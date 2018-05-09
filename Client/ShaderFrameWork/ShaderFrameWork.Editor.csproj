@@ -1,0 +1,535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{80D0F3BA-BCBE-1010-7E12-2D6B45D389E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2017.3.1f1</UnityVersion>
+    <RootNamespace></RootNamespace>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_3_1;UNITY_2017_3;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_3_1;UNITY_2017_3;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticlesLegacyModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ParticlesLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>Library\UnityAssemblies\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>Library\UnityAssemblies\UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Timeline">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIAutomation">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIAutomation">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.GoogleAudioSpatializer">
+      <HintPath>Library\UnityAssemblies\UnityEditor.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GoogleAudioSpatializer">
+      <HintPath>Library\UnityAssemblies\UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEditor.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>Library\UnityAssemblies\UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ShaderFrameWork.csproj">
+      <Project>{F0B8725E-9CD9-D8CD-119A-4361F5653F9D}</Project>
+      <Name>ShaderFrameWork</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Alloy\Scripts\AreaLight\Editor\AlloyAreaLightEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\AreaLight\Editor\AlloyLightCreator.cs" />
+    <Compile Include="Assets\Alloy\Scripts\AreaLight\Editor\AlloyLightEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyMenuGroups.cs" />
+    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyMigrationTools.cs" />
+    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyPropertyDrawers.cs" />
+    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyRequiredActions.cs" />
+    <Compile Include="Assets\Alloy\Scripts\EffectsManager\Editor\AlloyCameraEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\EffectsManager\Editor\AlloyEffectsManagerEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\AlloyInspectorBase.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\AlloyTabGroup.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\AlloyFieldBasedEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\AlloyFieldLexer.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\AlloyFieldParser.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyFieldDrawerFactory.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyFieldDrawers.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyFloatDrawers.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyTextureDrawer.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyTextureParser.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyVectorDrawers.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyCustomImportAction.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyCustomImportObject.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyCustomImportObjectEditor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyImporterSupervisor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyMaterialMapChannelPacker.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyPackerCompositor.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyTextureReader.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\ChannelDrawer.cs" />
+    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\MaterialMapChannelPackerDefinitionEditor.cs" />
+    <Compile Include="Assets\Editor\CreateMaterials.cs" />
+    <Compile Include="Assets\Editor\OrganizeDocuments.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Car Paint Fast ClearCoat.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Car Paint Full ClearCoat.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Core CrossFade.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Curvature Test.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Deferred Decal Advanced.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Intersection Glow.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Masked Core.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Mesh Particle Core.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\SP Car Paint.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Skin VertexDetail Forward.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Skin VertexDetail.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Transition Lite.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\3.0\Weathered Blend.shader" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\CarPaintFastClearCoat.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\CarPaintFullClearCoat.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\CurvatureTest.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\DeferredDecalAdvanced.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\IntersectionGlow.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\MaskedCore.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\MeshParticleCore.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\SPCarPaint.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\SkinVertexDetail.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\TransitionLite.cginc" />
+    <None Include="Assets\Alloy Mods\Shaders\Definition\WeatheredBlend.cginc" />
+    <None Include="Assets\Alloy\CHANGELOG.txt" />
+    <None Include="Assets\Alloy\EXTENSIONS.txt" />
+    <None Include="Assets\Alloy\LICENSES.txt" />
+    <None Include="Assets\Alloy\README.txt" />
+    <None Include="Assets\Alloy\REQUIRED ACTIONS.txt" />
+    <None Include="Assets\Alloy\Scripts\Editor\MaterialMigratorWarning.txt" />
+    <None Include="Assets\Alloy\Scripts\EffectsManager\Shaders\BlurNormals.shader" />
+    <None Include="Assets\Alloy\Scripts\EffectsManager\Shaders\TransmissionBlit.shader" />
+    <None Include="Assets\Alloy\Scripts\MaterialInspectors\Shaders\AlloyVisualize.shader" />
+    <None Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Shaders\AlloyNormalBlit.shader" />
+    <None Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Shaders\AlloyPassthroughBlit.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Core\Core.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Core\Prototyping.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Decal\Additive.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Decal\Alpha.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Decal\Ambient.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Decal\Cutout.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Decal\Multiplicative.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred Reflections.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred Shading.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred Skin.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred Transmission.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred UBER.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Eye.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Hair HighQuality OneSided.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Hair HighQuality TwoSided.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Hair LowQuality OneSided.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Hair LowQuality TwoSided.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Skin Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Human\Skin.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Details0.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Details1.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Details2.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\SpeedTree Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\SpeedTree.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\SpeedTreeBillboard.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Terrain 4Splat.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Terrain Distant.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Terrain nSplat AddPass.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Nature\Terrain nSplat FirstPass.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Car Paint.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Directional Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Glass HighQuality.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Glass LowQuality.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Oriented Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Oriented Core.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Transmission OneSided Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Transmission OneSided.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Transmission TwoSided Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Transmission TwoSided.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\TriPlanar.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Vertex Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\Specialist\Weighted Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle Add.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle AddMultiply.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle AddSmooth.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle Alpha Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle Anim Alpha Blended.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle Multiply.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle MultiplyDouble.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle Premultiply Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle VertexLit Blended.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Transition.shader" />
+    <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Unlit.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Core\Tessellation Core.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Core\Tessellation Prototyping.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Eye.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Hair HighQuality OneSided.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Hair HighQuality TwoSided.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Hair LowQuality OneSided.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Hair LowQuality TwoSided.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Skin Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Skin.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Car Paint.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Directional Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Glass HighQuality.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Glass LowQuality.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Oriented Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Oriented Core.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Transmission OneSided Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Transmission OneSided.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Transmission TwoSided Forward.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Transmission TwoSided.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation TriPlanar.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Vertex Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Weighted Blend.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\VisualEffects\Tessellation Transition.shader" />
+    <None Include="Assets\Alloy\Shaders\4.6\VisualEffects\Tessellation Unlit.shader" />
+    <None Include="Assets\Alloy\Shaders\Config.cginc" />
+    <None Include="Assets\Alloy\Shaders\Deferred\Decode.cginc" />
+    <None Include="Assets\Alloy\Shaders\Deferred\Light.cginc" />
+    <None Include="Assets\Alloy\Shaders\Deferred\ReflectionAdd.cginc" />
+    <None Include="Assets\Alloy\Shaders\Deferred\ReflectionProbe.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\CarPaint.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Core.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\DecalAdditive.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\DecalAlpha.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\DecalAmbient.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\DecalMultiplicative.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Details0.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Details1.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Details2.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\DirectionalBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Eye.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Hair.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\OrientedBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\OrientedCore.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Skin.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\SpeedTree.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\SpeedTreeBillboard.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Terrain.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Transition.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Transmission.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\TriPlanar.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\Unlit.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\VertexBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Definition\WeightedBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\AO2.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\CarPaint.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Decal.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Detail.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\DirectionalBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Dissolve.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Emission.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Emission2.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Eye.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\MainTextures.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\OrientedTextures.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Parallax.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Puddles.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Rim.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Rim2.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\SecondaryTextures.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\SkinTextures.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\SpeedTree.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\TeamColor.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Terrain.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\TransitionBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Transmission.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\TriPlanar.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\VertexBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\WeightedBlend.cginc" />
+    <None Include="Assets\Alloy\Shaders\Feature\Wetness.cginc" />
+    <None Include="Assets\Alloy\Shaders\Forward\Add.cginc" />
+    <None Include="Assets\Alloy\Shaders\Forward\Base.cginc" />
+    <None Include="Assets\Alloy\Shaders\Forward\Distort.cginc" />
+    <None Include="Assets\Alloy\Shaders\Forward\Gbuffer.cginc" />
+    <None Include="Assets\Alloy\Shaders\Forward\Meta.cginc" />
+    <None Include="Assets\Alloy\Shaders\Forward\Shadow.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Deferred.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Feature.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\FeatureImpl.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Forward.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Lighting.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\LightingImpl.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Particle.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Tessellation.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Type.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\TypeImpl.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Unity.cginc" />
+    <None Include="Assets\Alloy\Shaders\Framework\Utility.cginc" />
+    <None Include="Assets\Alloy\Shaders\Lighting\Hair.cginc" />
+    <None Include="Assets\Alloy\Shaders\Lighting\Standard.cginc" />
+    <None Include="Assets\Alloy\Shaders\Lighting\Unlit.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\DecalAdditive.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\DecalAlpha.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\DecalAmbient.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\DecalMultiplicative.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\Details1.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\Details2.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\SpeedTree.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\SpeedTreeBillboard.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\Standard.cginc" />
+    <None Include="Assets\Alloy\Shaders\Type\Terrain.cginc" />
+    <None Include="Assets\Alloy\Shaders\Unity\AutoLight.cginc" />
+    <None Include="Assets\Alloy\Shaders\Unity\UnityCG.cginc" />
+    <None Include="Assets\Alloy\Shaders\Unity\UnityPBSLighting.cginc" />
+    <None Include="Assets\Note.txt" />
+    <None Include="Assets\RawAssets\Shaders\Shader_Test.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+</Project>
