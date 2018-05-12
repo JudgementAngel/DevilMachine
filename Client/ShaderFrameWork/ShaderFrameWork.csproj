@@ -234,6 +234,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="ShaderFrameWork.Plugins.csproj">
+      <Project>{1EE59CFA-6219-528E-300C-4E400CF67BA9}</Project>
+      <Name>ShaderFrameWork.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Alloy\Scripts\AlloyPropertyAttributes.cs" />
     <Compile Include="Assets\Alloy\Scripts\AlloyUtils.cs" />
     <Compile Include="Assets\Alloy\Scripts\AreaLight\AlloyAreaLight.cs" />
@@ -242,6 +248,14 @@
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\MaterialMapChannelPackerClasses.cs" />
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\MaterialMapChannelPackerDefinition.cs" />
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\PackedMapDefinition.cs" />
+    <Compile Include="Assets\UBER\_Examples\ExamplesController.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_applyLightForDeferred.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_DeferredParams.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_GlobalParams.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_MaterialPreset.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_MaterialPresetCollection.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_MaterialPresetCollectionReference.cs" />
+    <Compile Include="Assets\UBER\Scripts\UBER_MouseOrbit_DynamicDistance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Alloy Mods\Shaders\3.0\Car Paint Fast ClearCoat.shader" />
@@ -463,6 +477,113 @@
     <None Include="Assets\RawAssets\ReferenceShaders\Hair_Release_0.0.4.shader" />
     <None Include="Assets\RawAssets\ReferenceShaders\Move.cginc" />
     <None Include="Assets\RawAssets\Shaders\Shader_Test.shader" />
+    <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Bloom\Resources\Bloom.cginc" />
+    <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Bloom\Resources\Bloom.shader" />
+    <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\HistogramCompute.compute" />
+    <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\HistogramRender.shader" />
+    <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\TonemappingColorGrading.cginc" />
+    <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
+    <None Include="Assets\UBER\Documentation.txt" />
+    <None Include="Assets\UBER\Editor\BakeProps.shader" />
+    <None Include="Assets\UBER\Models\_model_praparation_info.txt" />
+    <None Include="Assets\UBER\OpenFootage\_info.txt" />
+    <None Include="Assets\UBER\Shaders\Deferred_Lighting\Internal-DeferredShading_UBER.shader" />
+    <None Include="Assets\UBER\Shaders\Deferred_Lighting\UBER_with_Alloy.txt" />
+    <None Include="Assets\UBER\Shaders\Includes\DeferredTranslucensyBlit.shader" />
+    <None Include="Assets\UBER\Shaders\Includes\UBER_AutoLightMOD.cginc" />
+    <None Include="Assets\UBER\Shaders\Includes\UBER_StandardCore.cginc" />
+    <None Include="Assets\UBER\Shaders\Includes\UBER_StandardInput.cginc" />
+    <None Include="Assets\UBER\Shaders\Includes\UBER_StandardShadow_Tessellation.cginc" />
+    <None Include="Assets\UBER\Shaders\Includes\UBER_StandardUtils2.cginc" />
+    <None Include="Assets\UBER\Shaders\Includes\UBER_UnityDeferredLibrary.cginc" />
+    <None Include="Assets\UBER\Shaders\Resources\UBER_CopyPropsTexture.shader" />
+    <None Include="Assets\UBER\Shaders\UBER_ForwardFogType.cginc" />
+    <None Include="Assets\UBER\Shaders\UBER_StandardConfig.cginc" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Layers_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Sided.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Sided_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Sided_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Sided_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMAdvanced.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMAdvanced_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMDistanceMap.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMDistanceMap_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMExtrusionMap.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMExtrusionMap_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Refraction_Simple(no_normalmap).shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Simple(no_normalmap).shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Sided.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Sided_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Sided_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Sided_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_fallback2POMAdvanced.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_fallback2POMAdvanced_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective_2Layers_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Layers_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMAdvanced.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMAdvanced_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMDistanceMap.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMDistanceMap_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMExtrusionMap.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMExtrusionMap_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Refraction_Simple(no_normalmap).shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Simple(no_normalmap).shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Sided.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Sided_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Sided_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Sided_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_fallback2POMAdvanced.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_fallback2POMAdvanced_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_2Layers.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_2Layers_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_2Layers_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_GeomBlend.shader" />
+    <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_Refraction.shader" />
+    <None Include="Assets\UBER\Shaders\__UserCustomizedShaders\_info.txt" />
+    <None Include="Assets\UBER\Textures\[Modular]\copyright_info.txt" />
+    <None Include="Assets\UBER\Textures\_texture_import_info.txt" />
+    <None Include="Assets\UBER\_Examples\Candle\Sources\Materials\CandleFire.shader" />
+    <None Include="Assets\UBER\_Examples\Hebe\source_info.txt.txt" />
+    <None Include="Assets\UBER\_Examples\_UI elements\SkyboxButton.shader" />
+    <None Include="Assets\UBER\_IMPORTANT_INFO.txt" />
+    <None Include="Assets\UBER\_UBER_deferred_info.txt" />
+    <None Include="Assets\UBER\_verinfo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -4,8 +4,11 @@
 Temp
 Library
 obj
+UBER
+Standard Assets
 ##############################
 ## Netbeans conf            ##
 ##############################
 nb-configuration.xml
 nbactions.xml
+UBER.meta

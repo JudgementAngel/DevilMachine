@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{80D0F3BA-BCBE-1010-7E12-2D6B45D389E4}</ProjectGuid>
+    <ProjectGuid>{57AEA271-413E-3B2F-49B3-E73CCC865C25}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityProjectType>EditorPlugins:7</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.4.2f2</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -292,56 +292,14 @@
       <Project>{1EE59CFA-6219-528E-300C-4E400CF67BA9}</Project>
       <Name>ShaderFrameWork.Plugins</Name>
     </ProjectReference>
-    <ProjectReference Include="ShaderFrameWork.csproj">
-      <Project>{F0B8725E-9CD9-D8CD-119A-4361F5653F9D}</Project>
-      <Name>ShaderFrameWork</Name>
-    </ProjectReference>
-    <ProjectReference Include="ShaderFrameWork.Editor.Plugins.csproj">
-      <Project>{57AEA271-413E-3B2F-49B3-E73CCC865C25}</Project>
-      <Name>ShaderFrameWork.Editor.Plugins</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Alloy\Scripts\AreaLight\Editor\AlloyAreaLightEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\AreaLight\Editor\AlloyLightCreator.cs" />
-    <Compile Include="Assets\Alloy\Scripts\AreaLight\Editor\AlloyLightEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyMenuGroups.cs" />
-    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyMigrationTools.cs" />
-    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyPropertyDrawers.cs" />
-    <Compile Include="Assets\Alloy\Scripts\Editor\AlloyRequiredActions.cs" />
-    <Compile Include="Assets\Alloy\Scripts\EffectsManager\Editor\AlloyCameraEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\EffectsManager\Editor\AlloyEffectsManagerEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\AlloyInspectorBase.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\AlloyTabGroup.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\AlloyFieldBasedEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\AlloyFieldLexer.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\AlloyFieldParser.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyFieldDrawerFactory.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyFieldDrawers.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyFloatDrawers.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyTextureDrawer.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyTextureParser.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialInspectors\Editor\FieldBased\Drawers\AlloyVectorDrawers.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyCustomImportAction.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyCustomImportObject.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyCustomImportObjectEditor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyImporterSupervisor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyMaterialMapChannelPacker.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyPackerCompositor.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\AlloyTextureReader.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\ChannelDrawer.cs" />
-    <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\MaterialMapChannelPackerDefinitionEditor.cs" />
-    <Compile Include="Assets\Editor\CreateMaterials.cs" />
-    <Compile Include="Assets\Editor\OrganizeDocuments.cs" />
-    <Compile Include="Assets\UBER\Editor\NoKeywordToggleDrawer.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_BakeTanNormalsEditor.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_PostProcessDistanceMap.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_PostProcessMIPGloss.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_PostProcessMIPHeights.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_PostProcessModelForPOM.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_StandardShaderGUI.cs" />
-    <Compile Include="Assets\UBER\Editor\UBER_TextureChannelMixer.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Bloom\Editor\BloomEditor.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Bloom\Editor\BloomGraphDrawer.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Common\Editor\EditorGUIHelper.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Common\Editor\FieldFinder.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Common\Editor\MinDrawer.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Alloy Mods\Shaders\3.0\Car Paint Fast ClearCoat.shader" />
