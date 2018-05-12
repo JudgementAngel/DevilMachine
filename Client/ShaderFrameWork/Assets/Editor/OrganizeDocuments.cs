@@ -9,7 +9,7 @@ public class OrganizeDocuments : EditorWindow
 {
 
 
-    [MenuItem("Assets/OrganizeDocuments", false, 11)]
+    [MenuItem("Assets/OrganizeDocuments", false, 100)]
     public static void OrganizeDocs()
     {
         

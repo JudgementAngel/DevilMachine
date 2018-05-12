@@ -225,11 +225,11 @@
 		///Uniform variables
                 
                 float4 mixTex = tex2D(_MixTex,i.uv * _MixTex_ST.xy + _MixTex_ST.zw);
-				float metallic = mixTex.b;
-				float roughness = max(0.001f, mixTex.g);
+				float metallic = mixTex.r;
+				float roughness = max(0.001f, mixTex.a);
 
 				float3 baseColor = tex2D(_MainTex , i.uv * _MainTex_ST.xy + _MainTex_ST.zw).xyz;
-				float3 specColor = lerp(0.04f.rrr, baseColor, metallic);
+				float3 specColor = mixTex.rgb;//lerp(0.04f.rrr, baseColor, metallic);
 				baseColor = lerp(baseColor, 0.0f.rrr, metallic) * _MainColor;
 				
 				float Alpha = 1.0f;
