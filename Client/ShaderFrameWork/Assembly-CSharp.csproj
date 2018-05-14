@@ -244,6 +244,7 @@
      <None Include="Assets\Alloy\Shaders\Framework\Utility.cginc" />
      <None Include="Assets\UBER\Shaders\Includes\UBER_StandardCore.cginc" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Layers.shader" />
+     <None Include="Assets\MSF\Shaders\Shader_Test 1.shader" />
      <None Include="Assets\Alloy Mods\Shaders\3.0\Skin VertexDetail Forward.shader" />
      <None Include="Assets\Alloy\Shaders\Framework\TypeImpl.cginc" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_Refraction.shader" />

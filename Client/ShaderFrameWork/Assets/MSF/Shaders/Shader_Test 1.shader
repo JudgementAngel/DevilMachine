@@ -1,4 +1,4 @@
-﻿Shader "MSF/Shader_Test"
+﻿Shader "MSF/Shader_Test1"
 {
 	Properties
 	{
@@ -10,7 +10,7 @@
 		_LUT ("Look Up Table",2D) = "white"{}
 		_IBL ("ImageBasedLighting",CUBE) = ""{}
 	}
-	/*
+	
 	SubShader
 	{
 		Tags { "RenderType"="Opaque" }
@@ -169,7 +169,7 @@
 			ENDCG
 		}
 	}
-	*/
+	
 	SubShader
 	{
 		Tags { "RenderType"="Opaque" }
