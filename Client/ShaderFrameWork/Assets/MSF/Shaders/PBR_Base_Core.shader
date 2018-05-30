@@ -16,8 +16,9 @@ Shader "Move/PBR_Base_Core"
         _BumpMap("法线贴图", 2D) = "bump" {}
         _BumpScale("法线强度", Float) = 1.0
         
-        _HeightScale ("高度缩放", Range (0.005, 0.08)) = 0.02
-		_HeightMap ("高度图", 2D) = "black" {}
+        [Toggle(ENABLE_PARALLAX)] _EnableEmission("是否使用视差效果?",Float) = 0
+        _HeightScale ("视差缩放", Range (0.005, 0.08)) = 0.02
+		_HeightMap ("视差图", 2D) = "black" {}
 
         _OcclusionStrength("AO 强度", Range(0.0, 1.0)) = 1.0
         _OcclusionMap("AO 贴图", 2D) = "white" {}
@@ -57,20 +58,18 @@ Shader "Move/PBR_Base_Core"
 
             CGPROGRAM
 
-		
-		
-
-			
-
 			#pragma vertex vert
 			#pragma fragment frag
 
 			#pragma multi_compile_fwdbase
 			#pragma shader_feature ENABLE_EMISSION
+			#pragma shader_feature ENABLE_PARALLAX
 
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
-			
+			// #include "UnityStandardBRDF.cginc"
+			// #include "UnityLightingCommon.cginc"
+
 			#ifdef UNITY_COLORSPACE_GAMMA 
 				#define unity_ColorSpaceGrey fixed4(0.5, 0.5, 0.5, 0.5)
 				#define unity_ColorSpaceDouble fixed4(2.0, 2.0, 2.0, 2.0)
@@ -106,7 +105,8 @@ Shader "Move/PBR_Base_Core"
 				float3 worldPos : TEXCOORD7;
 			};
 
-			fixed4 _Color; fixed4 _LightColor0;
+			fixed4 _Color; 
+			fixed4 _LightColor0;
 			sampler2D _MainTex; float4 _MainTex_ST;			
 			sampler2D _OcclusionMap; half _OcclusionStrength;
 			sampler2D _HeightMap; half _HeightScale;
@@ -167,10 +167,10 @@ Shader "Move/PBR_Base_Core"
 			{
 				FragmentData s = (FragmentData)0;
 
-				// Parallax
-				float2 offset = ParallaxOffset(tex2D(_HeightMap,i_tex.xy).g,_HeightScale,i_viewDirForParallax);
-				i_tex += offset.xy;
-
+				#ifdef ENABLE_PARALLAX// Parallax
+					float2 offset = ParallaxOffset(tex2D(_HeightMap,i_tex.xy).g,_HeightScale,i_viewDirForParallax);
+					i_tex += offset.xy;
+				#endif
 				// Normal
 				half3 normalTangent = UnpackNormal(tex2D(_BumpMap,i_tex.xy));
 				normalTangent = lerp(float3(0,0,1),normalTangent,_BumpScale);
@@ -186,6 +186,7 @@ Shader "Move/PBR_Base_Core"
 				s.specColor = lerp(unity_ColorSpaceDielectricSpec.rgb ,s.diffColor,metallic);
 				s.oneMinusReflectivity = (1-metallic) * unity_ColorSpaceDielectricSpec.a;
 
+				s.diffColor *= s.oneMinusReflectivity;
 				s.roughness = roughness;
 				s.eyeVec = normalize(i_eyeVec);
 
@@ -273,7 +274,17 @@ Shader "Move/PBR_Base_Core"
 			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
 			    return lerp (F0, F90, t);
 			}
+			
+			inline half Remap(float Val,float iMin,float iMax,float oMin,float oMax)
+			{
+				return (oMin + ((Val - iMin) * (oMax - oMin))/(iMax - iMin));
+			}
 
+			inline half3 RemapLerp(half3 F0,half3 F90,half val)
+			{
+				half t = saturate(Remap(val,0.95,1,0,1));
+				return lerp (0, F0 ,t) ;
+			}
 
 			// Diffuse:Disney
 			// Specular: 基于Torrance-Sparrow micro-facet 光照模型
@@ -320,9 +331,11 @@ Shader "Move/PBR_Base_Core"
 
 			    half grazingTerm = saturate(1-perceptualRoughness + (1-s.oneMinusReflectivity));
 			    half3 color =   s.diffColor * (gi.indirectDiffuse + gi.color * diffuseTerm) 
-                    + specularTerm * gi.color * FresnelTerm (s.specColor, lh)
-                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv);
+                    + specularTerm * gi.color * FresnelTerm (s.specColor, lh) 
+                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv) * 4 + RemapLerp(s.specColor,grazingTerm,nh);
 
+                // color =surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv) * ViewLerp(s.specColor,grazingTerm,nv);
+                // color = ViewLerp(s.specColor,grazingTerm,nv);
                 return half4(color,1);
 			}
 
@@ -339,6 +352,19 @@ Shader "Move/PBR_Base_Core"
 				GI gi = FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
 
 				half4 col = BRDF_PBS(s,gi);
+				
+				/*
+				UnityLight mainLight;
+				mainLight.color = gi.color;
+				mainLight.dir = gi.dir;
+
+				UnityIndirect idirect;
+				idirect.diffuse = gi.indirectDiffuse;
+				idirect.specular = gi.indirectSpecular;
+
+
+				half4 col = BRDF3_Unity_PBS (s.diffColor,s.specColor,s.oneMinusReflectivity,1-s.roughness,s.normalWorld,-s.eyeVec,mainLight,idirect);
+				*/
 
 				#ifdef ENABLE_EMISSION
 					col.rgb += tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;

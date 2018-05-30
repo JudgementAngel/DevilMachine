@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EnvMap:
-        m_Texture: {fileID: 8900000, guid: 47555b2775c7df342bd7fb73aa6a647f, type: 3}
+        m_Texture: {fileID: 8900000, guid: 2c660a9e154653f4b9f32a08bed0adf1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
@@ -97,21 +97,21 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cull: 2
-    - _Cutoff: 0.527
+    - _Cutoff: 0.572
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionIntensity: 1
     - _EnableEmission: 0
-    - _EnvScale: 2.72
+    - _EnvScale: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightScale: 0.0122
+    - _HeightScale: 0.005
     - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Roughness: 3.4
+    - _Roughness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
