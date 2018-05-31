@@ -102,11 +102,12 @@ Material:
     - _DstBlend: 0
     - _EmissionIntensity: 1
     - _EnableEmission: 0
+    - _EnableParallax: 0
     - _EnvScale: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightScale: 0.005
+    - _HeightScale: 0.0111
     - _Metallic: 1
     - _Mode: 0
     - _OcclusionStrength: 1

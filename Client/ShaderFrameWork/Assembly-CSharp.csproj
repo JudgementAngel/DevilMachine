@@ -67,6 +67,7 @@
      <Compile Include="Assets\UBER\Scripts\UBER_MaterialPresetCollection.cs" />
      <Compile Include="Assets\UBER\Scripts\UBER_MaterialPresetCollectionReference.cs" />
      <Compile Include="Assets\UBER\Scripts\UBER_MouseOrbit_DynamicDistance.cs" />
+     <None Include="Assets\MSF\Shaders\Includes\TT.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective_2Layers.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_2Layers.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_Refraction.shader" />
@@ -76,6 +77,7 @@
      <None Include="Assets\MSF\ReferenceShaders\MoveShaders\06_IBL_Tex.shader" />
      <None Include="Assets\Alloy Mods\Shaders\3.0\Intersection Glow.shader" />
      <None Include="Assets\Alloy Mods\Shaders\Definition\MeshParticleCore.cginc" />
+     <None Include="Assets\MSF\Shaders\PBR_Multi_BRDF.shader" />
      <None Include="Assets\Alloy\Shaders\Framework\LightingImpl.cginc" />
      <None Include="Assets\Alloy\Shaders\Definition\DecalMultiplicative.cginc" />
      <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Particle AddMultiply.shader" />
@@ -298,6 +300,7 @@
      <None Include="Assets\UBER\_Examples\Candle\Sources\Materials\CandleFire.shader" />
      <None Include="Assets\Alloy Mods\Shaders\3.0\Core CrossFade.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Specialist\Oriented Core.shader" />
+     <None Include="Assets\MSF\Shaders\PBR_Base_Core.shader" />
      <None Include="Assets\MSF\Shaders\Shader_Test.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMAdvanced.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Human\Hair HighQuality OneSided.shader" />

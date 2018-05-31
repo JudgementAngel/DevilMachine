@@ -1,10 +1,4 @@
-﻿// 参考Unity Standard Shader
-// 暂时不考虑以下情况：
-//		灯光贴图、灯光探针、反射探针
-//		ForwardAdd、Deferred、Meta
-// 需改善效果：
-// 		渲染太油腻、金属和非金属质感的区分不够明显
-Shader "Move/PBR_Base_Core"
+﻿Shader "Move/PBR_Multi_BRDF" // TODO
 {
 	Properties
 	{
@@ -335,11 +329,9 @@ Shader "Move/PBR_Base_Core"
 				#endif
 
 			    half grazingTerm = saturate(1-perceptualRoughness + (1-s.oneMinusReflectivity));
-
-			    // HACK: 环境光太暗，所以默认乘4；加强金属光感
 			    half3 color =   s.diffColor * (gi.indirectDiffuse + gi.color * diffuseTerm) 
                     + specularTerm * gi.color * FresnelTerm (s.specColor, lh) 
-                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv) * 4 + surfaceReduction * RemapLerp(s.specColor,grazingTerm,nh);
+                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv) * 4 + RemapLerp(s.specColor,grazingTerm,nh);
 
                 return half4(color,1);
 			}
