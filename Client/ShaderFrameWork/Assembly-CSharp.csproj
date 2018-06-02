@@ -67,7 +67,6 @@
      <Compile Include="Assets\UBER\Scripts\UBER_MaterialPresetCollection.cs" />
      <Compile Include="Assets\UBER\Scripts\UBER_MaterialPresetCollectionReference.cs" />
      <Compile Include="Assets\UBER\Scripts\UBER_MouseOrbit_DynamicDistance.cs" />
-     <None Include="Assets\MSF\Shaders\Includes\TT.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective_2Layers.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_2Layers.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_Refraction.shader" />
@@ -184,6 +183,7 @@
      <None Include="Assets\Alloy\Shaders\3.0\Human\Hair LowQuality OneSided.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMExtrusionMap.shader" />
      <None Include="Assets\Alloy Mods\Shaders\Definition\MaskedCore.cginc" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Cook-Torrance.shader" />
      <None Include="Assets\Alloy\Shaders\Framework\Deferred.cginc" />
      <None Include="Assets\Alloy Mods\Shaders\3.0\Car Paint Full ClearCoat.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred Shading.shader" />
@@ -222,6 +222,7 @@
      <None Include="Assets\Alloy\Shaders\Forward\Base.cginc" />
      <None Include="Assets\Alloy\Shaders\Framework\Feature.cginc" />
      <None Include="Assets\Alloy Mods\Shaders\Definition\IntersectionGlow.cginc" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\LegacyVF.shader" />
      <None Include="Assets\Alloy\Shaders\Type\Details2.cginc" />
      <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Glass HighQuality.shader" />
      <None Include="Assets\Alloy\Shaders\Feature\Rim2.cginc" />
