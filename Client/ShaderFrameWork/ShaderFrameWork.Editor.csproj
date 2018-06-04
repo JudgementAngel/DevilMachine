@@ -546,6 +546,9 @@
     <None Include="Assets\Alloy\Shaders\Unity\AutoLight.cginc" />
     <None Include="Assets\Alloy\Shaders\Unity\UnityCG.cginc" />
     <None Include="Assets\Alloy\Shaders\Unity\UnityPBSLighting.cginc" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Cook-Torrance.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Desnity_Cook-Torrance.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\LegacyVF.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\01_Lambert.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\02_DisneyDiffuse.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\03_BlinnPhong.shader" />
@@ -561,8 +564,8 @@
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\CharacterShader_Release_0.0.4.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\Hair_Release_0.0.4.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\Move.cginc" />
-    <None Include="Assets\MSF\Shaders\Includes\TT.shader" />
     <None Include="Assets\MSF\Shaders\PBR_Base_Core.shader" />
+    <None Include="Assets\MSF\Shaders\PBR_Multi_BRDF.shader" />
     <None Include="Assets\MSF\Shaders\Shader_Test 1.shader" />
     <None Include="Assets\MSF\Shaders\Shader_Test.shader" />
     <None Include="Assets\Note.txt" />

@@ -241,6 +241,7 @@
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Layers_Refraction.shader" />
      <None Include="Assets\UBER\_UBER_deferred_info.txt" />
      <None Include="Assets\MSF\ReferenceShaders\MoveShaders\04_Phong.shader" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Ward.shader" />
      <None Include="Assets\Alloy\Scripts\EffectsManager\Shaders\TransmissionBlit.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Layers.shader" />
      <None Include="Assets\Alloy\Shaders\Feature\Dissolve.cginc" />
@@ -370,6 +371,7 @@
      <None Include="Assets\Alloy\Shaders\Type\SpeedTreeBillboard.cginc" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective_Refraction.shader" />
      <None Include="Assets\Alloy Mods\Shaders\3.0\Curvature Test.shader" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Disney_Cook-Torrance.shader" />
      <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Vertex Blend.shader" />
      <None Include="Assets\Alloy\Shaders\Type\Details1.cginc" />
      <None Include="Assets\Alloy\Shaders\Type\DecalAlpha.cginc" />

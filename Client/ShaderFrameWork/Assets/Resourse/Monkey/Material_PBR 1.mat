@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Material_PBR
-  m_Shader: {fileID: 4800000, guid: a36977f57f5a1ca41bf4598eaf65d1c9, type: 3}
+  m_Name: Material_PBR 1
+  m_Shader: {fileID: 4800000, guid: ef59131fa7b9abd4e9abfe509e15f0aa, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -62,16 +62,18 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Metallic: 0.688
+    - _Metallic: 0.719
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Roughness: 0.634
+    - _Roughness: 0.804
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - metallic: 0.61
+    - roughness: 0.509
     m_Colors:
     - _Color: {r: 0.95686275, g: 0.8392157, b: 0.47058824, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
