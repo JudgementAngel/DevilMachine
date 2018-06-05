@@ -102,6 +102,7 @@
      <None Include="Assets\Alloy\Shaders\3.0\Human\Hair LowQuality TwoSided.shader" />
      <None Include="Assets\UBER\Documentation.txt" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_2Layers.shader" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Anisotropic.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Simple(no_normalmap).shader" />
      <None Include="Assets\Alloy\Scripts\MaterialInspectors\Shaders\AlloyVisualize.shader" />
      <None Include="Assets\Note.txt" />
@@ -147,6 +148,7 @@
      <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Transmission TwoSided Forward.shader" />
      <None Include="Assets\MSF\ReferenceShaders\MoveShaders\Hair_Release_0.0.4.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Nature\Terrain nSplat AddPass.shader" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\LegacyBumpVF.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred UBER.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective.shader" />
      <None Include="Assets\MSF\ReferenceShaders\MoveShaders\Move.cginc" />
@@ -157,6 +159,7 @@
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMExtrusionMap.shader" />
      <None Include="Assets\Alloy\Shaders\Definition\Details2.cginc" />
      <None Include="Assets\Alloy Mods\Shaders\Definition\CurvatureTest.cginc" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\BrushMetallic.shader" />
      <None Include="Assets\Alloy\Shaders\Framework\Lighting.cginc" />
      <None Include="Assets\Alloy\Shaders\Framework\Type.cginc" />
      <None Include="Assets\Alloy\Shaders\Forward\Distort.cginc" />
@@ -200,6 +203,7 @@
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_TriplanarSelective.shader" />
      <None Include="Assets\Alloy\Shaders\4.6\Core\Tessellation Core.shader" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\SoftMetal_Tex.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided.shader" />
      <None Include="Assets\Alloy\Shaders\Feature\SkinTextures.cginc" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Refraction_Simple(no_normalmap).shader" />
@@ -386,6 +390,7 @@
      <None Include="Assets\Alloy\Shaders\3.0\Specialist\TriPlanar.shader" />
      <None Include="Assets\UBER\_verinfo.txt" />
      <None Include="Assets\Alloy\Shaders\3.0\Human\Hair HighQuality TwoSided.shader" />
+     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\SoftMetal.shader" />
      <None Include="Assets\UBER\Shaders\UBER_StandardConfig.cginc" />
      <None Include="Assets\Alloy\Shaders\Deferred\Decode.cginc" />
      <None Include="Assets\Alloy\Shaders\Lighting\Unlit.cginc" />
