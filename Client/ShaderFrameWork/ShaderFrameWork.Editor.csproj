@@ -259,9 +259,6 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
     <Reference Include="SimpleMatrixLibrary">
       <HintPath>Assets/UBER/Editor/SimpleMatrixLibrary.dll</HintPath>
     </Reference>
@@ -285,6 +282,9 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +334,9 @@
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\MaterialMapChannelPackerDefinitionEditor.cs" />
     <Compile Include="Assets\Editor\CreateMaterials.cs" />
     <Compile Include="Assets\Editor\OrganizeDocuments.cs" />
+    <Compile Include="Assets\Editor\SceneTools.cs" />
+    <Compile Include="Assets\MoveStandardShader\Editor\Move_StandardRoughnessShaderGUI.cs" />
+    <Compile Include="Assets\MoveStandardShader\Editor\Move_StandardShaderGUI.cs" />
     <Compile Include="Assets\UBER\Editor\NoKeywordToggleDrawer.cs" />
     <Compile Include="Assets\UBER\Editor\UBER_BakeTanNormalsEditor.cs" />
     <Compile Include="Assets\UBER\Editor\UBER_PostProcessDistanceMap.cs" />
@@ -546,9 +549,15 @@
     <None Include="Assets\Alloy\Shaders\Unity\AutoLight.cginc" />
     <None Include="Assets\Alloy\Shaders\Unity\UnityCG.cginc" />
     <None Include="Assets\Alloy\Shaders\Unity\UnityPBSLighting.cginc" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Anisotropic.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\BrushMetallic.shader" />
     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Cook-Torrance.shader" />
-    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Desnity_Cook-Torrance.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Disney_Cook-Torrance.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\LegacyBumpVF.shader" />
     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\LegacyVF.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\SoftMetal.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\SoftMetal_Tex.shader" />
+    <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Ward.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\01_Lambert.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\02_DisneyDiffuse.shader" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\03_BlinnPhong.shader" />
@@ -568,6 +577,12 @@
     <None Include="Assets\MSF\Shaders\PBR_Multi_BRDF.shader" />
     <None Include="Assets\MSF\Shaders\Shader_Test 1.shader" />
     <None Include="Assets\MSF\Shaders\Shader_Test.shader" />
+    <None Include="Assets\MoveStandardShader\Shaders\CGIncludes\Move_StandardCore.cginc" />
+    <None Include="Assets\MoveStandardShader\Shaders\CGIncludes\Move_StandardCoreForward.cginc" />
+    <None Include="Assets\MoveStandardShader\Shaders\CGIncludes\Move_StandardCoreForwardSimple.cginc" />
+    <None Include="Assets\MoveStandardShader\Shaders\Move_Standard.shader" />
+    <None Include="Assets\MoveStandardShader\Shaders\Move_StandardRoughness.shader" />
+    <None Include="Assets\MoveStandardShader\Shaders\Move_StandardSpecular.shader" />
     <None Include="Assets\Note.txt" />
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Bloom\Resources\Bloom.cginc" />
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\Bloom\Resources\Bloom.shader" />

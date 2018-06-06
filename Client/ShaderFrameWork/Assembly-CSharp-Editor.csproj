@@ -83,6 +83,9 @@
      <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Editor\MaterialMapChannelPackerDefinitionEditor.cs" />
      <Compile Include="Assets\Editor\CreateMaterials.cs" />
      <Compile Include="Assets\Editor\OrganizeDocuments.cs" />
+     <Compile Include="Assets\Editor\SceneTools.cs" />
+     <Compile Include="Assets\MoveStandardShader\Editor\Move_StandardRoughnessShaderGUI.cs" />
+     <Compile Include="Assets\MoveStandardShader\Editor\Move_StandardShaderGUI.cs" />
      <Compile Include="Assets\UBER\Editor\NoKeywordToggleDrawer.cs" />
      <Compile Include="Assets\UBER\Editor\UBER_BakeTanNormalsEditor.cs" />
      <Compile Include="Assets\UBER\Editor\UBER_PostProcessDistanceMap.cs" />

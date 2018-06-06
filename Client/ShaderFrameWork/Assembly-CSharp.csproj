@@ -71,6 +71,7 @@
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_2Layers.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_TriplanarSelective_Refraction.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Human\Skin Forward.shader" />
+     <None Include="Assets\MoveStandardShader\Shaders\CGIncludes\Move_StandardCoreForwardSimple.cginc" />
      <None Include="Assets\Alloy\Shaders\Definition\Unlit.cginc" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective_2Layers_Refraction.shader" />
      <None Include="Assets\MSF\ReferenceShaders\MoveShaders\06_IBL_Tex.shader" />
@@ -139,6 +140,7 @@
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_POMAdvanced.shader" />
      <None Include="Assets\Alloy\Shaders\Definition\Core.cginc" />
      <None Include="Assets\Alloy\Shaders\Forward\Add.cginc" />
+     <None Include="Assets\MoveStandardShader\Shaders\Move_Standard.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Nature\SpeedTree Forward.shader" />
      <None Include="Assets\Alloy\Shaders\Forward\Gbuffer.cginc" />
      <None Include="Assets\Alloy\Shaders\Feature\CarPaint.cginc" />
@@ -352,6 +354,7 @@
      <None Include="Assets\Alloy\Shaders\3.0\Nature\Terrain Distant.shader" />
      <None Include="Assets\Alloy\Shaders\Definition\SpeedTree.cginc" />
      <None Include="Assets\MSF\ReferenceShaders\MoveShaders\02_DisneyDiffuse.shader" />
+     <None Include="Assets\MoveStandardShader\Shaders\Move_StandardSpecular.shader" />
      <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Transmission OneSided Forward.shader" />
      <None Include="Assets\Alloy\Shaders\3.0\Nature\Details0.shader" />
      <None Include="Assets\Alloy Mods\Shaders\3.0\Skin VertexDetail.shader" />
@@ -367,10 +370,12 @@
      <None Include="Assets\Alloy\Shaders\3.0\Deferred\Alloy Deferred Skin.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_2Sided_TriplanarSelective_2Layers.shader" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_2Sided_TriplanarSelective_2Layers.shader" />
+     <None Include="Assets\MoveStandardShader\Shaders\CGIncludes\Move_StandardCore.cginc" />
      <None Include="Assets\UBER\Shaders\Includes\DeferredTranslucensyBlit.shader" />
      <None Include="Assets\Alloy\Shaders\Feature\VertexBlend.cginc" />
      <None Include="Assets\Alloy\Shaders\Type\Terrain.cginc" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation.shader" />
+     <None Include="Assets\MoveStandardShader\Shaders\CGIncludes\Move_StandardCoreForward.cginc" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_Tessellation_TriplanarSelective_Refraction.shader" />
      <None Include="Assets\Alloy\Shaders\Type\SpeedTreeBillboard.cginc" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_Tessellation_TriplanarSelective_Refraction.shader" />
@@ -382,6 +387,7 @@
      <None Include="Assets\Alloy\Shaders\Definition\Details0.cginc" />
      <None Include="Assets\UBER\Shaders\_Specular\_UBERShader_Specular_POMDistanceMap_Refraction.shader" />
      <None Include="Assets\UBER\Shaders\_Metallic\_UBERShader_Metallic_2Sided_2Layers.shader" />
+     <None Include="Assets\MoveStandardShader\Shaders\Move_StandardRoughness.shader" />
      <None Include="Assets\Alloy\Shaders\Forward\Meta.cginc" />
      <None Include="Assets\Alloy\Shaders\3.0\Core\Prototyping.shader" />
      <None Include="Assets\Alloy\Shaders\Feature\Transmission.cginc" />
