@@ -10,6 +10,8 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+#pragma warning disable 0618
+
 namespace Alloy {
     public class AlloyCustomImportAction : AssetPostprocessor {
         delegate void OnAlloyImportFunc(AlloyCustomImportObject settings, Texture2D texture, string path);
