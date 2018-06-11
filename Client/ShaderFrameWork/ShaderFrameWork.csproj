@@ -248,6 +248,7 @@
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\MaterialMapChannelPackerClasses.cs" />
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\MaterialMapChannelPackerDefinition.cs" />
     <Compile Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\PackedMapDefinition.cs" />
+    <Compile Include="Assets\LocalRes\Rotate.cs" />
     <Compile Include="Assets\UBER\_Examples\ExamplesController.cs" />
     <Compile Include="Assets\UBER\Scripts\UBER_applyLightForDeferred.cs" />
     <Compile Include="Assets\UBER\Scripts\UBER_DeferredParams.cs" />
