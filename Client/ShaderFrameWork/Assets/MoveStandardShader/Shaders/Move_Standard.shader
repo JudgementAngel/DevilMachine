@@ -1,6 +1,4 @@
-// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
-
-Shader "Move_Standard"
+﻿Shader "Move_Standard"
 {
     Properties
     {
@@ -30,6 +28,10 @@ Shader "Move_Standard"
 
         _EmissionColor("Color", Color) = (0,0,0)
         _EmissionMap("Emission", 2D) = "white" {}
+
+		_SwingSpeed ("Swing Speed",Range(0,10)) = 0
+		_SwingScale ("Swing Scale",Range(0,3)) = 0.5
+		_SwingTime ("Swing Time",Range(0,1)) = 0.5
 
         _DetailMask("Detail Mask", 2D) = "white" {}
 
@@ -76,7 +78,8 @@ Shader "Move_Standard"
             // -------------------------------------
 
             #pragma shader_feature _NORMALMAP
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _EMISSION
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma shader_feature ___ _DETAIL_MULX2
@@ -85,6 +88,7 @@ Shader "Move_Standard"
             #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
             #pragma shader_feature _PARALLAXMAP
             #pragma shader_feature _ _DEBUG_ALBEDO _DEBUG_NORMAL
+            #pragma shader_feature _ _SWING
 
             #pragma multi_compile_fwdbase
             #pragma multi_compile_fog
@@ -116,13 +120,15 @@ Shader "Move_Standard"
 
 
             #pragma shader_feature _NORMALMAP
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
             #pragma shader_feature ___ _DETAIL_MULX2
             #pragma shader_feature _PARALLAXMAP
             #pragma shader_feature _ _DEBUG_ALBEDO _DEBUG_NORMAL
+			#pragma shader_feature _ _SWING
 
             #pragma multi_compile_fwdadd_fullshadows
             #pragma multi_compile_fog
@@ -149,7 +155,8 @@ Shader "Move_Standard"
             // -------------------------------------
 
 
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma shader_feature _PARALLAXMAP
             #pragma multi_compile_shadowcaster
@@ -179,7 +186,8 @@ Shader "Move_Standard"
             // -------------------------------------
 
             #pragma shader_feature _NORMALMAP
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _EMISSION
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
@@ -246,13 +254,15 @@ Shader "Move_Standard"
             #pragma target 2.0
 
             #pragma shader_feature _NORMALMAP
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _EMISSION
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
             #pragma shader_feature _ _GLOSSYREFLECTIONS_OFF
             #pragma shader_feature _ _DEBUG_ALBEDO _DEBUG_NORMAL
+			#pragma shader_feature _ _SWING
             // SM2.0: NOT SUPPORTED shader_feature ___ _DETAIL_MULX2
             // SM2.0: NOT SUPPORTED shader_feature _PARALLAXMAP
 
@@ -282,12 +292,14 @@ Shader "Move_Standard"
             #pragma target 2.0
 
             #pragma shader_feature _NORMALMAP
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature _ _SPECULARHIGHLIGHTS_OFF
             #pragma shader_feature ___ _DETAIL_MULX2
             #pragma shader_feature _ _DEBUG_ALBEDO _DEBUG_NORMAL
+			#pragma shader_feature _ _SWING
             // SM2.0: NOT SUPPORTED shader_feature _PARALLAXMAP
             #pragma skip_variants SHADOWS_SOFT
 
@@ -311,7 +323,8 @@ Shader "Move_Standard"
             CGPROGRAM
             #pragma target 2.0
 
-            #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHATEST_ON _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature _ _ALPHABLEND_ON
             #pragma shader_feature _METALLICGLOSSMAP
             #pragma skip_variants SHADOWS_SOFT
             #pragma multi_compile_shadowcaster

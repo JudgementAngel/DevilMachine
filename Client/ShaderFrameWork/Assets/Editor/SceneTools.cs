@@ -6,16 +6,10 @@ namespace MoveEditor
 {
     public class SceneTools : EditorWindow
     {
-        public enum DebugMode
-        {
-            None,
-            Albedo,
-            Normal
-        }
+     
         public static int callbackIndex = 0;
         public static List<GameObject> gameObjectsList = new List<GameObject>();
         public static Dictionary<GameObject, int> GameObject_SiblingIndex = new Dictionary<GameObject, int>();
-        public static DebugMode debugMode = DebugMode.None;
         //% (ctrl on Windows, cmd on macOS), # (shift), & (alt). 
 
         [MenuItem("SceneTools/Group %g", false, 0)]
@@ -157,42 +151,7 @@ namespace MoveEditor
         {
             return Selection.gameObjects.Length == 1;
         }
-        [MenuItem("SceneTools/DebugMode/None",false,200)]
-        public static void DebugMode_None_Fun()
-        {
-            debugMode = DebugMode.None;
-            Shader.DisableKeyword("_DEBUG_ALBEDO");
-            Shader.DisableKeyword("_DEBUG_NORMAL");
-        }
-        [MenuItem("SceneTools/DebugMode/None", true)]
-        public static bool Validate_DebugMode_None_Fun()
-        {
-            return debugMode != DebugMode.None;
-        }
-        [MenuItem("SceneTools/DebugMode/Albedo", false, 200)]
-        public static void DebugMode_Albedo_Fun()
-        {
-            debugMode = DebugMode.Albedo;
-            Shader.EnableKeyword("_DEBUG_ALBEDO");
-            Shader.DisableKeyword("_DEBUG_NORMAL");
-        }
-        [MenuItem("SceneTools/DebugMode/Albedo", true)]
-        public static bool Validate_DebugMode_Albedo_Fun()
-        {
-            return debugMode != DebugMode.Albedo;
-        }
-        [MenuItem("SceneTools/DebugMode/Normal", false, 200)]
-        public static void DebugMode_Normal_Fun()
-        {
-            debugMode = DebugMode.Normal;
-            Shader.DisableKeyword("_DEBUG_ALBEDO");
-            Shader.EnableKeyword("_DEBUG_NORMAL");
-        }
-        [MenuItem("SceneTools/DebugMode/Normal", true)]
-        public static bool Validate_DebugMode_Normal_Fun()
-        {
-            return debugMode != DebugMode.Normal;
-        }
+  
         //--------------------------------------------------------------------------------------------
         //只会对MeshRenderer起作用
         //--------------------------------------------------------------------------------------------

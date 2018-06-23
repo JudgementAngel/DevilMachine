@@ -312,7 +312,49 @@ inline UnityGI FragmentGI (FragmentCommonData s, half occlusion, half4 i_ambient
 {
     return FragmentGI(s, occlusion, i_ambientOrLightmapUV, atten, light, true);
 }
+//-------------------------------------------------------------------------------------
+float _SwingTime, _SwingSpeed, _SwingScale;
+void FastSinCos(float4 val, out float4 s, out float4 c)
+{
+	val = val * 6.408849 - 3.1415927;
+	float4 r5 = val * val;
+	float4 r6 = r5 * r5;
+	float4 r7 = r6 * r5;
+	float4 r8 = r7;
+	float4 r1 = r5 * val;
+	float4 r2 = r1 * r5;
+	float4 r3 = r2 * r5;
+	
+	float4 sin7 = float4(1, -0.16161616, 0.0083333, -0.00019841);
+	float4 cos8 = float4(-0.5, 0.041666666, -0.0013888889, 0.00002480158);
 
+	s = val + r1 * sin7.y + r2 * sin7.z + r3 * sin7.w;
+	c = 1 + r5 * cos8.x + r6 * cos8.y + r7 * cos8.z + r8 * cos8.w;
+}
+float4 Swing(float4 vPos, float4 vColor)
+{
+	const fixed4 waveXSize = fixed4(0.048, 0.06, 0.24, 0.096);
+	const fixed4 waveZSize = fixed4(0.024, 0.08, 0.08, 0.2);
+	const fixed4 waveSpeed = fixed4(1.2, 2, 1.6, 4.8);
+
+	float4 waveXMove = float4(0.024, 0.04, -0.14, 0.096);
+	float4 waveYMove = float4(0.02, 0.01, -0.01, 0.096);
+	float4 waveZMove = float4(0.006, 0.02, -0.02, 0.1);
+
+	float4 waves = vPos.x * waveXSize + vPos.z * waveZSize;
+	waves += _Time.x *(1 - _SwingTime * 2 - vColor.b) * waveSpeed *_SwingSpeed *vColor.g;
+
+	float4 sinWave, cosWave;
+	waves = frac(waves);
+	FastSinCos(waves, sinWave, cosWave);
+
+	sinWave *= normalize(waveSpeed);
+
+	float3 waveMove = float3(dot(sinWave, waveXMove), dot(sinWave, waveXMove), dot(sinWave, waveXMove));
+	vPos.xyz += mul((float3x3)unity_WorldToObject, waveMove).xyz * vColor.r * _SwingScale;
+
+	return vPos;
+}
 
 //-------------------------------------------------------------------------------------
 half4 DebugForwardBase(half4 output,half4 i_tex)
@@ -413,6 +455,10 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
             o.posWorld = posWorld.xyz;
         #endif
     #endif
+	
+	#ifdef _SWING
+	v.vertex = Swing(v.vertex, 1.0f.xxxx);
+	#endif
     o.pos = UnityObjectToClipPos(v.vertex);
 
     o.tex = TexCoords(v);
@@ -504,6 +550,10 @@ VertexOutputForwardAdd vertForwardAdd (VertexInput v)
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
     float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
+
+	#ifdef _SWING
+		v.vertex = Swing(v.vertex, 1.0f.xxxx);
+	#endif
     o.pos = UnityObjectToClipPos(v.vertex);
 
     o.tex = TexCoords(v);

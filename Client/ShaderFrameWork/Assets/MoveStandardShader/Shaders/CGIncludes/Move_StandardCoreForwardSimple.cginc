@@ -89,6 +89,9 @@ VertexOutputBaseSimple vertForwardBaseSimple (VertexInput v)
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
     float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
+	#ifdef _SWING
+		v.vertex = Swing(v.vertex, 1.0f.xxxx);
+	#endif
     o.pos = UnityObjectToClipPos(v.vertex);
     o.tex = TexCoords(v);
 

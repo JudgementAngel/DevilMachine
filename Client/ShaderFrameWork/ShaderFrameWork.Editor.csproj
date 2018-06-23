@@ -259,6 +259,9 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleMatrixLibrary">
       <HintPath>Assets/UBER/Editor/SimpleMatrixLibrary.dll</HintPath>
     </Reference>
@@ -282,9 +285,6 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -335,8 +335,9 @@
     <Compile Include="Assets\Editor\CreateMaterials.cs" />
     <Compile Include="Assets\Editor\OrganizeDocuments.cs" />
     <Compile Include="Assets\Editor\SceneTools.cs" />
-    <Compile Include="Assets\MoveStandardShader\Editor\Move_StandardRoughnessShaderGUI.cs" />
-    <Compile Include="Assets\MoveStandardShader\Editor\Move_StandardShaderGUI.cs" />
+    <Compile Include="Assets\MoveStandardShader\Shaders\Editor\Move_StandardRoughnessShaderGUI.cs" />
+    <Compile Include="Assets\MoveStandardShader\Shaders\Editor\Move_StandardShaderGUI.cs" />
+    <Compile Include="Assets\MoveStandardShader\Shaders\Editor\ShaderControlEditor.cs" />
     <Compile Include="Assets\UBER\Editor\NoKeywordToggleDrawer.cs" />
     <Compile Include="Assets\UBER\Editor\UBER_BakeTanNormalsEditor.cs" />
     <Compile Include="Assets\UBER\Editor\UBER_PostProcessDistanceMap.cs" />

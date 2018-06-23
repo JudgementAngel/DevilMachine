@@ -21,7 +21,7 @@ namespace UnityEditor
             Cutout,
             Fade,   // Old school alpha-blending mode, fresnel does not affect amount of transparency
             Transparent, // Physically plausible transparency mode, implemented as alpha pre-multiply
-            FadeZWriteCutout // 透明写入深度的模式
+            FadeZWriteCutout, // 透明写入深度剔除的模式
         }
 
         public enum DebugMode
@@ -57,6 +57,10 @@ namespace UnityEditor
             public static GUIContent detailMaskText = new GUIContent("Detail Mask", "Mask for Secondary Maps (A)");
             public static GUIContent detailAlbedoText = new GUIContent("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
             public static GUIContent detailNormalMapText = new GUIContent("Normal Map", "Normal Map");
+
+            public static GUIContent swingSpeedText = new GUIContent("Swing Speed", "Swing Speed");
+            public static GUIContent swingTimeText = new GUIContent("Swing Time", "Swing Time");
+            public static GUIContent swingScaleText = new GUIContent("Swing Scale", "Swing Scale");
 
             public static string primaryMapsText = "Main Maps";
             public static string secondaryMapsText = "Secondary Maps";
@@ -98,6 +102,11 @@ namespace UnityEditor
         MaterialProperty detailNormalMapScale = null;
         MaterialProperty detailNormalMap = null;
         MaterialProperty uvSetSecondary = null;
+
+        MaterialProperty swingSpeed = null;
+        MaterialProperty swingScale = null;
+        MaterialProperty swingTime = null;
+
 
         MaterialEditor m_MaterialEditor;
         WorkflowMode m_WorkflowMode = WorkflowMode.Specular;
@@ -142,6 +151,10 @@ namespace UnityEditor
             detailNormalMapScale = FindProperty("_DetailNormalMapScale", props);
             detailNormalMap = FindProperty("_DetailNormalMap", props);
             uvSetSecondary = FindProperty("_UVSec", props);
+
+            swingSpeed = FindProperty("_SwingSpeed", props, false);
+            swingScale = FindProperty("_SwingScale", props, false);
+            swingTime = FindProperty("_SwingTime", props, false);
         }
 
         public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] props)
@@ -182,6 +195,8 @@ namespace UnityEditor
                 m_MaterialEditor.TexturePropertySingleLine(Styles.occlusionText, occlusionMap, occlusionMap.textureValue != null ? occlusionStrength : null);
                 m_MaterialEditor.TexturePropertySingleLine(Styles.detailMaskText, detailMask);
                 DoEmissionArea(material);
+                DoSwingArea(material);
+
                 EditorGUI.BeginChangeCheck();
                 m_MaterialEditor.TextureScaleOffsetProperty(albedoMap);
                 if (EditorGUI.EndChangeCheck())
@@ -215,6 +230,25 @@ namespace UnityEditor
             GUILayout.Label(Styles.advancedText, EditorStyles.boldLabel);
             m_MaterialEditor.EnableInstancingField();
             m_MaterialEditor.DoubleSidedGIField();
+        }
+
+        private void DoSwingArea(Material material)
+        {
+            EditorGUILayout.Space();
+
+            m_MaterialEditor.ShaderProperty(swingSpeed, Styles.swingSpeedText);
+            if (swingSpeed.floatValue <= 0)
+            {
+                material.DisableKeyword("_SWING");
+            }
+            else
+            {
+                material.EnableKeyword("_SWING");
+                m_MaterialEditor.ShaderProperty(swingScale, Styles.swingScaleText);
+                m_MaterialEditor.ShaderProperty(swingTime, Styles.swingTimeText);
+            }
+            EditorGUILayout.Space();
+
         }
 
         internal void DetermineWorkflow(MaterialProperty[] props)
@@ -427,14 +461,16 @@ namespace UnityEditor
                     break;
                 case BlendMode.FadeZWriteCutout:
                     material.SetOverrideTag("RenderType", "Transparent");
-                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                    material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                     material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                     material.SetInt("_ZWrite", 1);
                     material.EnableKeyword("_ALPHATEST_ON");
-                    material.DisableKeyword("_ALPHABLEND_ON");
+                    material.EnableKeyword("_ALPHABLEND_ON");
                     material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
                     material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
                     break;
+          
+                    
             }
         }
 
