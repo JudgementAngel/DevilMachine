@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Cloth
-  m_Shader: {fileID: 4800000, guid: 328ee1db5d229574fab70ee8622726c4, type: 3}
+  m_Shader: {fileID: 4800000, guid: c6d4e793bf850df4288c3308b3e90881, type: 3}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -98,6 +98,7 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.572
+    - _Debug: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionIntensity: 1
@@ -116,6 +117,9 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SwingScale: 0.5
+    - _SwingSpeed: 0
+    - _SwingTime: 0.5
     - _UVSec: 0
     - _ZTest: 4
     - _ZWrite: 1
