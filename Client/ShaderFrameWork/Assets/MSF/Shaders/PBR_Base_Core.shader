@@ -31,6 +31,7 @@ Shader "Move/PBR_Base_Core"
         _EmissionIntensity ("自发光强度",Float) = 1
         _EmissionMap("自发光贴图", 2D) = "white" {}
 
+        [Toggle(USE_UNITY_CUBE)] _UseUnityCube("是否使用UnityCube?",Float) = 0
 		_EnvMap("环境贴图",Cube) = "_Skybox"{}
         _EnvColor ("环境颜色",Color) = (1,1,1,0.5) 
         _EnvScale ("环境强度",Float) = 1.0
@@ -67,11 +68,10 @@ Shader "Move/PBR_Base_Core"
 			#pragma multi_compile_fwdbase
 			#pragma shader_feature ENABLE_EMISSION
 			#pragma shader_feature ENABLE_PARALLAX
+			#pragma shader_feature USE_UNITY_CUBE
 
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
-			// #include "UnityStandardBRDF.cginc"
-			// #include "UnityLightingCommon.cginc"
 
 			#ifdef UNITY_COLORSPACE_GAMMA 
 				#define unity_ColorSpaceGrey fixed4(0.5, 0.5, 0.5, 0.5)
@@ -86,6 +86,7 @@ Shader "Move/PBR_Base_Core"
 			#endif
 
 			#define UNITY_SPECCUBE_LOD_STEPS (6)
+			#define MOVE_SPECCUBE_LOD_STEPS (10)
 			
 			
 			struct appdata
@@ -118,7 +119,13 @@ Shader "Move/PBR_Base_Core"
 			sampler2D _MetallicMap; half _Metallic;
 			sampler2D _BumpMap; half _BumpScale;
 
-			samplerCUBE _EnvMap; half4 _EnvColor; half _EnvScale;
+		#ifdef USE_UNITY_CUBE
+			// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
+		#else
+			samplerCUBE _EnvMap;
+		#endif
+			half4 _EnvColor; half _EnvScale;
+		
 
 			half _Cutoff;
 
@@ -152,12 +159,13 @@ Shader "Move/PBR_Base_Core"
 	                unity_LightColor[0].rgb, unity_LightColor[1].rgb, unity_LightColor[2].rgb, unity_LightColor[3].rgb,
 	                unity_4LightAtten0, o.worldPos, normalWorld);
 
+				o.ambient.rgb += max(half3(0,0,0), ShadeSH9 (half4(normalWorld, 1.0)));
 				o.ambient.rgb += UNITY_LIGHTMODEL_AMBIENT.rgb;
 				UNITY_TRANSFER_SHADOW(o, v.uv1);
 				return o;
 			}
 			
-			struct FragmentData
+			struct Move_FragmentData
 			{
 				 half3 diffColor,specColor;
 				 half oneMinusReflectivity,roughness;
@@ -166,9 +174,9 @@ Shader "Move/PBR_Base_Core"
 			}; 
 
 
-			FragmentData FragmentSetup(inout float2 i_tex,float3 i_eyeVec,half3 i_viewDirForParallax ,float4 tangentToWorld[3],float3 i_posWorld)
+			Move_FragmentData Move_FragmentSetup(inout float2 i_tex,float3 i_eyeVec,half3 i_viewDirForParallax ,float4 tangentToWorld[3],float3 i_posWorld)
 			{
-				FragmentData s = (FragmentData)0;
+				Move_FragmentData s = (Move_FragmentData)0;
 
 				#ifdef ENABLE_PARALLAX// Parallax
 					float2 offset = ParallaxOffset(tex2D(_HeightMap,i_tex.xy).g,_HeightScale,i_viewDirForParallax);
@@ -197,7 +205,7 @@ Shader "Move/PBR_Base_Core"
 
 			}
 
-			struct GI
+			struct Move_GI
 			{
 				half3 color;
 				half3 dir;
@@ -206,9 +214,9 @@ Shader "Move/PBR_Base_Core"
 				half3 indirectSpecular;
 			}; 
 
-			GI FragmentGI(FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
+			Move_GI Move_FragmentGI(Move_FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
 			{
-				GI gi = (GI)0;
+				Move_GI gi = (Move_GI)0;
 				gi.color = lightColor * atten;
 				gi.dir = worldSpaceLightDir;
 
@@ -223,10 +231,16 @@ Shader "Move/PBR_Base_Core"
 				float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
 				half perceptualRoughness = s.roughness;
 				perceptualRoughness = perceptualRoughness*(1.7 - 0.7*perceptualRoughness);
-				half mip = perceptualRoughness * UNITY_SPECCUBE_LOD_STEPS;
-				half4 rgbm = texCUBElod(_EnvMap,half4(reflUVW,mip)) * _EnvColor * _EnvScale;
+				
 
-			
+			#ifdef USE_UNITY_CUBE
+				half mip = perceptualRoughness * UNITY_SPECCUBE_LOD_STEPS;
+				half4 rgbm = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0,reflUVW,mip) * _EnvColor * _EnvScale;
+			#else
+				half mip = perceptualRoughness * MOVE_SPECCUBE_LOD_STEPS;
+				half4 rgbm = texCUBElod(_EnvMap,half4(reflUVW,mip)) * _EnvColor * _EnvScale ;
+				rgbm *= unity_ColorSpaceDouble;
+			#endif
     			half3 envCol = DecodeHDR(rgbm,unity_SpecCube0_HDR);
 
 				gi.indirectSpecular = envCol * occlusion;
@@ -278,16 +292,16 @@ Shader "Move/PBR_Base_Core"
 			    return lerp (F0, F90, t);
 			}
 			
-			inline half Remap(float Val,float iMin,float iMax,float oMin,float oMax)
-			{
-				return (oMin + ((Val - iMin) * (oMax - oMin))/(iMax - iMin));
-			}
+			// inline half Remap(float Val,float iMin,float iMax,float oMin,float oMax)
+			// {
+			// 	return (oMin + ((Val - iMin) * (oMax - oMin))/(iMax - iMin));
+			// }
 
-			inline half3 RemapLerp(half3 F0,half3 F90,half val)
-			{
-				half t = saturate(Remap(val,0.95,1,0,1));
-				return lerp (0, F0 ,t) ;
-			}
+			// inline half3 RemapLerp(half3 F0,half3 F90,half val)
+			// {
+			// 	half t = saturate(Remap(val,0.95,1,0,1));
+			// 	return lerp (0, F0 ,t) ;
+			// }
 
 			// Diffuse:Disney
 			// Specular: 基于Torrance-Sparrow micro-facet 光照模型
@@ -296,7 +310,7 @@ Shader "Move/PBR_Base_Core"
 			//   I = BRDF * NdotL
 			// HACK: 这里没有给漫反射项除 pi，并且给高光项乘pi。
 			// 原因是：防止在引擎中的结果和传统的相比太暗；SH和非重要的灯光也得除pi;
-			half4 BRDF_PBS(FragmentData s,GI gi)
+			half4 Move_BRDF_PBS(Move_FragmentData s,Move_GI gi)
 			{
 				float perceptualRoughness = s.roughness;
 				float roughness = perceptualRoughness * perceptualRoughness;
@@ -336,40 +350,26 @@ Shader "Move/PBR_Base_Core"
 
 			    half grazingTerm = saturate(1-perceptualRoughness + (1-s.oneMinusReflectivity));
 
-			    // HACK: 环境光太暗，所以默认乘4；加强金属光感
 			    half3 color =   s.diffColor * (gi.indirectDiffuse + gi.color * diffuseTerm) 
                     + specularTerm * gi.color * FresnelTerm (s.specColor, lh) 
-                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv) * 4 + surfaceReduction * RemapLerp(s.specColor,grazingTerm,nh);
+                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv);
 
                 return half4(color,1);
 			}
 
 			fixed4 frag (v2f_forwardbase i) : SV_Target
 			{
-				FragmentData s = FragmentSetup(i.tex,i.eyeVec,
+				Move_FragmentData s = Move_FragmentSetup(i.tex,i.eyeVec,
 					half3(i.tangentToWorld_tangentView[0].w,i.tangentToWorld_tangentView[1].w,i.tangentToWorld_tangentView[2].w),
-					i.tangentToWorld_tangentView,i.worldPos);
-				
+					i.tangentToWorld_tangentView,i.worldPos); // Clear
+
 				UNITY_LIGHT_ATTENUATION(atten, i, s.posWorld); 
 
 				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
 
-				GI gi = FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-
-				half4 col = BRDF_PBS(s,gi);
+				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
 				
-				/*
-				UnityLight mainLight;
-				mainLight.color = gi.color;
-				mainLight.dir = gi.dir;
-
-				UnityIndirect idirect;
-				idirect.diffuse = gi.indirectDiffuse;
-				idirect.specular = gi.indirectSpecular;
-
-
-				half4 col = BRDF3_Unity_PBS (s.diffColor,s.specColor,s.oneMinusReflectivity,1-s.roughness,s.normalWorld,-s.eyeVec,mainLight,idirect);
-				*/
+				half4 col = Move_BRDF_PBS(s,gi);
 
 				#ifdef ENABLE_EMISSION
 					col.rgb += tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;
@@ -377,6 +377,7 @@ Shader "Move/PBR_Base_Core"
 
 				col.a = s.alpha;
 				clip(col.a - _Cutoff);
+				//return gi.indirectSpecular.rgbr;
 				return col;
 			}
 			ENDCG

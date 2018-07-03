@@ -101,6 +101,7 @@ Shader "Move_Standard (Roughness setup)"
 
             ENDCG
         }
+        /*
         // ------------------------------------------------------------------
         //  Additive forward pass (one light per pass)
         Pass
@@ -222,6 +223,7 @@ Shader "Move_Standard (Roughness setup)"
             #include "UnityStandardMeta.cginc"
             ENDCG
         }
+        */
     }
 
     SubShader
