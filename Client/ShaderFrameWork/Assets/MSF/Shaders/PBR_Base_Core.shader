@@ -33,6 +33,7 @@ Shader "Move/PBR_Base_Core"
 
         [Toggle(USE_UNITY_CUBE)] _UseUnityCube("是否使用UnityCube?",Float) = 0
 		_EnvMap("环境贴图",Cube) = "_Skybox"{}
+		_MipCount("_MipCount",Float) = 8
         _EnvColor ("环境颜色",Color) = (1,1,1,0.5) 
         _EnvScale ("环境强度",Float) = 1.0
 
@@ -43,6 +44,9 @@ Shader "Move/PBR_Base_Core"
        	[Enum(UnityEngine.Rendering.CullMode)] _Cull("裁剪模式:",Float) = 2
        	[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src 混合模式:",Float) = 1
        	[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst 混合模式:",Float) = 0
+
+       	
+       	
 	}
 	SubShader
 	{
@@ -86,7 +90,7 @@ Shader "Move/PBR_Base_Core"
 			#endif
 
 			#define UNITY_SPECCUBE_LOD_STEPS (6)
-			#define MOVE_SPECCUBE_LOD_STEPS (10)
+			#define MOVE_SPECCUBE_LOD_STEPS (_MipCount)
 			
 			
 			struct appdata
@@ -123,6 +127,7 @@ Shader "Move/PBR_Base_Core"
 			// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
 		#else
 			samplerCUBE _EnvMap;
+			fixed _MipCount;
 		#endif
 			half4 _EnvColor; half _EnvScale;
 		
@@ -214,6 +219,12 @@ Shader "Move/PBR_Base_Core"
 				half3 indirectSpecular;
 			}; 
 
+			float PerceptualRoughnessToMip(float perceptualRoughness,half mipCount)
+			{
+				half level = 3 - 1.15 * log2(perceptualRoughness);
+				return mipCount - 1- level;
+			}
+
 			Move_GI Move_FragmentGI(Move_FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
 			{
 				Move_GI gi = (Move_GI)0;
@@ -230,8 +241,8 @@ Shader "Move/PBR_Base_Core"
 				/// EnvCol
 				float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
 				half perceptualRoughness = s.roughness;
+
 				perceptualRoughness = perceptualRoughness*(1.7 - 0.7*perceptualRoughness);
-				
 
 			#ifdef USE_UNITY_CUBE
 				half mip = perceptualRoughness * UNITY_SPECCUBE_LOD_STEPS;
@@ -239,13 +250,17 @@ Shader "Move/PBR_Base_Core"
 			#else
 				half mip = perceptualRoughness * MOVE_SPECCUBE_LOD_STEPS;
 				half4 rgbm = texCUBElod(_EnvMap,half4(reflUVW,mip)) * _EnvColor * _EnvScale ;
-				rgbm *= unity_ColorSpaceDouble;
+				rgbm *= unity_ColorSpaceDouble; // Unity在烘焙反射贴图之后，会自动乘上这一项，即：如果使用烘焙后的贴图做CubeMap就不用乘这个
 			#endif
+
     			half3 envCol = DecodeHDR(rgbm,unity_SpecCube0_HDR);
 
 				gi.indirectSpecular = envCol * occlusion;
 				return gi;
 			}
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 
 			inline half Pow5 (half x)
 			{
@@ -368,7 +383,7 @@ Shader "Move/PBR_Base_Core"
 				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
 
 				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-				
+				//return gi.indirectSpecular.rgbr;
 				half4 col = Move_BRDF_PBS(s,gi);
 
 				#ifdef ENABLE_EMISSION
