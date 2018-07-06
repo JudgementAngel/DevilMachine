@@ -508,7 +508,7 @@ half4 fragForwardBaseInternal (VertexOutputForwardBase i)
 
     half occlusion = Occlusion(i.tex.xy);
     UnityGI gi = FragmentGI (s, occlusion, i.ambientOrLightmapUV, atten, mainLight);
-
+    // return gi.indirect.specular.rgbr;
     half4 c = UNITY_BRDF_PBS (s.diffColor, s.specColor, s.oneMinusReflectivity, s.smoothness, s.normalWorld, -s.eyeVec, gi.light, gi.indirect);
     c.rgb += Emission(i.tex.xy);
     

@@ -31,6 +31,7 @@ Shader "Move/PBR_Base_Core"
         _EmissionIntensity ("自发光强度",Float) = 1
         _EmissionMap("自发光贴图", 2D) = "white" {}
 
+        [Toggle(USE_VERTEX_GI)] _UseVertexGI("是否使用实时逐顶点光照?",Float) = 0
         [Toggle(USE_UNITY_CUBE)] _UseUnityCube("是否使用UnityCube?",Float) = 0
 		_EnvMap("环境贴图",Cube) = "_Skybox"{}
 		_MipCount("_MipCount",Float) = 8
@@ -44,8 +45,6 @@ Shader "Move/PBR_Base_Core"
        	[Enum(UnityEngine.Rendering.CullMode)] _Cull("裁剪模式:",Float) = 2
        	[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src 混合模式:",Float) = 1
        	[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst 混合模式:",Float) = 0
-
-       	
        	
 	}
 	SubShader
@@ -73,6 +72,7 @@ Shader "Move/PBR_Base_Core"
 			#pragma shader_feature ENABLE_EMISSION
 			#pragma shader_feature ENABLE_PARALLAX
 			#pragma shader_feature USE_UNITY_CUBE
+			#pragma shader_feature USE_VERTEX_GI
 
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
@@ -159,13 +159,19 @@ Shader "Move/PBR_Base_Core"
 				o.tangentToWorld_tangentView[1].w = viewDirForParallax.y;
 				o.tangentToWorld_tangentView[2].w = viewDirForParallax.z;
 				
-				o.ambient.rgb = Shade4PointLights (
-	                unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
-	                unity_LightColor[0].rgb, unity_LightColor[1].rgb, unity_LightColor[2].rgb, unity_LightColor[3].rgb,
-	                unity_4LightAtten0, o.worldPos, normalWorld);
+				#if USE_VERTEX_GI
+					o.ambient.rgb = Shade4PointLights (
+		                unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
+		                unity_LightColor[0].rgb, unity_LightColor[1].rgb, unity_LightColor[2].rgb, unity_LightColor[3].rgb,
+		                unity_4LightAtten0, o.worldPos, normalWorld);
+
+					
+				#else
+					o.ambient.rgb = 0.0f.xxx;
+				#endif
 
 				o.ambient.rgb += max(half3(0,0,0), ShadeSH9 (half4(normalWorld, 1.0)));
-				o.ambient.rgb += UNITY_LIGHTMODEL_AMBIENT.rgb;
+				//o.ambient.rgb += UNITY_LIGHTMODEL_AMBIENT.rgb;
 				UNITY_TRANSFER_SHADOW(o, v.uv1);
 				return o;
 			}
@@ -331,11 +337,11 @@ Shader "Move/PBR_Base_Core"
 				float roughness = perceptualRoughness * perceptualRoughness;
 
 				float3 lightDir = gi.dir;
-				float3 viewDir = -s.eyeVec;
+				float3 viewDir = -s.eyeVec; 
 				float3 normal = s.normalWorld;
 				float3 halfDir = normalize (lightDir + viewDir);
 
-				half nv = saturate(dot(normal,viewDir));
+				half nv = abs(dot(normal,viewDir));
 				half nl = saturate(dot(normal,lightDir));
 				float nh = saturate(dot(normal, halfDir));
 				half lv = saturate(dot(lightDir, viewDir));
@@ -383,7 +389,7 @@ Shader "Move/PBR_Base_Core"
 				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
 
 				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-				//return gi.indirectSpecular.rgbr;
+				// return gi.indirectDiffuse.rgbr;
 				half4 col = Move_BRDF_PBS(s,gi);
 
 				#ifdef ENABLE_EMISSION
@@ -392,7 +398,7 @@ Shader "Move/PBR_Base_Core"
 
 				col.a = s.alpha;
 				clip(col.a - _Cutoff);
-				//return gi.indirectSpecular.rgbr;
+				// return gi.indirectSpecular.rgbr;
 				return col;
 			}
 			ENDCG
