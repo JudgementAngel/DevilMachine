@@ -198,7 +198,8 @@ Shader "Move/PBR_Base_Core"
 				normalTangent = lerp(float3(0,0,1),normalTangent,_BumpScale);
 				s.normalWorld = normalize(tangentToWorld[0].xyz * normalTangent.x + tangentToWorld[1].xyz * normalTangent.y + tangentToWorld[2].xyz * normalTangent.z);
 
-				fixed4 mainTex = tex2D(_MainTex,i_tex.xy);
+				fixed4 mainTex = tex2D(_MainTex,i_tex.xy); 
+				clip(mainTex.a - _Cutoff);
 				s.diffColor = _Color.rgb * mainTex.rgb;
 				s.alpha = mainTex.a;
 
@@ -397,7 +398,7 @@ Shader "Move/PBR_Base_Core"
 				#endif
 
 				col.a = s.alpha;
-				clip(col.a - _Cutoff);
+				
 				// return gi.indirectSpecular.rgbr;
 				return col;
 			}
