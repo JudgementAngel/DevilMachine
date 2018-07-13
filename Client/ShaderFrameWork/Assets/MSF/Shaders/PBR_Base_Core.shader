@@ -123,16 +123,18 @@ Shader "Move/PBR_Base_Core"
 			sampler2D _MetallicMap; half _Metallic;
 			sampler2D _BumpMap; half _BumpScale;
 
-		#ifdef USE_UNITY_CUBE
-			// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
-		#else
-			samplerCUBE _EnvMap;
-			fixed _MipCount;
-		#endif
+			#ifdef USE_UNITY_CUBE
+				// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
+			#else
+				samplerCUBE _EnvMap;
+				fixed _MipCount;
+			#endif
 			half4 _EnvColor; half _EnvScale;
 		
 
 			half _Cutoff;
+
+
 
 			v2f_forwardbase vert (appdata v)
 			{
@@ -140,8 +142,9 @@ Shader "Move/PBR_Base_Core"
 				
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.tex = TRANSFORM_TEX(v.uv0, _MainTex);
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				o.eyeVec = normalize( o.worldPos.xyz - _WorldSpaceCameraPos);
+				float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
+				o.worldPos = posWorld;
+				o.eyeVec = posWorld.xyz - _WorldSpaceCameraPos;
 				
 
 				half3 normalWorld = UnityObjectToWorldNormal(v.normal);
@@ -164,14 +167,19 @@ Shader "Move/PBR_Base_Core"
 		                unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
 		                unity_LightColor[0].rgb, unity_LightColor[1].rgb, unity_LightColor[2].rgb, unity_LightColor[3].rgb,
 		                unity_4LightAtten0, o.worldPos, normalWorld);
-
-					
 				#else
 					o.ambient.rgb = 0.0f.xxx;
 				#endif
 
-				o.ambient.rgb += max(half3(0,0,0), ShadeSH9 (half4(normalWorld, 1.0)));
-				//o.ambient.rgb += UNITY_LIGHTMODEL_AMBIENT.rgb;
+
+				// SH 光照一部分在顶点中计算，一部分在片段中计算
+				#ifdef UNITY_COLORSPACE_GAMMA
+		            o.ambient.rgb = GammaToLinearSpace (o.ambient.rgb);
+		        #endif
+		        o.ambient.rgb += SHEvalLinearL2 (half4(normalWorld, 1.0));
+
+				// o.ambient.rgb = max(half3(0,0,0), ShadeSH9 (half4(normalWorld, 1.0)));//简化版本，只在Vertex中计算
+				// o.ambient.rgb += UNITY_LIGHTMODEL_AMBIENT.rgb;//不适用SH的版本
 				UNITY_TRANSFER_SHADOW(o, v.uv1);
 				return o;
 			}
@@ -212,7 +220,7 @@ Shader "Move/PBR_Base_Core"
 				s.diffColor *= s.oneMinusReflectivity;
 				s.roughness = roughness;
 				s.eyeVec = normalize(i_eyeVec);
-
+				s.posWorld = i_posWorld;
 				return s;
 
 			}
@@ -232,21 +240,188 @@ Shader "Move/PBR_Base_Core"
 				return mipCount - 1- level;
 			}
 
+
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+			inline half3 BoxProjectedCubemapDirection (half3 worldRefl, float3 worldPos, float4 cubemapCenter, float4 boxMin, float4 boxMax)
+			{
+			    // Do we have a valid reflection probe?
+			    // 我们是否有有效的反射探针？
+			    UNITY_BRANCH
+			    if (cubemapCenter.w > 0.0)
+			    {
+			        half3 nrdir = normalize(worldRefl);
+
+			        #if 1
+			            half3 rbmax = (boxMax.xyz - worldPos) / nrdir;
+			            half3 rbmin = (boxMin.xyz - worldPos) / nrdir;
+
+			            half3 rbminmax = (nrdir > 0.0f) ? rbmax : rbmin;
+
+			        #else // Optimized version
+			            half3 rbmax = (boxMax.xyz - worldPos);
+			            half3 rbmin = (boxMin.xyz - worldPos);
+
+			            half3 select = step (half3(0,0,0), nrdir);
+			            half3 rbminmax = lerp (rbmax, rbmin, select);
+			            rbminmax /= nrdir;
+			        #endif
+
+			        half fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
+
+			        worldPos -= cubemapCenter.xyz;
+			        worldRefl = worldPos + nrdir * fa;
+			    }
+			    return worldRefl;
+			}
+
+			// // Unity 全局光照输入参数结构体
+			// struct UnityGIInput
+			// {
+			//     UnityLight light; // pixel light, sent from the engine // 逐像素灯光，从引擎中输入
+
+			//     float3 worldPos; // 世界空间顶点位置
+			//     half3 worldViewDir; // 世界空间视线向量
+			//     half atten; // 灯光衰减，直射光非0即1，点光源和聚光灯具有衰减，也用来实现自阴影
+			//     half3 ambient; // 环境光
+
+			//     // interpolated lightmap UVs are passed as full float precision data to fragment shaders
+			//     // 内置光照贴图UV，作为完整的float 精度数据传递给fragment 着色器
+			//     // so lightmapUV (which is used as a tmp inside of lightmap fragment shaders) should
+			//     // also be full float precision to avoid data loss before sampling a texture.
+			//     // 所以 lightmapUV (作为临时参数被用于在Fragment着色器中传递灯光贴图UV)也应该
+			//     // 使用完整的float精度以避免在采样贴图之前丢失精度。
+
+			//     float4 lightmapUV; // .xy = static lightmap UV, .zw = dynamic lightmap UV // xy是静态的灯光贴图UV，zw是动态的灯光贴图UV
+
+			//     // @TODO
+			//     #if defined(UNITY_SPECCUBE_BLENDING) || defined(UNITY_SPECCUBE_BOX_PROJECTION) || defined(UNITY_ENABLE_REFLECTION_BUFFERS)
+			//     float4 boxMin[2];
+			//     #endif
+			//     #ifdef UNITY_SPECCUBE_BOX_PROJECTION
+			//     float4 boxMax[2];
+			//     float4 probePosition[2];
+			//     #endif
+
+			//     // HDR cubemap properties, use to decompress HDR texture
+			//     // HDR cubemap 属性，用来解压HDR贴图
+			//     float4 probeHDR[2];
+			// };
+
+			// half3 Unity_GlossyEnvironment (UNITY_ARGS_TEXCUBE(tex), half4 hdr, half roughness)
+			// {
+			//     half perceptualRoughness = roughness /* perceptualRoughness */ ;
+
+			
+			//     perceptualRoughness = perceptualRoughness*(1.7 - 0.7*perceptualRoughness);
+			
+
+
+			//     half mip = perceptualRoughnessToMipmapLevel(perceptualRoughness);
+			//     half3 R = glossIn.reflUVW;
+			//     half4 rgbm = UNITY_SAMPLE_TEXCUBE_LOD(tex, R, mip);
+
+			//     return DecodeHDR(rgbm, hdr);
+			// }
+
+			// inline UnityGIInput SetUnityGIInput(Move_FragmentData s )
+			// {
+			// 	UnityGIInput d;
+			//     d.light = light;
+			//     d.worldPos = s.posWorld;
+			//     d.worldViewDir = -s.eyeVec;
+			//     d.atten = atten;
+
+			//     // 是否使用灯光贴图，使用灯光贴图就不使用环境光
+			//     #if defined(LIGHTMAP_ON) || defined(DYNAMICLIGHTMAP_ON)
+			//         d.ambient = 0;
+			//         d.lightmapUV = i_ambientOrLightmapUV;
+			//     #else
+			//         d.ambient = i_ambientOrLightmapUV.rgb;
+			//         d.lightmapUV = 0;
+			//     #endif
+
+			//     // @TODO: unity_SpecCube0_HDR unity_SpecCube1_HDR 具体指什么
+			//     d.probeHDR[0] = unity_SpecCube0_HDR;
+			//     d.probeHDR[1] = unity_SpecCube1_HDR;
+			//     #if defined(UNITY_SPECCUBE_BLENDING) || defined(UNITY_SPECCUBE_BOX_PROJECTION)
+			//       d.boxMin[0] = unity_SpecCube0_BoxMin; // .w holds lerp value for blending // w 存储用混合的差值变量
+			//     #endif
+
+			//     // @TODO
+			//     #ifdef UNITY_SPECCUBE_BOX_PROJECTION
+			//       d.boxMax[0] = unity_SpecCube0_BoxMax;
+			//       d.probePosition[0] = unity_SpecCube0_ProbePosition;
+			//       d.boxMax[1] = unity_SpecCube1_BoxMax;
+			//       d.boxMin[1] = unity_SpecCube1_BoxMin;
+			//       d.probePosition[1] = unity_SpecCube1_ProbePosition;
+			//     #endif
+
+			//       return d;
+			// }
+
+			// inline half3 UnityGI_IndirectSpecular(UnityGIInput data, half occlusion, half3 reflUVW,half roughness)
+			// {
+			//     half3 specular;
+
+			//     #ifdef UNITY_SPECCUBE_BOX_PROJECTION
+			//         // we will tweak reflUVW in glossIn directly (as we pass it to Unity_GlossyEnvironment twice for probe0 and probe1), so keep original to pass into BoxProjectedCubemapDirection
+			//         // 我们将会直接调整 glossIn 中的 reflUVW （因为我们将它传递到 Unity_GlossEnvironment 两次，用于 probe0 和 probe1），所以请保持原始传递到BoxProjectedCubemapDirection
+			//         half3 originalReflUVW = glossIn.reflUVW;
+			//         glossIn.reflUVW = BoxProjectedCubemapDirection (originalReflUVW, data.worldPos, data.probePosition[0], data.boxMin[0], data.boxMax[0]);
+			//     #endif
+
+			//     #ifdef _GLOSSYREFLECTIONS_OFF
+			//         specular = unity_IndirectSpecColor.rgb;
+			//     #else
+			//         half3 env0 = Unity_GlossyEnvironment (UNITY_PASS_TEXCUBE(unity_SpecCube0), data.probeHDR[0], roughness);
+			//         #ifdef UNITY_SPECCUBE_BLENDING
+			//             const float kBlendFactor = 0.99999;
+			//             float blendLerp = data.boxMin[0].w;
+			//             UNITY_BRANCH
+			//             if (blendLerp < kBlendFactor)
+			//             {
+			//                 #ifdef UNITY_SPECCUBE_BOX_PROJECTION
+			//                     glossIn.reflUVW = BoxProjectedCubemapDirection (originalReflUVW, data.worldPos, data.probePosition[1], data.boxMin[1], data.boxMax[1]);
+			//                 #endif
+
+			//                 half3 env1 = Unity_GlossyEnvironment (UNITY_PASS_TEXCUBE_SAMPLER(unity_SpecCube1,unity_SpecCube0), data.probeHDR[1], roughness);
+			//                 specular = lerp(env1, env0, blendLerp);
+			//             }
+			//             else
+			//             {
+			//                 specular = env0;
+			//             }
+			//         #else
+			//             specular = env0;
+			//         #endif
+			//     #endif
+
+			//     return specular * occlusion;
+			// }
+//-----------------------------------------------------------------------------------------------------------------------------------
+
 			Move_GI Move_FragmentGI(Move_FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
 			{
 				Move_GI gi = (Move_GI)0;
 				gi.color = lightColor * atten;
 				gi.dir = worldSpaceLightDir;
 
-				// SH完全逐顶点计算,只是在这里做Gamma矫正
-				gi.indirectDiffuse = i_ambient; 
+				// SH 光照一部分在顶点中计算，一部分在片段中计算
+				half3 ambient_contrib = 0.0;
+		        ambient_contrib = SHEvalLinearL0L1 (half4(s.normalWorld, 1.0));
+		        gi.indirectDiffuse = max(half3(0, 0, 0), i_ambient + ambient_contrib);
 				#ifdef UNITY_COLORSPACE_GAMMA
 					gi.indirectDiffuse = LinearToGammaSpace(gi.indirectDiffuse);
 				#endif
 				gi.indirectDiffuse *= occlusion;
 				
+
 				/// EnvCol
-				float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
+				half3 reflUVW = reflect(s.eyeVec,s.normalWorld);
+				//reflUVW = BoxProjectedCubemapDirection (reflUVW, s.posWorld, unity_SpecCube0_ProbePosition, unity_SpecCube0_BoxMin, unity_SpecCube0_BoxMax);
+
 				half perceptualRoughness = s.roughness;
 
 				perceptualRoughness = perceptualRoughness*(1.7 - 0.7*perceptualRoughness);
@@ -263,11 +438,13 @@ Shader "Move/PBR_Base_Core"
     			half3 envCol = DecodeHDR(rgbm,unity_SpecCube0_HDR);
 
 				gi.indirectSpecular = envCol * occlusion;
+
+			
+				// float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
+				// gi.indirectSpecular = UnityGI_IndirectSpecular(UnityGIInput data, occlusion, reflUVW,s.roughness)
 				return gi;
 			}
-
-//-----------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------
+		
 
 			inline half Pow5 (half x)
 			{
@@ -338,7 +515,7 @@ Shader "Move/PBR_Base_Core"
 				float roughness = perceptualRoughness * perceptualRoughness;
 
 				float3 lightDir = gi.dir;
-				float3 viewDir = -s.eyeVec; 
+				float3 viewDir = -normalize(s.eyeVec); 
 				float3 normal = s.normalWorld;
 				float3 halfDir = normalize (lightDir + viewDir);
 
@@ -383,14 +560,30 @@ Shader "Move/PBR_Base_Core"
 			{
 				Move_FragmentData s = Move_FragmentSetup(i.tex,i.eyeVec,
 					half3(i.tangentToWorld_tangentView[0].w,i.tangentToWorld_tangentView[1].w,i.tangentToWorld_tangentView[2].w),
-					i.tangentToWorld_tangentView,i.worldPos); // Clear
+					i.tangentToWorld_tangentView,i.worldPos); 
 
+				/*
+				 half3 diffColor,specColor;
+				 half oneMinusReflectivity,roughness;
+				 float3 normalWorld,eyeVec,posWorld;
+				 half alpha;
+				
+				return s.posWorld.rgbr;
+				*/
+				// return s.eyeVec.rgbr;
 				UNITY_LIGHT_ATTENUATION(atten, i, s.posWorld); 
 
 				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
-
+				// return occlusion.xxxx;
 				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-				// return gi.indirectDiffuse.rgbr;
+				/*
+				half3 color;
+				half3 dir;
+
+				half3 indirectDiffuse;
+				half3 indirectSpecular;
+				*/
+				// return gi.indirectSpecular.rgbr;
 				half4 col = Move_BRDF_PBS(s,gi);
 
 				#ifdef ENABLE_EMISSION

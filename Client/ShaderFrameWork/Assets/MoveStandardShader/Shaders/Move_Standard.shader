@@ -11,7 +11,7 @@
         _GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
         [Enum(Metallic Alpha,0,Albedo Alpha,1)] _SmoothnessTextureChannel ("Smoothness texture channel", Float) = 0
 
-        [Gamma] _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
+        _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
         _MetallicGlossMap("Metallic", 2D) = "white" {}
 
         [ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0

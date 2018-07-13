@@ -499,7 +499,7 @@ half4 fragForwardBaseInternal (VertexOutputForwardBase i)
     UNITY_APPLY_DITHER_CROSSFADE(i.pos.xy);
 
     FRAGMENT_SETUP(s)
-    
+    // return s.eyeVec.rgbr;
     UNITY_SETUP_INSTANCE_ID(i);
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
@@ -507,6 +507,7 @@ half4 fragForwardBaseInternal (VertexOutputForwardBase i)
     UNITY_LIGHT_ATTENUATION(atten, i, s.posWorld);
 
     half occlusion = Occlusion(i.tex.xy);
+    // return occlusion.xxxx;
     UnityGI gi = FragmentGI (s, occlusion, i.ambientOrLightmapUV, atten, mainLight);
     // return gi.indirect.specular.rgbr;
     half4 c = UNITY_BRDF_PBS (s.diffColor, s.specColor, s.oneMinusReflectivity, s.smoothness, s.normalWorld, -s.eyeVec, gi.light, gi.indirect);
