@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{34F41456-6280-847C-F3EA-C62482AA075C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -51,104 +52,108 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DesignModeCodes\DM01_State.cs" />
-     <Compile Include="Assets\DesignModeCodes\DM02_Bridge.cs" />
-     <Compile Include="Assets\DesignModeCodes\DM03_Strategy.cs" />
-     <Compile Include="Assets\DesignModeCodes\DM04_TempleMethod.cs" />
-     <Compile Include="Assets\ReflectionPlane\MirrorReflection.cs" />
-     <Compile Include="Assets\Scripts\ArchievementSystem\ArchievementSystem.cs" />
-     <Compile Include="Assets\Scripts\AudioManager.cs" />
-     <Compile Include="Assets\Scripts\BaseClass\IBaseUI.cs" />
-     <Compile Include="Assets\Scripts\BaseClass\IGameSystem.cs" />
-     <Compile Include="Assets\Scripts\BaseLog.cs" />
-     <Compile Include="Assets\Scripts\CampSystem\CampSystem.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Attributes\ICharacterAttr.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\EnemyAttrStrategy.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\IAttrStrategy.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\SoldierAttrStrategy.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\CharacterSystem.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Enemy\Enemy_Elf.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Enemy\Enemy_Ogre.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Enemy\Enemy_Troll.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Enemy\EnemyAttr.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Enemy\IEnemy.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\EnemyAttackState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\EnemyChaseState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\EnemyFSMSystem.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\IEnemyState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\ICharacter.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\ISoldierState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierAttackState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierChaseState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierFSMSystem.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierIdleState.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\ISoldier.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Captain.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Rokie.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Sergeant.cs" />
-     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\SoldierAttr.cs" />
-     <Compile Include="Assets\Scripts\EnergySystem\EnergySystem.cs" />
-     <Compile Include="Assets\Scripts\Factory\Character\EnemyFactory.cs" />
-     <Compile Include="Assets\Scripts\Factory\Character\ICharacterFactory.cs" />
-     <Compile Include="Assets\Scripts\Factory\Character\SoldierFactory.cs" />
-     <Compile Include="Assets\Scripts\GameEventSystem\GameEventSystem.cs" />
-     <Compile Include="Assets\Scripts\GameFacade.cs" />
-     <Compile Include="Assets\Scripts\GameLoop.cs" />
-     <Compile Include="Assets\Scripts\SceneStates\BattleState.cs" />
-     <Compile Include="Assets\Scripts\SceneStates\GameStartState.cs" />
-     <Compile Include="Assets\Scripts\SceneStates\ISceneState.cs" />
-     <Compile Include="Assets\Scripts\SceneStates\MainMenuState.cs" />
-     <Compile Include="Assets\Scripts\SceneStates\SceneStateController.cs" />
-     <Compile Include="Assets\Scripts\StageSystem\StageSystem.cs" />
-     <Compile Include="Assets\Scripts\UISystem\CampInfoUI.cs" />
-     <Compile Include="Assets\Scripts\UISystem\GamePauseUI.cs" />
-     <Compile Include="Assets\Scripts\UISystem\GameStateInfoUI.cs" />
-     <Compile Include="Assets\Scripts\UISystem\SoldierInfoUI.cs" />
-     <Compile Include="Assets\Scripts\Weapon\IWeapon.cs" />
-     <Compile Include="Assets\Scripts\Weapon\WeaponGun.cs" />
-     <Compile Include="Assets\Scripts\Weapon\WeaponLaser.cs" />
-     <Compile Include="Assets\Scripts\Weapon\WeaponRifle.cs" />
-     <Compile Include="Assets\Scripts\Weapon\WeaponRocket.cs" />
-     <None Include="Assets\ReflectionPlane\ReflectionPlane.shader" />
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
- </Reference>
- <Reference Include="nunit.framework">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Timeline">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UIAutomation">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.GoogleAudioSpatializer">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SpatialTracking">
- <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.4/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.StandardEvents">
- <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\DesignModeCodes\DM01_State.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM02_Bridge.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM03_Strategy.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM04_TempleMethod.cs" />
+    <Compile Include="Assets\ReflectionPlane\MirrorReflection.cs" />
+    <Compile Include="Assets\Scripts\ArchievementSystem\ArchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\BaseClass\IBaseUI.cs" />
+    <Compile Include="Assets\Scripts\BaseClass\IGameSystem.cs" />
+    <Compile Include="Assets\Scripts\BaseLog.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\CampSystem.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Attributes\ICharacterAttr.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\EnemyAttrStrategy.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\IAttrStrategy.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\SoldierAttrStrategy.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\CharacterSystem.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Enemy\Enemy_Elf.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Enemy\Enemy_Ogre.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Enemy\Enemy_Troll.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Enemy\EnemyAttr.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Enemy\IEnemy.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\EnemyAttackState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\EnemyChaseState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\EnemyFSMSystem.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\EnemyAI\IEnemyState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\ICharacter.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\ISoldierState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierAttackState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierChaseState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierFSMSystem.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierIdleState.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Soldier\ISoldier.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Captain.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Rokie.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Sergeant.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Soldier\SoldierAttr.cs" />
+    <Compile Include="Assets\Scripts\EnergySystem\EnergySystem.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\IAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\LocalAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\RemoteAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\ResourceAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\EnemyFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\ICharacterFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\SoldierFactory.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\GameEventSystem.cs" />
+    <Compile Include="Assets\Scripts\GameFacade.cs" />
+    <Compile Include="Assets\Scripts\GameLoop.cs" />
+    <Compile Include="Assets\Scripts\SceneStates\BattleState.cs" />
+    <Compile Include="Assets\Scripts\SceneStates\GameStartState.cs" />
+    <Compile Include="Assets\Scripts\SceneStates\ISceneState.cs" />
+    <Compile Include="Assets\Scripts\SceneStates\MainMenuState.cs" />
+    <Compile Include="Assets\Scripts\SceneStates\SceneStateController.cs" />
+    <Compile Include="Assets\Scripts\StageSystem\StageSystem.cs" />
+    <Compile Include="Assets\Scripts\UISystem\CampInfoUI.cs" />
+    <Compile Include="Assets\Scripts\UISystem\GamePauseUI.cs" />
+    <Compile Include="Assets\Scripts\UISystem\GameStateInfoUI.cs" />
+    <Compile Include="Assets\Scripts\UISystem\SoldierInfoUI.cs" />
+    <Compile Include="Assets\Scripts\Weapon\IWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapon\WeaponGun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\WeaponLaser.cs" />
+    <Compile Include="Assets\Scripts\Weapon\WeaponRifle.cs" />
+    <Compile Include="Assets\Scripts\Weapon\WeaponRocket.cs" />
+    <None Include="Assets\ReflectionPlane\ReflectionPlane.shader" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIAutomation">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GoogleAudioSpatializer">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>C:/Program Files/Unity2017.4.2f2/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.4/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -158,5 +163,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>
