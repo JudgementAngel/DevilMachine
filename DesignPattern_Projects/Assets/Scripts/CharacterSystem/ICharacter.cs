@@ -26,6 +26,8 @@ public abstract class ICharacter
         }
     }
     public float atkRange { get { return mWeapon.atkRange; } }
+    public ICharacterAttr attr { set { mAttr = value; } }
+
     public abstract void UpdateFSMAI(List<ICharacter> targets);
 
     public void Update()
@@ -51,6 +53,7 @@ public abstract class ICharacter
 
 
     }
+  
 
     public void PlayAnim(string animName)
     {
@@ -62,4 +65,27 @@ public abstract class ICharacter
         mNavAgent.SetDestination(targetPosition);
         PlayAnim("move");
     }
+
+    protected void DoPlayEffect(string effectName)
+    {
+        // 第一步 加载特效 TODO
+        GameObject effectGO;
+        // 控制销毁 TODO
+    }
+
+
+    protected void DoPlaySound(string soundName)
+    {
+        AudioClip clip = null; // TODO
+        mAudio.clip = clip;
+        mAudio.Play();
+    }
+
+    public void Killed()
+    {
+        // TODO
+    }
+
+    protected abstract void PlaySound();
+    protected abstract void PlayEffect();
 }

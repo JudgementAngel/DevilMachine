@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+public enum WeaponType
+{
+    Gun,
+    Rifle,
+    Rocket
+}
+
 public abstract class IWeapon
 {
     protected int mAtk;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ISoldier : ICharacter
+public abstract class ISoldier : ICharacter
 {
     protected SoldierFSMSystem mFSMSystem;
 
@@ -32,5 +32,16 @@ public class ISoldier : ICharacter
         attackState.AddTransiiton(SoldierTransition.SeeEnemy, SoldierStateID.Chase);
 
         mFSMSystem.AddState(idleState, chaseState, attackState);
+    }
+    public override void UnderAttack(int damage)
+    {
+        base.UnderAttack(damage);
+
+        if(mAttr.currentHP <= 0)
+        {
+            PlaySound();
+            PlayEffect();
+            Killed();
+        }
     }
 }

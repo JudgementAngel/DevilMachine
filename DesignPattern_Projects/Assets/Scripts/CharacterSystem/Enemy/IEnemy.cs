@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,27 +21,22 @@ public abstract class IEnemy : ICharacter
     private void MakeFSM()
     {
         mFSMSystem = new EnemyFSMSystem();
-        EnemyChaseState chaseState = new EnemyChaseState(mFSMSystem,this);
+        EnemyChaseState chaseState = new EnemyChaseState(mFSMSystem, this);
         chaseState.AddTransiiton(EnemyTransition.CanAttack, EnemyStateID.Attack);
-        
-        EnemyAttackState attackState = new EnemyAttackState(mFSMSystem,this);
+
+        EnemyAttackState attackState = new EnemyAttackState(mFSMSystem, this);
         attackState.AddTransiiton(EnemyTransition.LostSoldier, EnemyStateID.Chase);
 
-        mFSMSystem.AddState(chaseState,attackState);
+        mFSMSystem.AddState(chaseState, attackState);
     }
 
     public override void UnderAttack(int damage)
     {
         base.UnderAttack(damage);
         PlayEffect();
-    }
-
-    protected abstract void PlayEffect();
-
-    protected void DOPlayEffect(string effectName )
-    {
-        // 第一步 加载特效 TODO
-        GameObject effectGO;
-        // 控制销毁 TODO
+        if (mAttr.currentHP <= 0)
+        {
+            Killed();
+        }
     }
 }
