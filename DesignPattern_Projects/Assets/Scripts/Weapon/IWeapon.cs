@@ -5,15 +5,15 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    Gun,
-    Rifle,
-    Rocket
+    Gun = 0,
+    Rifle = 1,
+    Rocket = 2,
+    MAX
 }
 
 public abstract class IWeapon
 {
-    protected int mAtk;
-    protected float mAtkRange;
+    protected WeaponBaseAttr mBaseAttr;
     // protected int mAtkPlusValue; // 额外的暴击率是随机获得的
 
     protected GameObject mGameObject;
@@ -26,8 +26,23 @@ public abstract class IWeapon
 
     protected float mEffectDisplayTime;
 
-    public float atkRange { get { return mAtkRange; } }
-    public int atk { get { return mAtk; } }
+    public float atkRange { get { return mBaseAttr.atkRange; } }
+    public int atk { get { return mBaseAttr.atk; } }
+
+    public ICharacter owner { set { mOwner = value; } }
+    public GameObject gameObject { get { return mGameObject; }}
+
+    public IWeapon(WeaponBaseAttr baseAttr, GameObject gameObject)
+    {
+        mBaseAttr = baseAttr;
+        mGameObject = gameObject;
+
+        Transform effect = mGameObject.transform.Find("Effect");
+        mPariticle = effect.GetComponent<ParticleSystem>();
+        mLine = effect.GetComponent<LineRenderer>();
+        mLight = effect.GetComponent<Light>();
+        mAudio = effect.GetComponent<AudioSource>();
+    }
 
     public void Update()
     {
@@ -84,7 +99,7 @@ public abstract class IWeapon
 
     protected void DoPlaySound(string clipName)
     {
-        AudioClip clip = null;// TODO
+        AudioClip clip = FactoryManager.AssetFactory.LoadAudioClip(clipName);
         mAudio.clip = clip;
         mAudio.Play();
     }

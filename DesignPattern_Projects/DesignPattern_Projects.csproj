@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.4.2f2</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -238,13 +240,24 @@
     <Compile Include="Assets\DesignModeCodes\DM02_Bridge.cs" />
     <Compile Include="Assets\DesignModeCodes\DM03_Strategy.cs" />
     <Compile Include="Assets\DesignModeCodes\DM04_TempleMethod.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM05_Builder.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM06_Composite.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM07_Command.cs" />
+    <Compile Include="Assets\MonoBehaviour\CampOnClick.cs" />
+    <Compile Include="Assets\MonoBehaviour\DestoryForTime.cs" />
     <Compile Include="Assets\ReflectionPlane\MirrorReflection.cs" />
     <Compile Include="Assets\Scripts\ArchievementSystem\ArchievementSystem.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\BaseClass\IBaseUI.cs" />
     <Compile Include="Assets\Scripts\BaseClass\IGameSystem.cs" />
-    <Compile Include="Assets\Scripts\BaseLog.cs" />
     <Compile Include="Assets\Scripts\CampSystem\CampSystem.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\Command\TrainSoldierCommand.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\EnergyStategy\IEnergyCostStrategy.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\EnergyStategy\SoldierEnergyCostStrategy.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\ICamp.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\Command\ITrainCommand.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\SoldierCamp.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Attributes\BaseAttr\CharacterBaseAttr.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Attributes\ICharacterAttr.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\EnemyAttrStrategy.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\AttrStrategy\IAttrStrategy.cs" />
@@ -271,6 +284,22 @@
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Sergeant.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\SoldierAttr.cs" />
     <Compile Include="Assets\Scripts\EnergySystem\EnergySystem.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\IAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\LocalAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\RemoteAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\ResourceAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Attribute\AttrFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Attribute\IAttrFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\Builder\CharacterBuilderDirector.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\Builder\EnemyBuilder.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\Builder\ICharacterBuilder.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\Builder\SoldierBuilder.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\EnemyFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\ICharacterFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Character\SoldierFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\FactoryManager.cs" />
+    <Compile Include="Assets\Scripts\Factory\Weapon\IWeaponFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Weapon\WeaponFactory.cs" />
     <Compile Include="Assets\Scripts\GameEventSystem\GameEventSystem.cs" />
     <Compile Include="Assets\Scripts\GameFacade.cs" />
     <Compile Include="Assets\Scripts\GameLoop.cs" />
@@ -284,15 +313,19 @@
     <Compile Include="Assets\Scripts\UISystem\GamePauseUI.cs" />
     <Compile Include="Assets\Scripts\UISystem\GameStateInfoUI.cs" />
     <Compile Include="Assets\Scripts\UISystem\SoldierInfoUI.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Attributes\WeaponBaseAttr.cs" />
     <Compile Include="Assets\Scripts\Weapon\IWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponGun.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponLaser.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponRifle.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponRocket.cs" />
+    <Compile Include="Assets\Tools\UITool.cs" />
+    <Compile Include="Assets\Tools\UnityTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ReflectionPlane\ReflectionPlane.shader" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

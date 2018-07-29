@@ -37,15 +37,15 @@ public abstract class  ISoldierState
     {
         if (trans == SoldierTransition.NullTransition)
         {
-            BaseLog.LogError("SoldierTransition Error:trans 不能为空");return;
+            Debug.LogError("SoldierTransition Error:trans 不能为空");return;
         }
         if (id == SoldierStateID.NullState)
         {
-            BaseLog.LogError("SoldierTransition Error:id状态 不能为空"); return;
+            Debug.LogError("SoldierTransition Error:id状态 不能为空"); return;
         }
         if (mMap.ContainsKey(trans))
         {
-            BaseLog.LogError("SoldierTransition Error: " + trans+"已经添加上了"); return;
+            Debug.LogError("SoldierTransition Error: " + trans+"已经添加上了"); return;
         }
 
         mMap.Add(trans,id);
@@ -55,7 +55,7 @@ public abstract class  ISoldierState
     {
         if (mMap.ContainsKey(trans) == false)
         {
-            BaseLog.LogError("删除转换条件的时候，转换条件["+trans+"]不存在"); return;
+            Debug.LogError("删除转换条件的时候，转换条件["+trans+"]不存在"); return;
         }
         mMap.Remove(trans);
     }
@@ -64,7 +64,7 @@ public abstract class  ISoldierState
     {
         if (mMap.ContainsKey(trans) == false)
         {
-            BaseLog.LogError("转换条件[" + trans + "]不存在"); return SoldierStateID.NullState; 
+            Debug.LogError("转换条件[" + trans + "]不存在"); return SoldierStateID.NullState; 
         }
         else
         {

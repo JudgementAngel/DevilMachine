@@ -20,7 +20,7 @@ public class EnemyFSMSystem
     {
         if (state == null)
         {
-            BaseLog.LogError("要添加的状态为空");
+            UnityEngine.Debug.LogError("要添加的状态为空");
             return;
         }
 
@@ -35,17 +35,18 @@ public class EnemyFSMSystem
         {
             if (s.stateID == state.stateID)
             {
-                BaseLog.LogError("要添加的状态ID[" + s.stateID + "]已经添加");
+                UnityEngine.Debug.LogError("要添加的状态ID[" + s.stateID + "]已经添加");
                 return;
             }
         }
         mStates.Add(state);
     }
+
     public void DeleteState(EnemyStateID stateID)
     {
         if (stateID == EnemyStateID.NullState)
         {
-            BaseLog.LogError("要删除的状态ID为空" + stateID);
+            UnityEngine.Debug.LogError("要删除的状态ID为空" + stateID);
             return;
         }
         foreach (IEnemyState s in mStates)
@@ -56,19 +57,19 @@ public class EnemyFSMSystem
                 return;
             }
         }
-        BaseLog.LogError("要删除的StatedID[" + stateID + "]不存在集合中");
+        UnityEngine.Debug.LogError("要删除的StatedID[" + stateID + "]不存在集合中");
     }    // 一般不需要删除状态;
     public void PerformTransition(EnemyTransition trans)
     {
         if (trans == EnemyTransition.NullTransition)
         {
-            BaseLog.LogError("要转换的条件为空:" + trans);
+            UnityEngine.Debug.LogError("要转换的条件为空:" + trans);
             return;
         }
         EnemyStateID nextStateID = mCurrentState.GetOutPutState(trans);
         if (nextStateID == EnemyStateID.NullState)
         {
-            BaseLog.LogError("在转换条件 [" + trans + "] 下，没有对应的转换状态");
+            UnityEngine.Debug.LogError("在转换条件 [" + trans + "] 下，没有对应的转换状态");
             return;
         }
 

@@ -55,7 +55,7 @@ namespace DM
 
         public void Handle(int arg)
         {
-            BaseLog.Log("A.Handle" + arg);
+            UnityEngine.Debug.Log("A.Handle" + arg);
 
             if (arg > 10)
             {
@@ -75,7 +75,7 @@ namespace DM
 
         public void Handle(int arg)
         {
-            BaseLog.Log("B.Handle" + arg);
+            UnityEngine.Debug.Log("B.Handle" + arg);
             if (arg <= 10)
             {
                 mContext.SetState(new ConcreteStateA(mContext)); //转换为状态A

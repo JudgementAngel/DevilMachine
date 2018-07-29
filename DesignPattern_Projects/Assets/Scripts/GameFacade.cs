@@ -110,4 +110,19 @@ public class GameFacade
         //TODO
         return Vector3.zero; 
     }
+
+    public void ShowCampInfo(ICamp camp)
+    {
+        mCampInfoUI.ShowCampInfo(camp);
+    }
+
+    public void AddSoldier(ISoldier soldier)
+    {
+        mCharacterSystem.AddSoldier(soldier);
+    }
+
+    public void AddEnemy(IEnemy enemy)
+    {
+        mCharacterSystem.AddEnemy(enemy);
+    }
 }

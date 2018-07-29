@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class WeaponRocket : IWeapon
 {
+    public WeaponRocket(WeaponBaseAttr baseAttr, GameObject gameObject) : base(baseAttr, gameObject)
+    {
+    }
+
     protected override void PlauSound()
     {
         DoPlaySound("RocketShot");

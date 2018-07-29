@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SoldierType
+{
+    Rookie,
+    Sergeant,
+    Captain
+}
+
 public abstract class ISoldier : ICharacter
 {
     protected SoldierFSMSystem mFSMSystem;

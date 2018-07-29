@@ -35,15 +35,15 @@ public abstract class IEnemyState
     {
         if (trans == EnemyTransition.NullTransition)
         {
-            BaseLog.LogError("EnemyTransition Error:trans 不能为空"); return;
+            UnityEngine.Debug.LogError("EnemyTransition Error:trans 不能为空"); return;
         }
         if (id == EnemyStateID.NullState)
         {
-            BaseLog.LogError("EnemyTransition Error:id状态 不能为空"); return;
+            UnityEngine.Debug.LogError("EnemyTransition Error:id状态 不能为空"); return;
         }
         if (mMap.ContainsKey(trans))
         {
-            BaseLog.LogError("EnemyTransition Error: " + trans + "已经添加上了"); return;
+            UnityEngine.Debug.LogError("EnemyTransition Error: " + trans + "已经添加上了"); return;
         }
 
         mMap.Add(trans, id);
@@ -53,7 +53,7 @@ public abstract class IEnemyState
     {
         if (mMap.ContainsKey(trans) == false)
         {
-            BaseLog.LogError("删除转换条件的时候，转换条件[" + trans + "]不存在"); return;
+            UnityEngine.Debug.LogError("删除转换条件的时候，转换条件[" + trans + "]不存在"); return;
         }
         mMap.Remove(trans);
     }
@@ -62,7 +62,7 @@ public abstract class IEnemyState
     {
         if (mMap.ContainsKey(trans) == false)
         {
-            BaseLog.LogError("转换条件[" + trans + "]不存在"); return EnemyStateID.NullState;
+            UnityEngine.Debug.LogError("转换条件[" + trans + "]不存在"); return EnemyStateID.NullState;
         }
         else
         {

@@ -33,7 +33,7 @@ public class ConcreteStrategyA : IStrategy
 {
     public void Cal()
     {
-        BaseLog.Log("A");
+        UnityEngine.Debug.Log("A");
     }
 }
 
@@ -41,6 +41,6 @@ public class ConcreteStrategyB : IStrategy
 {
     public void Cal()
     {
-        BaseLog.Log("B");
+        UnityEngine.Debug.Log("B");
     }
 }

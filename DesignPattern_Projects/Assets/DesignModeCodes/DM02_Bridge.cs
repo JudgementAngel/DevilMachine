@@ -93,7 +93,7 @@ namespace DM
     {
         public override void Render(string name)
         {
-            BaseLog.Log(name + "is Render in OpenGL!");
+            UnityEngine.Debug.Log(name + "is Render in OpenGL!");
         }
     }
 
@@ -101,7 +101,7 @@ namespace DM
     {
         public override void Render(string name)
         {
-            BaseLog.Log(name + "is Render in DirectX!");
+            UnityEngine.Debug.Log(name + "is Render in DirectX!");
         }
     }
 }

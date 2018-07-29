@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class WeaponGun : IWeapon
 {
+    public WeaponGun(WeaponBaseAttr baseAttr, GameObject gameObject) : base(baseAttr, gameObject)
+    {
+    }
+
     protected override void PlauSound()
     {
         DoPlaySound("GunShot");

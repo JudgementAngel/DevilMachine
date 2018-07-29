@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class WeaponLaser : IWeapon
 {
+    public WeaponLaser(WeaponBaseAttr baseAttr, GameObject gameObject) : base(baseAttr, gameObject)
+    {
+    }
+
     protected override void PlauSound()
     {
         DoPlaySound("LaserShot");
@@ -17,4 +21,6 @@ public class WeaponLaser : IWeapon
     {
         mEffectDisplayTime = 0.25f;
     }
+
+   
 }

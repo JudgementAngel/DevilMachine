@@ -38,11 +38,13 @@ public class ResourceAssetFactory : IAssetFactory
     }
     public Sprite LoadSprite(string name)
     {
-        return LoadAsset(SpritePath + name) as Sprite;
+        //return LoadAsset(SpritePath + name) as Sprite;
+        return Resources.Load(SpritePath + name, typeof(Sprite)) as Sprite;
     }
     public AudioClip LoadAudioClip(string name)
     {
-        return LoadAsset(AudioPath + name) as AudioClip;
+        //return LoadAsset(AudioPath + name) as AudioClip;
+        return Resources.Load(AudioPath + name, typeof(AudioClip)) as AudioClip;
     }
     
 

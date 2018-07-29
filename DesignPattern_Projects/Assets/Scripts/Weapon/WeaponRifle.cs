@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class WeaponRifle:IWeapon
 {
+    public WeaponRifle(WeaponBaseAttr baseAttr, GameObject gameObject) : base(baseAttr, gameObject)
+    {
+    }
+
     protected override void PlauSound()
     {
         DoPlaySound("RifleShot");

@@ -28,14 +28,14 @@ namespace DM
 
         protected void Orderfoods()
         {
-            BaseLog.Log("Order");
+            UnityEngine.Debug.Log("Order");
         }
 
         protected virtual void EatSomething() { }
 
         protected void PayBill()
         {
-            BaseLog.Log("买单");
+            UnityEngine.Debug.Log("买单");
         }
     }
 
@@ -43,7 +43,7 @@ namespace DM
     {
         protected override void EatSomething()
         {
-            BaseLog.Log("面条");
+            UnityEngine.Debug.Log("面条");
         }
     }
 
@@ -51,7 +51,7 @@ namespace DM
     {
         protected override void EatSomething()
         {
-            BaseLog.Log("米饭");
+            UnityEngine.Debug.Log("米饭");
         }
     }
 }
