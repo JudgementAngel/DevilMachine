@@ -13,7 +13,7 @@ public static class FactoryManager
 
     public static IAssetFactory AssetFactory
     {
-        get { return mAssetFactory ?? (mAssetFactory = new ResourceAssetFactory()); }
+        get { return mAssetFactory ?? (mAssetFactory = new ResourcesAssetProxyFactory()); }
     }
 
     public static ICharacterFactory SoldierFactory

@@ -14,6 +14,7 @@ public class SoldierCamp : ICamp
         mLv = lv;
         mWeaponType = weaponType;
         energyCostStrategy = new SoldierEnergyCostStrategy();
+        UpdateEnergyCost();
     }
 
     public override int lv
@@ -29,7 +30,7 @@ public class SoldierCamp : ICamp
     public override void Train()
     {
         // ÃÌº”—µ¡∑√¸¡Ó
-        TrainSoldierCommand cmd = new TrainSoldierCommand(mSoldierType,mWeaponType,mPositionl,mLv);
+        TrainSoldierCommand cmd = new TrainSoldierCommand(mSoldierType,mWeaponType,mPosition,mLv);
         mCommands.Add(cmd);
     }
 

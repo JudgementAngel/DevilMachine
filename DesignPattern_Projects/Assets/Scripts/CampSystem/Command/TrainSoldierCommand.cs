@@ -23,7 +23,7 @@ public class TrainSoldierCommand : ITrainCommand
         switch (mSoldierType)
         {
             case SoldierType.Rookie:
-                FactoryManager.SoldierFactory.CreateCharacter<Soldier_Rokie>(mWeaponType, mPosition, mLv);
+                FactoryManager.SoldierFactory.CreateCharacter<Soldier_Rookie>(mWeaponType, mPosition, mLv);
                 break;
             case SoldierType.Sergeant:
                 FactoryManager.SoldierFactory.CreateCharacter<Soldier_Sergeant>(mWeaponType, mPosition, mLv);

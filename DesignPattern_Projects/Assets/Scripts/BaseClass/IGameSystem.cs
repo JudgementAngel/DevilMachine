@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class IGameSystem
 {
-    public virtual void Init(){ }
+    protected GameFacade mFacade;
+    public virtual void Init(){ mFacade = GameFacade.Instance; }
     public virtual void Update() { }
     public virtual void Release() { }
 }

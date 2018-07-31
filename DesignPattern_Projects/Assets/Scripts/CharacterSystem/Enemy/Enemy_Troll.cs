@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_Troll : IEnemy {
-
-    protected override void PlayEffect()
+    public override void PlayEffect()
     {
         DoPlayEffect("TrollHitEffect");
     }
 
-    protected override void PlaySound()
+    public override void PlaySound()
     {
         
     }

@@ -12,8 +12,18 @@ public abstract class ICharacter
     protected Animation mAnim;
     protected IWeapon mWeapon;
 
+    protected bool mIsKilled = false;
+    public bool isKilled { get { return mIsKilled; } }
+
+    protected bool mCanDestory = false;
+    protected float mDestoryTime = 2.0f;
+    protected float mDestoryTimer = 2.0f;
+
+    public bool canDestory { get { return mCanDestory; } }
+
     public IWeapon weapon
     {
+        get { return mWeapon; }
         set
         {
             mWeapon = value;
@@ -36,10 +46,11 @@ public abstract class ICharacter
         }
     }
     public float atkRange { get { return mWeapon.atkRange; } }
-    public ICharacterAttr attr { set { mAttr = value; } }
+    public ICharacterAttr attr { get { return mAttr; } set { mAttr = value; } }
 
     public GameObject gameObject
     {
+        get { return mGameObject; }
         set
         {
             mGameObject = value;
@@ -50,9 +61,20 @@ public abstract class ICharacter
     }
 
     public abstract void UpdateFSMAI(List<ICharacter> targets);
+    public abstract void RunVisitor(ICharacterVisitor visitor);
 
     public void Update()
     {
+        if (mIsKilled)
+        {
+            mDestoryTimer -= Time.deltaTime;
+            if (mDestoryTimer <= 0)
+            {
+                mDestoryTimer = mDestoryTime;
+                mCanDestory = true;
+            }
+            return;
+        }
         mWeapon.Update();
     }
 
@@ -104,11 +126,17 @@ public abstract class ICharacter
         mAudio.Play();
     }
 
-    public void Killed()
+    public virtual void Killed()
     {
-        // TODO
+        mIsKilled = true;
+        mNavAgent.isStopped = true;
     }
 
-    protected abstract void PlaySound();
-    protected abstract void PlayEffect();
+    public void Release()
+    {
+        GameObject.Destroy(mGameObject);
+    }
+
+    public abstract void PlaySound();
+    public abstract void PlayEffect();
 }

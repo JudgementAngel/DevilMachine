@@ -10,7 +10,7 @@ public abstract class ICamp
     protected string mName;
     protected string mIconSprite;
     protected SoldierType mSoldierType;
-    protected Vector3 mPositionl; // 集合点
+    protected Vector3 mPosition; // 集合点
     protected float mTrainTime;
 
     public string name { get { return mName; } }
@@ -34,7 +34,7 @@ public abstract class ICamp
         mName = name;
         mIconSprite = icon;
         mSoldierType = soldierType;
-        mPositionl = position;
+        mPosition = position;
         mTrainTime = trainTime;
         mTrainTimer = mTrainTime;
 

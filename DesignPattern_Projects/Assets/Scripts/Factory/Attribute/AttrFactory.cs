@@ -28,7 +28,7 @@ public class AttrFactory : IAttrFactory
         mCharacterBaseAttrDict = new Dictionary<Type, CharacterBaseAttr>();
 
         // Soldier
-        mCharacterBaseAttrDict.Add(typeof(Soldier_Rokie),new CharacterBaseAttr("新手士兵",80,2.5f, "RokieIcon", "Soldier2",0));
+        mCharacterBaseAttrDict.Add(typeof(Soldier_Rookie),new CharacterBaseAttr("新手士兵",80,2.5f, "RokieIcon", "Soldier2",0));
         mCharacterBaseAttrDict.Add(typeof(Soldier_Sergeant), new CharacterBaseAttr("中士士兵", 90, 3f, "SergeantIcon", "Soldier3", 0));
         mCharacterBaseAttrDict.Add(typeof(Soldier_Captain), new CharacterBaseAttr("上尉士兵", 100, 3f, "CaptainIcon", "Soldier1", 0));
 

@@ -33,7 +33,7 @@ public class GameFacade
 
     private GameFacade() { }
 
-    private ArchievementSystem mArchievementSystem;
+    private AchievementSystem mAchievementSystem;
     private CampSystem mCampSystem;
     private CharacterSystem mCharacterSystem;
     private EnergySystem mEnergySystem;
@@ -48,7 +48,7 @@ public class GameFacade
     public void Init()
     {
         // 创建对象
-        mArchievementSystem = new ArchievementSystem();
+        mAchievementSystem = new AchievementSystem();
         mCampSystem = new CampSystem();
         mCharacterSystem = new CharacterSystem();
         mEnergySystem = new EnergySystem();
@@ -61,7 +61,7 @@ public class GameFacade
         mSoldierInfoUI = new SoldierInfoUI();
         
         // 初始化对象
-        mArchievementSystem.Init();
+        mAchievementSystem.Init();
         mCampSystem.Init();
         mCharacterSystem.Init();
         mEnergySystem.Init();
@@ -73,11 +73,12 @@ public class GameFacade
         mGameStateInfoUI.Init();
         mSoldierInfoUI.Init();
 
+        LoadMemento();
     }
 
     public void Update()
     {
-        mArchievementSystem.Update();
+        mAchievementSystem.Update();
         mCampSystem.Update();
         mCharacterSystem.Update();
         mEnergySystem.Update();
@@ -92,7 +93,7 @@ public class GameFacade
 
     public void Release()
     {
-        mArchievementSystem.Release();
+        mAchievementSystem.Release();
         mCampSystem.Release();
         mCharacterSystem.Release();
         mEnergySystem.Release();
@@ -103,12 +104,13 @@ public class GameFacade
         mGamePauseUI.Release();
         mGameStateInfoUI.Release();
         mSoldierInfoUI.Release();
+
+        CreateMemento();
     }
 
     public Vector3 GetEnemyTargetPosition()
     {
-        //TODO
-        return Vector3.zero; 
+        return mStageSystem.targetPosition;
     }
 
     public void ShowCampInfo(ICamp camp)
@@ -124,5 +126,62 @@ public class GameFacade
     public void AddEnemy(IEnemy enemy)
     {
         mCharacterSystem.AddEnemy(enemy);
+    }
+
+    public void RemoveEnemy(IEnemy enemy)
+    {
+        mCharacterSystem.RemoveEnemy(enemy);
+    }
+
+    public bool TakeEnergy(int value)
+    {
+        return mEnergySystem.TakeEnergy(value);
+    }
+
+    public void RecycleEnergy(int value)
+    {
+        mEnergySystem.RecycleEnergy(value);
+    }
+
+    public void ShowMsg(string msg)
+    {
+        mGameStateInfoUI.ShowMsg(msg);
+    }
+
+    public void UpdateEnergySlider(int nowEnergy, int maxEnergy)
+    {
+        mGameStateInfoUI.UpdateEnergySlider(nowEnergy,maxEnergy);
+    }
+
+    public void RegisterObserver(GameEventType eventType, IGameEventObserver observer)
+    {
+        mGameEventSystem.RegisterObserver(eventType,observer);
+    }
+    public void RemoveObserver(GameEventType eventType, IGameEventObserver observer)
+    {
+        mGameEventSystem.RemoveObserver(eventType, observer);
+    }
+
+    public void NotifySubject(GameEventType eventType)
+    {
+        mGameEventSystem.NotifySubject(eventType);
+    }
+
+    public void LoadMemento()
+    {
+        AchievementMemento memento = new AchievementMemento();
+        memento.LoadData();
+        mAchievementSystem.SetMemento(memento);
+    }
+
+    public void CreateMemento()
+    {
+        AchievementMemento memento = mAchievementSystem.CreateMemento();
+        memento.SaveData();
+    }
+
+    public void RunVisitor(ICharacterVisitor visitor)
+    {
+        mCharacterSystem.RunVisitor(visitor);
     }
 }

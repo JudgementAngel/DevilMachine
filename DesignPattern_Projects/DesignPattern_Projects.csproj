@@ -243,19 +243,28 @@
     <Compile Include="Assets\DesignModeCodes\DM05_Builder.cs" />
     <Compile Include="Assets\DesignModeCodes\DM06_Composite.cs" />
     <Compile Include="Assets\DesignModeCodes\DM07_Command.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM08_ChainOfResponsibility.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM09_Observer.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM10_Memento.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM11_Visitor.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM12_Adapter.cs" />
+    <Compile Include="Assets\DesignModeCodes\DM13_Decorator.cs" />
     <Compile Include="Assets\MonoBehaviour\CampOnClick.cs" />
     <Compile Include="Assets\MonoBehaviour\DestoryForTime.cs" />
     <Compile Include="Assets\ReflectionPlane\MirrorReflection.cs" />
-    <Compile Include="Assets\Scripts\ArchievementSystem\ArchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\AchievementSystem\AchievementMemento.cs" />
+    <Compile Include="Assets\Scripts\AchievementSystem\AchievementSystem.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\BaseClass\IBaseUI.cs" />
     <Compile Include="Assets\Scripts\BaseClass\IGameSystem.cs" />
     <Compile Include="Assets\Scripts\CampSystem\CampSystem.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\CaptiveCamp.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\Command\ITrainCommand.cs" />
+    <Compile Include="Assets\Scripts\CampSystem\Command\TrainCaptiveCommand.cs" />
     <Compile Include="Assets\Scripts\CampSystem\Command\TrainSoldierCommand.cs" />
     <Compile Include="Assets\Scripts\CampSystem\EnergyStategy\IEnergyCostStrategy.cs" />
     <Compile Include="Assets\Scripts\CampSystem\EnergyStategy\SoldierEnergyCostStrategy.cs" />
     <Compile Include="Assets\Scripts\CampSystem\ICamp.cs" />
-    <Compile Include="Assets\Scripts\CampSystem\Command\ITrainCommand.cs" />
     <Compile Include="Assets\Scripts\CampSystem\SoldierCamp.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Attributes\BaseAttr\CharacterBaseAttr.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Attributes\ICharacterAttr.cs" />
@@ -280,14 +289,18 @@
     <Compile Include="Assets\Scripts\CharacterSystem\SoldieAI\SoldierIdleState.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\ISoldier.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Captain.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Captive.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Rokie.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\Soldier_Sergeant.cs" />
     <Compile Include="Assets\Scripts\CharacterSystem\Soldier\SoldierAttr.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Visitor\AliveCountVisitor.cs" />
+    <Compile Include="Assets\Scripts\CharacterSystem\Visitor\IcharacterVisitor.cs" />
     <Compile Include="Assets\Scripts\EnergySystem\EnergySystem.cs" />
     <Compile Include="Assets\Scripts\Factory\Asset\IAssetFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Asset\LocalAssetFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Asset\RemoteAssetFactory.cs" />
-    <Compile Include="Assets\Scripts\Factory\Asset\ResourceAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\ResourcesAssetFactory.cs" />
+    <Compile Include="Assets\Scripts\Factory\Asset\ResourcesAssetProxyFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Attribute\AttrFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Attribute\IAttrFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Character\Builder\CharacterBuilderDirector.cs" />
@@ -301,6 +314,15 @@
     <Compile Include="Assets\Scripts\Factory\Weapon\IWeaponFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\Weapon\WeaponFactory.cs" />
     <Compile Include="Assets\Scripts\GameEventSystem\GameEventSystem.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Observer\EnemyKilledObserver\EnemyKilledObserverAchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Observer\EnemyKilledObserver\EnemyKilledObserverStageSystem.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Observer\IGameEventObserver.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Observer\NewStageObserver\NewStageObserverAchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Observer\SoldierKilledObserver\SoldierKilledObserverAchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Subject\EnemyKilledSubject.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Subject\IGameEventSubject.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Subject\NewStageSubject.cs" />
+    <Compile Include="Assets\Scripts\GameEventSystem\Subject\SoldierKilledSubject.cs" />
     <Compile Include="Assets\Scripts\GameFacade.cs" />
     <Compile Include="Assets\Scripts\GameLoop.cs" />
     <Compile Include="Assets\Scripts\SceneStates\BattleState.cs" />
@@ -308,6 +330,8 @@
     <Compile Include="Assets\Scripts\SceneStates\ISceneState.cs" />
     <Compile Include="Assets\Scripts\SceneStates\MainMenuState.cs" />
     <Compile Include="Assets\Scripts\SceneStates\SceneStateController.cs" />
+    <Compile Include="Assets\Scripts\StageSystem\Handler\IStageHandler.cs" />
+    <Compile Include="Assets\Scripts\StageSystem\Handler\NormalStageHandler.cs" />
     <Compile Include="Assets\Scripts\StageSystem\StageSystem.cs" />
     <Compile Include="Assets\Scripts\UISystem\CampInfoUI.cs" />
     <Compile Include="Assets\Scripts\UISystem\GamePauseUI.cs" />
@@ -325,7 +349,6 @@
   <ItemGroup>
     <None Include="Assets\ReflectionPlane\ReflectionPlane.shader" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

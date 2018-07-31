@@ -7,7 +7,7 @@ public static class UnityTool
 {
     public static GameObject FindChild(GameObject parent ,string childName)
     {
-        Transform[] children = parent.GetComponentsInChildren<Transform>();
+        Transform[] children = parent.GetComponentsInChildren<Transform>(true);
         bool isFinded = false;
         Transform child = null;
         foreach (Transform t in children)

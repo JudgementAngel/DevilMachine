@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_Ogre : IEnemy {
-
-    protected override void PlayEffect()
+    public override void PlayEffect()
     {
         DoPlayEffect("OgreHitEffect");
     }
 
-    protected override void PlaySound()
+    public override void PlaySound()
     {
         
     }

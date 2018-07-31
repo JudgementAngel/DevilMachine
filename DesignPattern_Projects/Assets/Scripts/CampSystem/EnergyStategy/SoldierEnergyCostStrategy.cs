@@ -67,14 +67,16 @@ class SoldierEnergyCostStrategy : IEnergyCostStrategy
             case SoldierType.Captain:
                 energy = 20;
                 break;
+            case SoldierType.Captive:
+                energy = 10;
+                break;
             default:
-                Debug.LogError("无法获取" + st + "类型兵营升级所消耗的能量值");
+                Debug.LogError("无法获取" + st + "类型训练士兵所消耗的能量值");
                 break;
         }
 
         energy += (lv - 1) * 2;
 
-        
         return energy;
     }
 }

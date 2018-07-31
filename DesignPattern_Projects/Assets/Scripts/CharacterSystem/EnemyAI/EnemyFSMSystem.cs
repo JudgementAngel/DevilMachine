@@ -4,7 +4,7 @@ using System.Text;
 
 public class EnemyFSMSystem
 {
-    private List<IEnemyState> mStates;
+    private List<IEnemyState> mStates = new List<IEnemyState>();
     private IEnemyState mCurrentState;
     public IEnemyState CurrentState { get { return mCurrentState; } }
 

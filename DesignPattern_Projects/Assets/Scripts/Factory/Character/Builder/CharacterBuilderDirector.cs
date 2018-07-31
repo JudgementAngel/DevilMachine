@@ -10,6 +10,7 @@ public class CharacterBuilderDirector
         builder.AddCharacterAttr(); // 必须先构造属性
         builder.AddGameObject();
         builder.AddWeapon();
+        builder.AddInCharacterSystem();
         return builder.GetResult();
     }
 }

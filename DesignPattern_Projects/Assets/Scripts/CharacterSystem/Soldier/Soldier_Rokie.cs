@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Soldier_Rokie : ISoldier {
-    protected override void PlayEffect()
+public class Soldier_Rookie : ISoldier {
+    public override void PlayEffect()
     {
-        DoPlayEffect("RokieDeadEffect");
+        DoPlayEffect("RookieDeadEffect");
     }
-    protected override void PlaySound()
+
+    public override void PlaySound()
     {
-        DoPlaySound("RokieDeath");
+        DoPlaySound("RookieDeath");
     }
 }
