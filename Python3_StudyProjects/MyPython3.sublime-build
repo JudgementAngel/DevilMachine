@@ -1,0 +1,14 @@
+{
+	"cmd": ["python","-u","$file"],
+	"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+	"selector": "source.python",
+	"variants":
+		[
+			{
+				"name":"Run",
+				"shell": true,
+				"cmd": ["start","cmd","/c", "python $file &echo. & pause"],
+				"working_dir": "${file_path}",
+			}
+		]
+}
