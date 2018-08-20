@@ -368,9 +368,6 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/chenjiahao02/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="Substance.Game">
-      <HintPath>E:/02_GitHubProjects/ShaderFramework/Client/ShaderFrameWork/Assets/Plugins/Substance.Game.dll</HintPath>
-    </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
