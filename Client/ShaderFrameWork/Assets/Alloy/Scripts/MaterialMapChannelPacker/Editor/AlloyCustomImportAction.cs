@@ -9,7 +9,6 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
-
 #pragma warning disable 0618
 
 namespace Alloy {
@@ -265,13 +264,16 @@ namespace Alloy {
             int count = 1;
             var texture2D = tex as Texture2D;
             var renderTexture = tex as RenderTexture;
-            var proceduralTexture = tex as ProceduralTexture;
+            //var proceduralTexture = tex as ProceduralTexture;
 
             if (texture2D != null) {
                 count = texture2D.mipmapCount;
             } else if (renderTexture != null) {
                 count = renderTexture.useMipMap ? GetMipCountFromSize(tex) : 1;
-            } else if (proceduralTexture != null) {
+            }
+            /*
+            else if (proceduralTexture != null)
+            {
                 var mat =
                     proceduralTexture.GetType()
                         .GetMethod("GetProceduralMaterial", BindingFlags.Instance | BindingFlags.NonPublic)
@@ -279,7 +281,7 @@ namespace Alloy {
                 var imp = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(mat)) as SubstanceImporter;
                 count = imp != null && imp.GetGenerateMipMaps(mat) ? GetMipCountFromSize(tex) : 1;
             }
-
+            */
             return count;
         }
 
