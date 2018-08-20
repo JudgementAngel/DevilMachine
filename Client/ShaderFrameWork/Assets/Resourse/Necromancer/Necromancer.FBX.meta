@@ -1,0 +1,131 @@
+fileFormatVersion: 2
+guid: fdddfd6641bf74f489406fa382c7fbfe
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Necromancer_Eye
+    100004: Necromancer_Face
+    100006: Necromancer_Hair
+    100008: Necromancer_LowBody
+    100010: Necromancer_OralCavity
+    100012: Necromancer_Pauldrons
+    100014: Necromancer_Teeth
+    100016: Necromancer_UpperBody
+    400000: //RootNode
+    400002: Necromancer_Eye
+    400004: Necromancer_Face
+    400006: Necromancer_Hair
+    400008: Necromancer_LowBody
+    400010: Necromancer_OralCavity
+    400012: Necromancer_Pauldrons
+    400014: Necromancer_Teeth
+    400016: Necromancer_UpperBody
+    2100000: No Name
+    2300000: Necromancer_Eye
+    2300002: Necromancer_Face
+    2300004: Necromancer_Hair
+    2300006: Necromancer_LowBody
+    2300008: Necromancer_OralCavity
+    2300010: Necromancer_Pauldrons
+    2300012: Necromancer_Teeth
+    2300014: Necromancer_UpperBody
+    3300000: Necromancer_Eye
+    3300002: Necromancer_Face
+    3300004: Necromancer_Hair
+    3300006: Necromancer_LowBody
+    3300008: Necromancer_OralCavity
+    3300010: Necromancer_Pauldrons
+    3300012: Necromancer_Teeth
+    3300014: Necromancer_UpperBody
+    4300000: Necromancer_OralCavity
+    4300002: Necromancer_Face
+    4300004: Necromancer_Teeth
+    4300006: Necromancer_UpperBody
+    4300008: Necromancer_Hair
+    4300010: Necromancer_Pauldrons
+    4300012: Necromancer_Eye
+    4300014: Necromancer_LowBody
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
