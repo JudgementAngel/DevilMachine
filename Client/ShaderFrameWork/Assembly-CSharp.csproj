@@ -90,6 +90,7 @@
     <None Include="Assets\Alloy\Shaders\Definition\SpeedTreeBillboard.cginc" />
     <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Hair LowQuality OneSided.shader" />
     <None Include="Assets\Alloy\Shaders\3.0\Core\Core.shader" />
+    <None Include="Assets\G67\Includes\MessPBRCore.cginc" />
     <None Include="Assets\Alloy\Shaders\Type\SpeedTree.cginc" />
     <None Include="Assets\Alloy\Shaders\Feature\SpeedTree.cginc" />
     <None Include="Assets\Alloy\Shaders\3.0\Specialist\Weighted Blend.shader" />
@@ -289,6 +290,7 @@
     <None Include="Assets\Alloy Mods\Shaders\3.0\Curvature Test.shader" />
     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Disney_Cook-Torrance.shader" />
     <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Vertex Blend.shader" />
+    <None Include="Assets\G67\PBR.shader" />
     <None Include="Assets\Alloy\Shaders\Type\Details1.cginc" />
     <None Include="Assets\Alloy\Shaders\Type\DecalAlpha.cginc" />
     <None Include="Assets\Alloy\Shaders\Definition\Details0.cginc" />
