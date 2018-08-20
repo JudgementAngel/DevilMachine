@@ -32,6 +32,15 @@ import graphviz
 #                         filled=True,rounded=True,
 #                         impurity=False)
 # graph = pydot.graph_from_dot_data(dot_data.getvalue())
-dot_data = tree.export_graphviz(clf, out_file=None) 
+
+dot_data = tree.export_graphviz(clf,
+                        out_file=None,
+                        feature_names=iris.feature_names,
+                        class_names=iris.target_names,
+                        filled=True,rounded=True,
+                        impurity=False)
 graph = graphviz.Source(dot_data)  
 graph.render("iris") 
+
+print(test_data[0],test_target[0])
+print(iris.feature_names,iris.target_names)
