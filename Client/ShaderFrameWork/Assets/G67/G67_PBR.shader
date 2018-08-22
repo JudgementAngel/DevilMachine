@@ -24,15 +24,23 @@
         _EmissionMap("自发光贴图", 2D) = "white" {}
 
         [Toggle(USE_VERTEX_GI)] _UseVertexGI("是否使用实时逐顶点光照?",Float) = 0
+        
+        [Toggle(ENABLE_IBL)] _EnableIBL("_EnableIBL?",Float) = 0
         [Toggle(USE_UNITY_CUBE)] _UseUnityCube("是否使用UnityCube?",Float) = 0
 		_EnvMap("环境贴图",Cube) = "_Skybox"{}
 		_MipCount("_MipCount",Float) = 8
         _EnvColor ("环境颜色",Color) = (1,1,1,0.5) 
         _EnvScale ("环境强度",Float) = 1.0
 
+        _AlphaScale("AlphaScale",Range(0,1)) = 1
         _Cutoff("Alpha 剔除",Range(0,1)) = 0.5
 
-       	[Enum(Off,0,On,1)] _ZWrite ("是否写入深度:",Float) = 1
+       	[Toggle(ENABLE_SSS)] _EnableSSS("_EnableSSS?",Float) = 0
+       	[Toggle(ENABLE_REFLECTION)] _EnableReflection("_EnableReflection?",Float) = 0
+       	[Toggle(ENABLE_ANISOTROPIC)] _EnableAnisotropic("_EnableAnisotropic?",Float) = 0
+		
+
+		[Enum(Off,0,On,1)] _ZWrite ("是否写入深度:",Float) = 1
        	[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("深度测试模式:",Float) = 4
        	[Enum(UnityEngine.Rendering.CullMode)] _Cull("裁剪模式:",Float) = 2
        	[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src 混合模式:",Float) = 1
