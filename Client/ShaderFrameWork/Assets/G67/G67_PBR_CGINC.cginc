@@ -1,428 +1,513 @@
-﻿Shader "G67/PBR"
+﻿#ifndef G67_PBR_CGINC 
+#define G67_PBR_CGINC
+
+float PerceptualRoughnessToMip(float perceptualRoughness,half mipCount)
 {
-	Properties
-	{
-		_Color("颜色", Color) = (1,1,1,1)
-        _MainTex("漫反射纹理(RGB)透明通道(A)", 2D) = "white" {}
-
-        _Glossiness ("光泽度",Float) = 1
-        _SpecularMap("高光(RGB)光泽度(A)", 2D) = "white" {}
-
-        _BumpMap("法线贴图", 2D) = "bump" {}
-        _BumpScale("法线强度", Float) = 1.0
-        
-        [Toggle(ENABLE_PARALLAX)] _EnableParallax("是否使用视差效果?",Float) = 0
-        _HeightScale ("视差缩放", Range (0.005, 0.08)) = 0.02
-		_HeightMap ("视差图", 2D) = "black" {}
-
-        _OcclusionStrength("AO 强度", Range(0.0, 1.0)) = 1.0
-        _OcclusionMap("AO 贴图", 2D) = "white" {}
-
-		[Toggle(ENABLE_EMISSION)] _EnableEmission("是否使用自发光?",Float) = 0
-        _EmissionColor("自发光颜色", Color) = (0,0,0)
-        _EmissionIntensity ("自发光强度",Float) = 1
-        _EmissionMap("自发光贴图", 2D) = "white" {}
-
-        [Toggle(USE_VERTEX_GI)] _UseVertexGI("是否使用实时逐顶点光照?",Float) = 0
-        [Toggle(USE_UNITY_CUBE)] _UseUnityCube("是否使用UnityCube?",Float) = 0
-		_EnvMap("环境贴图",Cube) = "_Skybox"{}
-		_MipCount("_MipCount",Float) = 8
-        _EnvColor ("环境颜色",Color) = (1,1,1,0.5) 
-        _EnvScale ("环境强度",Float) = 1.0
-
-        _Cutoff("Alpha 剔除",Range(0,1)) = 0.5
-
-       	[Enum(Off,0,On,1)] _ZWrite ("是否写入深度:",Float) = 1
-       	[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("深度测试模式:",Float) = 4
-       	[Enum(UnityEngine.Rendering.CullMode)] _Cull("裁剪模式:",Float) = 2
-       	[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src 混合模式:",Float) = 1
-       	[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst 混合模式:",Float) = 0
-       	
-	}
-	SubShader
-	{
-		Tags { "RenderType"="Opaque" }
-
-
-
-		Pass
-		{
-			Name "FORWARD"
-            Tags { "LightMode" = "ForwardBase" }
-
-            Blend [_SrcBlend][_DstBlend]
-            ZWrite [_ZWrite]
-            ZTest [_ZTest]
-            Cull [_Cull]
-
-            CGPROGRAM
-
-			#pragma vertex vert
-			#pragma fragment frag
-
-			#pragma multi_compile_fwdbase
-			#pragma shader_feature ENABLE_EMISSION
-			#pragma shader_feature ENABLE_PARALLAX
-			#pragma shader_feature USE_UNITY_CUBE
-			#pragma shader_feature USE_VERTEX_GI
-
-			#include "UnityCG.cginc"
-			#include "AutoLight.cginc"
-
-			#ifdef UNITY_COLORSPACE_GAMMA 
-				#define unity_ColorSpaceGrey fixed4(0.5, 0.5, 0.5, 0.5)
-				#define unity_ColorSpaceDouble fixed4(2.0, 2.0, 2.0, 2.0)
-				#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)
-				#define unity_ColorSpaceLuminance half4(0.22, 0.707, 0.071, 0.0) // Legacy: alpha is set to 0.0 to specify gamma mode 
-			#else // Linear values 
-				#define unity_ColorSpaceGrey fixed4(0.214041144, 0.214041144, 0.214041144, 0.5)
-				#define unity_ColorSpaceDouble fixed4(4.59479380, 4.59479380, 4.59479380, 2.0)
-				#define unity_ColorSpaceDielectricSpec half4(0.04, 0.04, 0.04, 1.0 - 0.04) // standard dielectric reflectivity coef at incident angle (= 4%) 
-				#define unity_ColorSpaceLuminance half4(0.0396819152, 0.458021790, 0.00609653955, 1.0) // Legacy: alpha is set to 1.0 to specify linear mode
-			#endif
-
-			#define UNITY_SPECCUBE_LOD_STEPS (6)
-			#define MOVE_SPECCUBE_LOD_STEPS (_MipCount)
-			
-			
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float2 uv0 : TEXCOORD0;
-				float2 uv1 : TEXCOORD1;
-				half4 tangent : TANGENT;
-				half3 normal : NORMAL;
-			};
-
-			struct v2f_forwardbase
-			{
-				float4 pos : SV_POSITION;
-				float2 tex : TEXCOORD0;
-				float3 eyeVec : TEXCOORD1;
-				float4 tangentToWorld_tangentView[3] : TEXCOORD2;
-				half4 ambient : TEXCOORD5;
-				UNITY_SHADOW_COORDS(6)
-				float3 worldPos : TEXCOORD7;
-			};
-
-			fixed4 _Color; 
-			fixed4 _LightColor0;
-			sampler2D _MainTex; float4 _MainTex_ST;			
-			sampler2D _OcclusionMap; half _OcclusionStrength;
-			sampler2D _HeightMap; half _HeightScale;
-			sampler2D _EmissionMap; half4 _EmissionColor; half _EmissionIntensity; 
-			sampler2D _SpecularMap; half _Glossiness;
-			sampler2D _BumpMap; half _BumpScale;
-
-			#ifdef USE_UNITY_CUBE
-				// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
-			#else
-				samplerCUBE _EnvMap;
-				fixed _MipCount;
-			#endif
-			half4 _EnvColor; half _EnvScale;
-		
-
-			half _Cutoff;
-
-
-
-			v2f_forwardbase vert (appdata v)
-			{
-				v2f_forwardbase o = (v2f_forwardbase)0;
-				
-				o.pos = UnityObjectToClipPos(v.vertex);
-				o.tex = TRANSFORM_TEX(v.uv0, _MainTex);
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				o.eyeVec = normalize( o.worldPos.xyz - _WorldSpaceCameraPos);
-				
-
-				half3 normalWorld = UnityObjectToWorldNormal(v.normal);
-				half3 tangentWorld = UnityObjectToWorldDir(v.tangent.xyz);
-				half3 binormalWorld = cross(normalWorld,tangentWorld) * v.tangent.w;
-
-				o.tangentToWorld_tangentView[0].xyz = tangentWorld;
-				o.tangentToWorld_tangentView[1].xyz = binormalWorld;
-				o.tangentToWorld_tangentView[2].xyz = normalWorld;
-
-				float3x3 rotation = float3x3(tangentWorld,binormalWorld,normalWorld);
-				half3 viewDirForParallax = mul (rotation, UnityWorldSpaceViewDir(o.worldPos));
-				
-				o.tangentToWorld_tangentView[0].w = viewDirForParallax.x;
-				o.tangentToWorld_tangentView[1].w = viewDirForParallax.y;
-				o.tangentToWorld_tangentView[2].w = viewDirForParallax.z;
-				
-				#if USE_VERTEX_GI
-					o.ambient.rgb = Shade4PointLights (
-		                unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
-		                unity_LightColor[0].rgb, unity_LightColor[1].rgb, unity_LightColor[2].rgb, unity_LightColor[3].rgb,
-		                unity_4LightAtten0, o.worldPos, normalWorld);
-				#else
-					o.ambient.rgb = 0.0f.xxx;
-				#endif
-
-
-				// SH 光照一部分在顶点中计算，一部分在片段中计算
-				#ifdef UNITY_COLORSPACE_GAMMA
-		            o.ambient.rgb = GammaToLinearSpace (o.ambient.rgb);
-		        #endif
-		        o.ambient.rgb += SHEvalLinearL2 (half4(normalWorld, 1.0));
-
-				// o.ambient.rgb = max(half3(0,0,0), ShadeSH9 (half4(normalWorld, 1.0)));//简化版本，只在Vertex中计算
-				// o.ambient.rgb += UNITY_LIGHTMODEL_AMBIENT.rgb;//不适用SH的版本
-				UNITY_TRANSFER_SHADOW(o, v.uv1);
-				return o;
-			}
-			
-			struct Move_FragmentData
-			{
-				 half3 diffColor,specColor;
-				 half oneMinusReflectivity,roughness;
-				 float3 normalWorld,eyeVec,posWorld;
-				 half alpha;
-			}; 
-
-
-			Move_FragmentData Move_FragmentSetup(inout float2 i_tex,float3 i_eyeVec,half3 i_viewDirForParallax ,float4 tangentToWorld[3],float3 i_posWorld)
-			{
-				Move_FragmentData s = (Move_FragmentData)0;
-
-				#ifdef ENABLE_PARALLAX// Parallax
-					float2 offset = ParallaxOffset(tex2D(_HeightMap,i_tex.xy).g,_HeightScale,i_viewDirForParallax);
-					i_tex += offset.xy;
-				#endif
-				// Normal
-				half3 normalTangent = UnpackNormal(tex2D(_BumpMap,i_tex.xy));
-				normalTangent = lerp(float3(0,0,1),normalTangent,_BumpScale);
-				s.normalWorld = normalize(tangentToWorld[0].xyz * normalTangent.x + tangentToWorld[1].xyz * normalTangent.y + tangentToWorld[2].xyz * normalTangent.z);
-
-				fixed4 mainTex = tex2D(_MainTex,i_tex.xy); 
-				clip(mainTex.a - _Cutoff);
-				s.diffColor = _Color.rgb * mainTex.rgb;
-				s.alpha = mainTex.a;
-
-				fixed4 specTex = tex2D(_SpecularMap,i_tex.xy);
-				
-				half roughness = 1-(specTex.a * _Glossiness);
-
-				s.specColor = specTex.rgb;
-				s.oneMinusReflectivity = (1-s.specColor.r);//(1-max (max (s.specColor.r, s.specColor.g), s.specColor.b));
-
-				s.diffColor *= 1.0f.xxx - s.specColor;
-				s.roughness = roughness;
-				s.eyeVec = normalize(i_eyeVec);
-				s.posWorld = i_posWorld;
-				return s;
-
-			}
-
-			struct Move_GI
-			{
-				half3 color;
-				half3 dir;
-
-				half3 indirectDiffuse;
-				half3 indirectSpecular;
-			}; 
-
-			float PerceptualRoughnessToMip(float perceptualRoughness,half mipCount)
-			{
-				half level = 3 - 1.15 * log2(perceptualRoughness);
-				return mipCount - 1- level;
-			}
-
-			Move_GI Move_FragmentGI(Move_FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
-			{
-				Move_GI gi = (Move_GI)0;
-				gi.color = lightColor * atten;
-				gi.dir = worldSpaceLightDir;
-
-				// SH 光照一部分在顶点中计算，一部分在片段中计算
-				half3 ambient_contrib = 0.0;
-		        ambient_contrib = SHEvalLinearL0L1 (half4(s.normalWorld, 1.0));
-		        gi.indirectDiffuse = max(half3(0, 0, 0), i_ambient + ambient_contrib);
-				#ifdef UNITY_COLORSPACE_GAMMA
-					gi.indirectDiffuse = LinearToGammaSpace(gi.indirectDiffuse);
-				#endif
-				gi.indirectDiffuse *= occlusion;
-				
-
-				/// EnvCol
-				float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
-				half perceptualRoughness = s.roughness;
-
-				perceptualRoughness = perceptualRoughness*(1.7 - 0.7*perceptualRoughness);
-
-			#ifdef USE_UNITY_CUBE
-				half mip = perceptualRoughness * UNITY_SPECCUBE_LOD_STEPS;
-				half4 rgbm = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0,reflUVW,mip) * _EnvColor * _EnvScale;
-			#else
-				half mip = perceptualRoughness * MOVE_SPECCUBE_LOD_STEPS;
-				half4 rgbm = texCUBElod(_EnvMap,half4(reflUVW,mip)) * _EnvColor * _EnvScale ;
-				rgbm *= unity_ColorSpaceDouble; // Unity在烘焙反射贴图之后，会自动乘上这一项，即：如果使用烘焙后的贴图做CubeMap就不用乘这个
-			#endif
-
-    			half3 envCol = DecodeHDR(rgbm,unity_SpecCube0_HDR);
-
-				gi.indirectSpecular = envCol * occlusion;
-				return gi;
-			}
-		
-
-			inline half Pow5 (half x)
-			{
-			    return x*x * x*x * x;
-			}
-
-			// Note: Disney diffuse must be multiply by diffuseAlbedo / PI. This is done outside of this function.
-			half DisneyDiffuse(half NdotV, half NdotL, half LdotH, half perceptualRoughness)
-			{
-			    half fd90 = 0.5 + 2 * LdotH * LdotH * perceptualRoughness;
-			    // Two schlick fresnel term
-			    half lightScatter   = (1 + (fd90 - 1) * Pow5(1 - NdotL));
-			    half viewScatter    = (1 + (fd90 - 1) * Pow5(1 - NdotV));
-
-			    return lightScatter * viewScatter;
-			}
-
-			inline float GGXTerm (float NdotH, float roughness)
-			{
-			    float a2 = roughness * roughness;
-			    float d = (NdotH * a2 - NdotH) * NdotH + 1.0f; // 2 mad
-			    return UNITY_INV_PI * a2 / (d * d + 1e-7f); // This function is not intended to be running on Mobile,
-			                                            // therefore epsilon is smaller than what can be represented by half
-			}
-			
-			inline half SmithJointGGXVisibilityTerm (half NdotL, half NdotV, half roughness)
-			{
-				half a = roughness;
-			    half lambdaV = NdotL * (NdotV * (1 - a) + a);
-			    half lambdaL = NdotV * (NdotL * (1 - a) + a);
-
-			    return 0.5f / (lambdaV + lambdaL + 1e-5f);
-			}
-
-			inline half3 FresnelTerm (half3 F0, half cosA)
-			{
-			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
-			    return F0 + (1-F0) * t;
-			}
-
-			inline half3 FresnelLerp (half3 F0, half3 F90, half cosA)
-			{
-			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
-			    return lerp (F0, F90, t);
-			}
-			
-			// inline half Remap(float Val,float iMin,float iMax,float oMin,float oMax)
-			// {
-			// 	return (oMin + ((Val - iMin) * (oMax - oMin))/(iMax - iMin));
-			// }
-
-			// inline half3 RemapLerp(half3 F0,half3 F90,half val)
-			// {
-			// 	half t = saturate(Remap(val,0.95,1,0,1));
-			// 	return lerp (0, F0 ,t) ;
-			// }
-
-			// Diffuse:Disney
-			// Specular: 基于Torrance-Sparrow micro-facet 光照模型
-			// 		NDF: GGX ; V项: Smith; Fresnel: Schlick的近似
-			//   BRDF = kD / pi + kS * (D * V * F) / 4
-			//   I = BRDF * NdotL
-			// HACK: 这里没有给漫反射项除 pi，并且给高光项乘pi。
-			// 原因是：防止在引擎中的结果和传统的相比太暗；SH和非重要的灯光也得除pi;
-			half4 Move_BRDF_PBS(Move_FragmentData s,Move_GI gi)
-			{
-				float perceptualRoughness = s.roughness;
-				float roughness = perceptualRoughness * perceptualRoughness;
-
-				float3 lightDir = gi.dir;
-				float3 viewDir = -s.eyeVec; 
-				float3 normal = s.normalWorld;
-				float3 halfDir = normalize (lightDir + viewDir);
-
-				half nv = abs(dot(normal,viewDir));
-				half nl = saturate(dot(normal,lightDir));
-				float nh = saturate(dot(normal, halfDir));
-				half lv = saturate(dot(lightDir, viewDir));
-    			half lh = saturate(dot(lightDir, halfDir));
-
-    			// DiffuseTerm
-    			half diffuseTerm = DisneyDiffuse(nv, nl, lh, perceptualRoughness) * nl;
-
-    			// SpecularTerm: GGX
-    			roughness = max(roughness,0.002);
-    			half V = SmithJointGGXVisibilityTerm (nl, nv, roughness);
-    			float D = GGXTerm (nh, roughness);
-
-    			half specularTerm = V*D * UNITY_PI; // Torrance-Sparrow model, Fresnel is applied later
-    			#ifdef UNITY_COLORSPACE_GAMMA
-        			specularTerm = sqrt(max(1e-4h, specularTerm));
-				#endif
-        		
-        		specularTerm = max(0, specularTerm * nl);
-
-			    half surfaceReduction;
-				#ifdef UNITY_COLORSPACE_GAMMA
-			        surfaceReduction = 1.0-0.28*roughness*perceptualRoughness;      // 1-0.28*x^3 as approximation for (1/(x^4+1))^(1/2.2) on the domain [0;1]
-				#else
-			        surfaceReduction = 1.0 / (roughness*roughness + 1.0);           // fade \in [0.5;1]
-				#endif
-
-			    half grazingTerm = saturate(1-perceptualRoughness + (1-s.oneMinusReflectivity));
-
-			    half3 color =   s.diffColor * (gi.indirectDiffuse + gi.color * diffuseTerm) 
-                    + specularTerm * gi.color * FresnelTerm (s.specColor, lh) 
-                    + surfaceReduction * gi.indirectSpecular * FresnelLerp (s.specColor, grazingTerm, nv);
-
-                return half4(color,1);
-			}
-
-			fixed4 frag (v2f_forwardbase i) : SV_Target
-			{
-				Move_FragmentData s = Move_FragmentSetup(i.tex,i.eyeVec,
-					half3(i.tangentToWorld_tangentView[0].w,i.tangentToWorld_tangentView[1].w,i.tangentToWorld_tangentView[2].w),
-					i.tangentToWorld_tangentView,i.worldPos); 
-
-				/*
-				 half3 diffColor,specColor;
-				 half oneMinusReflectivity,roughness;
-				 float3 normalWorld,eyeVec,posWorld;
-				 half alpha;
-				
-				return s.posWorld.rgbr;
-				*/
-
-				UNITY_LIGHT_ATTENUATION(atten, i, s.posWorld); 
-
-				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
-				// return occlusion.xxxx;
-				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-				/*
-				half3 color;
-				half3 dir;
-
-				half3 indirectDiffuse;
-				half3 indirectSpecular;
-				*/
-				// return gi.indirectDiffuse.rgbr;
-				half4 col = Move_BRDF_PBS(s,gi);
-
-				#ifdef ENABLE_EMISSION
-					col.rgb += tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;
-				#endif
-
-				col.a = s.alpha;
-				
-				// return gi.indirectSpecular.rgbr;
-				return col;
-			}
-			ENDCG
-		}
-      
-
-	}
-
-	Fallback "Diffuse"
+	half level = 3 - 1.15 * log2(perceptualRoughness);
+	return mipCount - 1- level;
 }
+
+inline half Pow5 (half x)
+{
+    return x*x * x*x * x;
+}
+
+// Note: Disney diffuse must be multiply by diffuseAlbedo / PI. This is done outside of this function.
+half DisneyDiffuse(half NdotV, half NdotL, half LdotH, half perceptualRoughness)
+{
+    half fd90 = 0.5 + 2 * LdotH * LdotH * perceptualRoughness;
+    // Two schlick fresnel term
+    half lightScatter   = (1 + (fd90 - 1) * Pow5(1 - NdotL));
+    half viewScatter    = (1 + (fd90 - 1) * Pow5(1 - NdotV));
+
+    return lightScatter * viewScatter;
+}
+
+inline float GGXTerm (float NdotH, float roughness)
+{
+    float a2 = roughness * roughness;
+    float d = (NdotH * a2 - NdotH) * NdotH + 1.0f; // 2 mad
+    return UNITY_INV_PI * a2 / (d * d + 1e-7f); // This function is not intended to be running on Mobile,
+                                            // therefore epsilon is smaller than what can be represented by half
+}
+
+inline half SmithJointGGXVisibilityTerm (half NdotL, half NdotV, half roughness)
+{
+	half a = roughness;
+    half lambdaV = NdotL * (NdotV * (1 - a) + a);
+    half lambdaL = NdotV * (NdotL * (1 - a) + a);
+
+    return 0.5f / (lambdaV + lambdaL + 1e-5f);
+}
+
+inline half3 FresnelTerm (half3 F0, half cosA)
+{
+    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
+    return F0 + (1-F0) * t;
+}
+
+inline half3 FresnelLerp (half3 F0, half3 F90, half cosA)
+{
+    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
+    return lerp (F0, F90, t);
+}
+
+// inline half Remap(float Val,float iMin,float iMax,float oMin,float oMax)
+// {
+// 	return (oMin + ((Val - iMin) * (oMax - oMin))/(iMax - iMin));
+// }
+
+// inline half3 RemapLerp(half3 F0,half3 F90,half val)
+// {
+// 	half t = saturate(Remap(val,0.95,1,0,1));
+// 	return lerp (0, F0 ,t) ;
+// }
+
+
+// Physically based shading model
+// parameterized with the below options
+
+// Diffuse model
+// 0: Lambert
+// 1: Burley
+// 2: Oren-Nayar
+#define PHYSICAL_DIFFUSE	0
+
+// Microfacet distribution function
+// 0: Blinn
+// 1: Beckmann
+// 2: GGX
+#define PHYSICAL_SPEC_D		2
+
+// Geometric attenuation or shadowing
+// 0: Implicit
+// 1: Neumann
+// 2: Kelemen
+// 3: Schlick
+// 4: Smith (matched to GGX)
+// 5: Schlick_disney
+#define PHYSICAL_SPEC_G		5
+
+// Fresnel
+// 0: None
+// 1: Schlick
+// 2: Fresnel
+#define PHYSICAL_SPEC_F		1
+
+//helper functions
+#ifndef PI
+	#define PI 3.1415926535897932384626433832795
+#endif
+#define MIN_ROUGHNESS 0.08
+
+float Square( float x )
+{
+	return x*x;
+}
+float3 Square( float3 x )
+{
+	return x*x;
+}
+// Clamp the base, so it's never <= 0.0f (INF/NaN).
+float PhongShadingPow(float X, float Y)
+{
+	return pow(max(abs(X),0.000001f),Y);
+}
+
+float3 Diffuse_Lambert( float3 DiffuseColor )
+{
+	return DiffuseColor / PI;
+}
+
+// [Burley 2012, "Physically-Based Shading at Disney"]
+float3 Diffuse_Burley( float3 DiffuseColor, float Roughness, float NoV, float NoL, float VoH )
+{
+	float FD90 = 0.5 + 2 * VoH * VoH * Roughness;
+	float FdV = 1 + (FD90 - 1) * exp2( (-5.55473 * NoV - 6.98316) * NoV );
+	float FdL = 1 + (FD90 - 1) * exp2( (-5.55473 * NoL - 6.98316) * NoL );
+	return DiffuseColor * ( 1 / PI * FdV * FdL );
+}
+
+// [Gotanda 2012, "Beyond a Simple Physically Based Blinn-Phong Model in Real-Time"]
+float3 Diffuse_OrenNayar( float3 DiffuseColor, float Roughness, float NoV, float NoL, float VoH )
+{
+	float VoL = 2 * VoH - 1;
+	float m = Roughness * Roughness;
+	float m2 = m * m;
+	float C1 = 1 - 0.5 * m2 / (m2 + 0.33);
+	float Cosri = VoL - NoV * NoL;
+	float C2 = 0.45 * m2 / (m2 + 0.09) * Cosri * ( Cosri >= 0 ? min( 1, NoL / NoV ) : NoL );
+	return DiffuseColor / PI * ( NoL * C1 + C2 );
+}
+
+// [Blinn 1977, "Models of light reflection for computer synthesized pictures"]
+float D_Blinn( float Roughness, float NoH )
+{
+	float m = Roughness * Roughness;
+	float m2 = m * m;
+	float n = 2 / m2 - 2;
+	return (n+2) / (2*PI) * PhongShadingPow( NoH, n );		// 1 mad, 1 exp, 1 mul, 1 log
+}
+
+// [Beckmann 1963, "The scattering of electromagnetic waves from rough surfaces"]
+float D_Beckmann( float Roughness, float NoH )
+{
+	float m = Roughness * Roughness;
+	float m2 = m * m;
+	float NoH2 = NoH * NoH;
+	return exp( (NoH2 - 1) / (m2 * NoH2) ) / ( PI * m2 * NoH2 * NoH2 );
+}
+
+// GGX / Trowbridge-Reitz
+// [Walter et al. 2007, "Microfacet models for refraction through rough surfaces"]
+float D_GGX( float Roughness, float NoH )
+{
+	float m = Roughness * Roughness;
+	float m2 = m * m;
+	float d = ( NoH * m2 - NoH ) * NoH + 1;	// 2 mad
+	return m2 / ( PI*d*d );					// 2 mul, 1 rcp
+}
+
+// Anisotropic GGX
+// [Burley 2012, "Physically-Based Shading at Disney"]
+float D_GGXaniso( float RoughnessX, float RoughnessY, float NoH, float3 H, float3 X, float3 Y )
+{
+	float mx = RoughnessX * RoughnessX;
+	float my = RoughnessY * RoughnessY;
+	float XoH = dot( X, H );
+	float YoH = dot( Y, H );
+	float d = XoH*XoH / (mx*mx) + YoH*YoH / (my*my) + NoH*NoH;
+	return 1 / ( PI * mx*my * d*d );
+}
+
+float G_Implicit()
+{
+	return 0.25;
+}
+
+// [Neumann et al. 1999, "Compact metallic reflectance models"]
+float G_Neumann( float NoV, float NoL )
+{
+	return 1 / ( 4 * max( NoL, NoV ) );
+}
+
+// [Kelemen 2001, "A microfacet based coupled specular-matte brdf model with importance sampling"]
+float G_Kelemen( float VoH )
+{
+	return rcp( 4 * VoH * VoH );
+}
+
+// Tuned to match behavior of Vis_Smith
+// [Schlick 1994, "An Inexpensive BRDF Model for Physically-Based Rendering"]
+float G_Schlick( float Roughness, float NoV, float NoL )
+{
+	float k = Square( Roughness ) * 0.5;
+	float Vis_SchlickV = NoV * (1 - k) + k;
+	float Vis_SchlickL = NoL * (1 - k) + k;
+	return 0.25 / ( Vis_SchlickV * Vis_SchlickL );
+}
+
+// Smith term for GGX
+// [Smith 1967, "Geometrical shadowing of a random rough surface"]
+float G_Smith( float Roughness, float NoV, float NoL )
+{
+	float a = Square( Roughness );
+	float a2 = a*a;
+
+	float Vis_SmithV = NoV + sqrt( NoV * (NoV - NoV * a2) + a2 );
+	float Vis_SmithL = NoL + sqrt( NoL * (NoL - NoL * a2) + a2 );
+	return rcp( Vis_SmithV * Vis_SmithL );
+}
+
+// Appoximation of joint Smith term for GGX
+// [Heitz 2014, "Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs"]
+float G_SmithJointApprox( float Roughness, float NoV, float NoL )
+{
+	float a = Square( Roughness );
+	float Vis_SmithV = NoL * ( NoV * ( 1 - a ) + a );
+	float Vis_SmithL = NoV * ( NoL * ( 1 - a ) + a );
+	return 0.5 * rcp( Vis_SmithV + Vis_SmithL );
+}
+
+float3 F_None( float3 SpecularColor )
+{
+	return SpecularColor;
+}
+
+// [Schlick 1994, "An Inexpensive BRDF Model for Physically-Based Rendering"]
+// [Lagarde 2012, "Spherical Gaussian approximation for Blinn-Phong, Phong and Fresnel"]
+float3 F_Schlick( float3 SpecularColor, float VoH )
+{
+	// Anything less than 2% is physically impossible and is instead considered to be shadowing 
+	return SpecularColor + ( saturate( 50.0 * SpecularColor.g ) - SpecularColor ) * exp2( (-5.55473 * VoH - 6.98316) * VoH );
+
+	//float Fc = exp2( (-5.55473 * VoH - 6.98316) * VoH );	// 1 mad, 1 mul, 1 exp 	//float Fc = pow( 1 - VoH, 5 );
+	//return Fc + (1 - Fc) * SpecularColor;					// 1 add, 3 mad
+}
+
+float3 F_Fresnel( float3 SpecularColor, float VoH )
+{
+	float3 SpecularColorSqrt = sqrt( clamp( float3(0, 0, 0), float3(0.99, 0.99, 0.99), SpecularColor ) );
+	float3 n = ( 1 + SpecularColorSqrt ) / ( 1 - SpecularColorSqrt );
+	float3 g = sqrt( n*n + VoH*VoH - 1 );
+	return 0.5 * Square( (g - VoH) / (g + VoH) ) * ( 1 + Square( ((g+VoH)*VoH - 1) / ((g-VoH)*VoH + 1) ) );
+}
+
+
+float3 Diffuse( float3 DiffuseColor, float Roughness, float NoV, float NoL, float VoH )
+{
+#if   PHYSICAL_DIFFUSE == 0
+	return Diffuse_Lambert( DiffuseColor );
+#elif PHYSICAL_DIFFUSE == 1
+	return Diffuse_Burley( DiffuseColor, Roughness, NoV, NoL, VoH );
+#elif PHYSICAL_DIFFUSE == 2
+	return Diffuse_OrenNayar( DiffuseColor, Roughness, NoV, NoL, VoH );
+#endif
+}
+
+float Distribution( float Roughness, float NoH )
+{
+#if   PHYSICAL_SPEC_D == 0
+	return D_Blinn( Roughness, NoH );
+#elif PHYSICAL_SPEC_D == 1
+	return D_Beckmann( Roughness, NoH );
+#elif PHYSICAL_SPEC_D == 2
+	return D_GGX( Roughness, NoH );
+#endif
+}
+
+// Vis = G / (4*NoL*NoV)
+float GeometricVisibility( float Roughness, float NoV, float NoL, float VoH )
+{
+#if   PHYSICAL_SPEC_G == 0
+	return G_Implicit();
+#elif PHYSICAL_SPEC_G == 1
+	return G_Neumann( NoV, NoL );
+#elif PHYSICAL_SPEC_G == 2
+	return G_Kelemen( VoH );
+#elif PHYSICAL_SPEC_G == 3
+	return G_Schlick( Roughness, NoV, NoL );
+#elif PHYSICAL_SPEC_G == 4
+	return G_Smith( Roughness, NoV, NoL );
+#elif PHYSICAL_SPEC_G == 5
+	// TODO
+	// return G_Schlick_Disney( Roughness, NoV, NoL );	
+#endif
+}
+
+float3 Fresnel( float3 SpecularColor, float VoH )
+{
+#if   PHYSICAL_SPEC_F == 0
+	return F_None( SpecularColor );
+#elif PHYSICAL_SPEC_F == 1
+	return F_Schlick( SpecularColor, VoH );
+#elif PHYSICAL_SPEC_F == 2
+	return F_Fresnel( SpecularColor, VoH );
+#endif
+}
+
+// uint BRDFReverseBits( uint bits )
+// {
+// #if SM5_PROFILE
+// 	return reversebits( bits );
+// #else
+// 	bits = ( bits << 16) | ( bits >> 16);
+// 	bits = ( (bits & 0x00ff00ff) << 8 ) | ( (bits & 0xff00ff00) >> 8 );
+// 	bits = ( (bits & 0x0f0f0f0f) << 4 ) | ( (bits & 0xf0f0f0f0) >> 4 );
+// 	bits = ( (bits & 0x33333333) << 2 ) | ( (bits & 0xcccccccc) >> 2 );
+// 	bits = ( (bits & 0x55555555) << 1 ) | ( (bits & 0xaaaaaaaa) >> 1 );
+// 	return bits;
+// #endif
+// }
+
+// float2 Hammersley( uint Index, uint NumSamples, uint2 Random )
+// {
+// 	float E1 = frac( (float)Index / NumSamples + float( Random.x & 0xffff ) / (1<<16) );
+// 	float E2 = float( BRDFReverseBits(Index) ^ Random.y ) * 2.3283064365386963e-10;
+// 	return float2( E1, E2 );
+// }
+
+float2 JitterRandom( float2 Random)
+{
+	float2 hash = frac( Random * 49999 );
+	return hash;
+}
+
+float3 ImportanceSampleGGX( float2 E, float Roughness, float3 N )
+{
+	float m = Roughness * Roughness;
+
+	float Phi = 2 * PI * E.x;
+	float CosTheta = sqrt( (1 - E.y) / ( 1 + (m*m - 1) * E.y ) );
+	float SinTheta = sqrt( 1 - CosTheta * CosTheta );
+
+	float3 H;
+	H.x = SinTheta * cos( Phi );
+	H.y = SinTheta * sin( Phi );
+	H.z = CosTheta;
+
+	float3 UpVector = abs(N.z) < 0.999 ? float3(0,0,1) : float3(1,0,0);
+	float3 TangentX = normalize( cross( UpVector, N ) );
+	float3 TangentY = cross( N, TangentX );
+	// tangent to world space
+	return TangentX * H.x + TangentY * H.y + N * H.z;
+}
+
+float3 CosWeightSample( float2 E, float3 N )
+{
+	//cos⁡(θ)=1−ε; φ=2πε
+	float Phi = 2 * PI * E.x;
+	float CosTheta = 1 - E.y;
+	float SinTheta = sqrt( 1 - CosTheta * CosTheta );
+
+	float3 H;
+	H.x = SinTheta * cos( Phi );
+	H.y = SinTheta * sin( Phi );
+	H.z = CosTheta;
+
+	float3 UpVector = abs(N.z) < 0.999 ? float3(0,0,1) : float3(1,0,0);
+	float3 TangentX = normalize( cross( UpVector, N ) );
+	float3 TangentY = cross( N, TangentX );
+	// tangent to world space
+	return TangentX * H.x + TangentY * H.y + N * H.z;
+}
+
+// float2 IntegrateBRDF(float Roughness, float NoV)
+// {
+// 	//homogenous, all vector in tangent space of
+// 	float3 V;
+// 	V.x = sqrt( 1.0f - NoV * NoV ); // sin
+// 	V.y = 0;
+// 	V.z = NoV; // cos
+// 	float3 N = float3( 0, 0, 1 );
+
+// 	float A = 0;	//A = D*G*(1-(1-VoH)^5)*NoL
+// 	float B = 0;	//B = D*G*(1-VoH)^5*NoL
+// 	const uint NumSamples = 4096;
+// 	for( uint i = 0; i < NumSamples; i++ )
+// 	{
+// 		float2 Xi = g_randomTexture[i].xy;
+// 		float3 H = ImportanceSampleGGX( Xi, Roughness, N );
+// 		float3 L = 2 * dot( V, H ) * H - V;
+// 		float NoL = saturate( L.z );
+// 		float NoH = saturate( H.z );
+// 		float VoH = saturate( dot( V, H ) );
+// 		if( NoL > 0 )
+// 		{
+// 			float G = G_Smith( Roughness, NoV, NoL );//G_Smith pack with  1 / (4*NoL*NoV);
+// 			float Fc = pow( 1 - VoH, 5 );
+// 			// pdf = D * NoH / (4 * VoH)
+// 			A += 4.0f * NoL * G * (1-Fc) * VoH / NoH;
+// 			B += 4.0f * NoL * G * Fc * VoH / NoH;
+// 		}
+// 	}
+// 	return float2(A, B) / NumSamples;
+// }
+// Texture2D		PreIntegratedGF;
+// SamplerState	PreIntegratedGFSampler;
+
+// half3 EnvBRDF( half3 SpecularColor, half Roughness, half NoV )
+// {
+// 	// Importance sampled preintegrated G * F
+// 	float2 AB = Texture2DSampleLevel( PreIntegratedGF, PreIntegratedGFSampler, float2( NoV, Roughness ), 0 ).rg;
+// 
+// 	// Anything less than 2% is physically impossible and is instead considered to be shadowing 
+// 	float3 GF = SpecularColor * AB.x + saturate( 50.0 * SpecularColor.g ) * AB.y;
+// 	return GF;
+// }
+
+half3 EnvBRDFApprox( half3 SpecularColor, half Roughness, half NoV )
+{
+	// [ Lazarov 2013, "Getting More Physical in Call of Duty: Black Ops II" ]
+	// Adaptation to fit our G term.
+	const half4 c0 = { -1, -0.0275, -0.572, 0.022 };
+	const half4 c1 = { 1, 0.0425, 1.04, -0.04 };
+	half4 r = Roughness * c0 + c1;
+	half a004 = min( r.x * r.x, exp2( -9.28 * NoV ) ) * r.x + r.y;
+	half2 AB = half2( -1.04, 1.04 ) * a004 + r.zw;
+
+#if !(ES2_PROFILE || ES3_1_PROFILE)
+	// Anything less than 2% is physically impossible and is instead considered to be shadowing
+	// In ES2 this is skipped for performance as the impact can be small
+	// Note: this is needed for the 'specular' show flag to work, since it uses a SpecularColor of 0
+	AB.y *= saturate( 50.0 * SpecularColor.g );
+#endif
+
+	return SpecularColor * AB.x + AB.y;
+}
+
+half EnvBRDFApproxNonmetal( half Roughness, half NoV )
+{
+	// Same as EnvBRDFApprox( 0.04, Roughness, NoV )
+	const half2 c0 = { -1, -0.0275 };
+	const half2 c1 = { 1, 0.0425 };
+	half2 r = Roughness * c0 + c1;
+	return min( r.x * r.x, exp2( -9.28 * NoV ) ) * r.x + r.y;
+}
+
+half3 SimpleBRDF(in float3 L, in float3 N, in float3 V, in half NoV, in half NoL,
+	in half3 DiffuseColor, in half3 SpecularColor, in half Roughness)
+{
+	float3 H = normalize(V + L);
+	float NoH = saturate( dot(N, H) );
+	
+	half D = D_GGX( max(MIN_ROUGHNESS, Roughness), NoH );
+	half G = G_Implicit();
+	half3 F = F_None( SpecularColor );
+
+	return DiffuseColor + (D * G) * F;
+}
+
+half3 SimpleBRDF_SPEC(in float3 L, in float3 N, in float3 V, in half NoV, in half NoL,
+	in half3 SpecularColor, in half Roughness)
+{
+	float3 H = normalize(V + L);
+	float NoH = saturate( dot(N, H) );
+
+	half D = D_GGX( max(MIN_ROUGHNESS, Roughness), NoH );
+	half G = G_Implicit();
+	half3 F = F_None( SpecularColor );
+
+	return (D * G) * F;
+}
+
+half NPR_SPEC_SCALE(in float3 L, in float3 N, in float3 V, in half Roughness)
+{
+	float3 H = normalize(V + L);
+	float NoH = saturate( dot(N, H) );
+
+	return D_GGX( max(MIN_ROUGHNESS, Roughness), NoH );
+}
+
+half3 PbrBRDF(in float3 L, in float3 N, in float3 V, in half NoV, in half NoL,
+	in half3 DiffuseColor, in half3 SpecularColor, in half Roughness)
+{
+	float3 H = normalize(V + L);
+	float NoH = saturate( dot(N, H) );
+	float VoH = saturate( dot(V, H) );
+	half3 DiffuseLighting = DiffuseColor;
+	
+	half D = D_GGX( max(MIN_ROUGHNESS, Roughness), NoH );
+	half  G = G_Schlick( Roughness, NoV, NoL );
+	half3 F = F_Schlick( SpecularColor, VoH );
+
+	return DiffuseLighting + D*G*F;
+}
+
+half3 PbrBRDF_SPEC(in float3 L, in float3 N, in float3 V, in half NoV, in half NoL,
+	in half3 SpecularColor, in half Roughness)
+{
+	float3 H = normalize(V + L);
+	float NoH = saturate( dot(N, H) );
+	float VoH = saturate( dot(V, H) );
+	
+	half D = D_GGX( max(MIN_ROUGHNESS, Roughness), NoH );
+	half  G = G_Schlick( Roughness, NoV, NoL );
+	half3 F = F_Schlick( SpecularColor, VoH );
+
+	return D*G*F;
+}
+
+
+
+#endif // G67_PBR_CGINC

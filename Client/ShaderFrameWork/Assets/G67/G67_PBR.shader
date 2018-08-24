@@ -5,8 +5,8 @@
 		_Color("颜色", Color) = (1,1,1,1)
         _MainTex("漫反射纹理(RGB)透明通道(A)", 2D) = "white" {}
 
-        _Glossiness ("光泽度",Float) = 1
-        _SpecularMap("高光(RGB)光泽度(A)", 2D) = "white" {}
+        _Smoothness ("光泽度",Float) = 1
+        _MixMap("Smoothness(R)Metallic(G)AO(B)EmissionMask(A)", 2D) = "white" {} // Smoothness(R)Metallic(G)AO(B)EmissionMask(A)
 
         _BumpMap("法线贴图", 2D) = "bump" {}
         _BumpScale("法线强度", Float) = 1.0
@@ -16,8 +16,7 @@
 		_HeightMap ("视差图", 2D) = "black" {}
 
         _OcclusionStrength("AO 强度", Range(0.0, 1.0)) = 1.0
-        _OcclusionMap("AO 贴图", 2D) = "white" {}
-
+        
 		[Toggle(ENABLE_EMISSION)] _EnableEmission("是否使用自发光?",Float) = 0
         _EmissionColor("自发光颜色", Color) = (0,0,0)
         _EmissionIntensity ("自发光强度",Float) = 1
@@ -36,6 +35,12 @@
         _Cutoff("Alpha 剔除",Range(0,1)) = 0.5
 
        	[Toggle(ENABLE_SSS)] _EnableSSS("_EnableSSS?",Float) = 0
+        _SkinMaskMap("_SkinMaskMap", 2D) = "white" {}
+        _SkinProfileMap("_SkinProfileMap",2D) = "white"{}
+        _TSThickness("_TSThickness",Range(0,1)) = 0.05
+
+
+
        	[Toggle(ENABLE_REFLECTION)] _EnableReflection("_EnableReflection?",Float) = 0
        	[Toggle(ENABLE_ANISOTROPIC)] _EnableAnisotropic("_EnableAnisotropic?",Float) = 0
 		
@@ -71,11 +76,16 @@
 			#pragma multi_compile_fwdbase
 			#pragma shader_feature ENABLE_EMISSION
 			#pragma shader_feature ENABLE_PARALLAX
+			#pragma shader_feature ENABLE_IBL
 			#pragma shader_feature USE_UNITY_CUBE
 			#pragma shader_feature USE_VERTEX_GI
+			#pragma shader_feature ENABLE_SSS
+			#pragma shader_feature ENABLE_REFLECTION
+			#pragma shader_feature ENABLE_ANISOTROPIC
 
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
+            #include "G67_PBR_CGINC.cginc"
 
 			#ifdef UNITY_COLORSPACE_GAMMA 
 				#define unity_ColorSpaceGrey fixed4(0.5, 0.5, 0.5, 0.5)
@@ -100,6 +110,7 @@
 				float2 uv1 : TEXCOORD1;
 				half4 tangent : TANGENT;
 				half3 normal : NORMAL;
+				fixed4 color : COLOR;
 			};
 
 			struct v2f_forwardbase
@@ -116,11 +127,12 @@
 			fixed4 _Color; 
 			fixed4 _LightColor0;
 			sampler2D _MainTex; float4 _MainTex_ST;			
-			sampler2D _OcclusionMap; half _OcclusionStrength;
+			half _OcclusionStrength; half _AlphaScale;
 			sampler2D _HeightMap; half _HeightScale;
 			sampler2D _EmissionMap; half4 _EmissionColor; half _EmissionIntensity; 
-			sampler2D _SpecularMap; half _Glossiness;
+			sampler2D _MixMap; half _Smoothness;
 			sampler2D _BumpMap; half _BumpScale;
+			sampler2D _SkinMaskMap,_SkinProfileMap;
 
 			#ifdef USE_UNITY_CUBE
 				// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
@@ -130,10 +142,9 @@
 			#endif
 			half4 _EnvColor; half _EnvScale;
 		
-
 			half _Cutoff;
 
-
+			half _TSThickness;			
 
 			v2f_forwardbase vert (appdata v)
 			{
@@ -187,9 +198,11 @@
 				 half3 diffColor,specColor;
 				 half oneMinusReflectivity,roughness;
 				 float3 normalWorld,eyeVec,posWorld;
+				 half3 emissionColor;
 				 half alpha;
-			}; 
 
+				 half thickness;
+			}; 
 
 			Move_FragmentData Move_FragmentSetup(inout float2 i_tex,float3 i_eyeVec,half3 i_viewDirForParallax ,float4 tangentToWorld[3],float3 i_posWorld)
 			{
@@ -209,7 +222,7 @@
 				s.diffColor = _Color.rgb * mainTex.rgb;
 				s.alpha = mainTex.a;
 
-				fixed4 specTex = tex2D(_SpecularMap,i_tex.xy);
+				fixed4 specTex = tex2D(_MixMap,i_tex.xy);
 				
 				half roughness = 1-(specTex.a * _Glossiness);
 
@@ -220,6 +233,8 @@
 				s.roughness = roughness;
 				s.eyeVec = normalize(i_eyeVec);
 				s.posWorld = i_posWorld;
+
+				s.thickness = _TSThickness;
 				return s;
 
 			}
@@ -233,12 +248,7 @@
 				half3 indirectSpecular;
 			}; 
 
-			float PerceptualRoughnessToMip(float perceptualRoughness,half mipCount)
-			{
-				half level = 3 - 1.15 * log2(perceptualRoughness);
-				return mipCount - 1- level;
-			}
-
+			
 			Move_GI Move_FragmentGI(Move_FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
 			{
 				Move_GI gi = (Move_GI)0;
@@ -275,64 +285,7 @@
 				gi.indirectSpecular = envCol * occlusion;
 				return gi;
 			}
-		
-
-			inline half Pow5 (half x)
-			{
-			    return x*x * x*x * x;
-			}
-
-			// Note: Disney diffuse must be multiply by diffuseAlbedo / PI. This is done outside of this function.
-			half DisneyDiffuse(half NdotV, half NdotL, half LdotH, half perceptualRoughness)
-			{
-			    half fd90 = 0.5 + 2 * LdotH * LdotH * perceptualRoughness;
-			    // Two schlick fresnel term
-			    half lightScatter   = (1 + (fd90 - 1) * Pow5(1 - NdotL));
-			    half viewScatter    = (1 + (fd90 - 1) * Pow5(1 - NdotV));
-
-			    return lightScatter * viewScatter;
-			}
-
-			inline float GGXTerm (float NdotH, float roughness)
-			{
-			    float a2 = roughness * roughness;
-			    float d = (NdotH * a2 - NdotH) * NdotH + 1.0f; // 2 mad
-			    return UNITY_INV_PI * a2 / (d * d + 1e-7f); // This function is not intended to be running on Mobile,
-			                                            // therefore epsilon is smaller than what can be represented by half
-			}
 			
-			inline half SmithJointGGXVisibilityTerm (half NdotL, half NdotV, half roughness)
-			{
-				half a = roughness;
-			    half lambdaV = NdotL * (NdotV * (1 - a) + a);
-			    half lambdaL = NdotV * (NdotL * (1 - a) + a);
-
-			    return 0.5f / (lambdaV + lambdaL + 1e-5f);
-			}
-
-			inline half3 FresnelTerm (half3 F0, half cosA)
-			{
-			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
-			    return F0 + (1-F0) * t;
-			}
-
-			inline half3 FresnelLerp (half3 F0, half3 F90, half cosA)
-			{
-			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
-			    return lerp (F0, F90, t);
-			}
-			
-			// inline half Remap(float Val,float iMin,float iMax,float oMin,float oMax)
-			// {
-			// 	return (oMin + ((Val - iMin) * (oMax - oMin))/(iMax - iMin));
-			// }
-
-			// inline half3 RemapLerp(half3 F0,half3 F90,half val)
-			// {
-			// 	half t = saturate(Remap(val,0.95,1,0,1));
-			// 	return lerp (0, F0 ,t) ;
-			// }
-
 			// Diffuse:Disney
 			// Specular: 基于Torrance-Sparrow micro-facet 光照模型
 			// 		NDF: GGX ; V项: Smith; Fresnel: Schlick的近似
@@ -393,37 +346,20 @@
 					half3(i.tangentToWorld_tangentView[0].w,i.tangentToWorld_tangentView[1].w,i.tangentToWorld_tangentView[2].w),
 					i.tangentToWorld_tangentView,i.worldPos); 
 
-				/*
-				 half3 diffColor,specColor;
-				 half oneMinusReflectivity,roughness;
-				 float3 normalWorld,eyeVec,posWorld;
-				 half alpha;
-				
-				return s.posWorld.rgbr;
-				*/
-
 				UNITY_LIGHT_ATTENUATION(atten, i, s.posWorld); 
 
 				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
 				// return occlusion.xxxx;
 				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-				/*
-				half3 color;
-				half3 dir;
-
-				half3 indirectDiffuse;
-				half3 indirectSpecular;
-				*/
-				// return gi.indirectDiffuse.rgbr;
+			
 				half4 col = Move_BRDF_PBS(s,gi);
 
 				#ifdef ENABLE_EMISSION
-					col.rgb += tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;
+					col.rgb += s.emissionColor;//tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;
 				#endif
 
 				col.a = s.alpha;
 				
-				// return gi.indirectSpecular.rgbr;
 				return col;
 			}
 			ENDCG
