@@ -1,12 +1,16 @@
-﻿Shader "G67/PBR"
+﻿/// 使用粗糙度而不是感知粗糙度
+
+Shader "Move/PBR_Base_Core_RoughnessNotPerceptualRoughness"
 {
 	Properties
 	{
 		_Color("颜色", Color) = (1,1,1,1)
         _MainTex("漫反射纹理(RGB)透明通道(A)", 2D) = "white" {}
 
-        _Smoothness ("光泽度",Float) = 1
-        _MixMap("Smoothness(R)Metallic(G)AO(B)EmissionMask(A)", 2D) = "white" {} // Smoothness(R)Metallic(G)AO(B)EmissionMask(A)
+        _Roughness ("粗糙度",Float) = 1
+        _RoughnessMap("粗糙度贴图", 2D) = "white" {}
+        _Metallic ("金属度",Float) = 1
+        _MetallicMap("金属度贴图", 2D) = "white" {}
 
         _BumpMap("法线贴图", 2D) = "bump" {}
         _BumpScale("法线强度", Float) = 1.0
@@ -16,36 +20,23 @@
 		_HeightMap ("视差图", 2D) = "black" {}
 
         _OcclusionStrength("AO 强度", Range(0.0, 1.0)) = 1.0
-        
+        _OcclusionMap("AO 贴图", 2D) = "white" {}
+
 		[Toggle(ENABLE_EMISSION)] _EnableEmission("是否使用自发光?",Float) = 0
         _EmissionColor("自发光颜色", Color) = (0,0,0)
         _EmissionIntensity ("自发光强度",Float) = 1
         _EmissionMap("自发光贴图", 2D) = "white" {}
 
         [Toggle(USE_VERTEX_GI)] _UseVertexGI("是否使用实时逐顶点光照?",Float) = 0
-        
-        [Toggle(ENABLE_IBL)] _EnableIBL("_EnableIBL?",Float) = 0
         [Toggle(USE_UNITY_CUBE)] _UseUnityCube("是否使用UnityCube?",Float) = 0
 		_EnvMap("环境贴图",Cube) = "_Skybox"{}
 		_MipCount("_MipCount",Float) = 8
         _EnvColor ("环境颜色",Color) = (1,1,1,0.5) 
         _EnvScale ("环境强度",Float) = 1.0
 
-        _AlphaScale("AlphaScale",Range(0,1)) = 1
         _Cutoff("Alpha 剔除",Range(0,1)) = 0.5
 
-       	[Toggle(ENABLE_SSS)] _EnableSSS("_EnableSSS?",Float) = 0
-        _SkinMaskMap("_SkinMaskMap", 2D) = "white" {}
-        _SkinProfileMap("_SkinProfileMap",2D) = "white"{}
-        _TSThickness("_TSThickness",Range(0,1)) = 0.05
-
-
-
-       	[Toggle(ENABLE_REFLECTION)] _EnableReflection("_EnableReflection?",Float) = 0
-       	[Toggle(ENABLE_ANISOTROPIC)] _EnableAnisotropic("_EnableAnisotropic?",Float) = 0
-		
-
-		[Enum(Off,0,On,1)] _ZWrite ("是否写入深度:",Float) = 1
+       	[Enum(Off,0,On,1)] _ZWrite ("是否写入深度:",Float) = 1
        	[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("深度测试模式:",Float) = 4
        	[Enum(UnityEngine.Rendering.CullMode)] _Cull("裁剪模式:",Float) = 2
        	[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src 混合模式:",Float) = 1
@@ -76,16 +67,11 @@
 			#pragma multi_compile_fwdbase
 			#pragma shader_feature ENABLE_EMISSION
 			#pragma shader_feature ENABLE_PARALLAX
-			#pragma shader_feature ENABLE_IBL
 			#pragma shader_feature USE_UNITY_CUBE
 			#pragma shader_feature USE_VERTEX_GI
-			#pragma shader_feature ENABLE_SSS
-			#pragma shader_feature ENABLE_REFLECTION
-			#pragma shader_feature ENABLE_ANISOTROPIC
 
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
-            #include "G67_PBR_CGINC.cginc"
 
 			#ifdef UNITY_COLORSPACE_GAMMA 
 				#define unity_ColorSpaceGrey fixed4(0.5, 0.5, 0.5, 0.5)
@@ -110,7 +96,6 @@
 				float2 uv1 : TEXCOORD1;
 				half4 tangent : TANGENT;
 				half3 normal : NORMAL;
-				fixed4 color : COLOR;
 			};
 
 			struct v2f_forwardbase
@@ -127,14 +112,12 @@
 			fixed4 _Color; 
 			fixed4 _LightColor0;
 			sampler2D _MainTex; float4 _MainTex_ST;			
-			half _OcclusionStrength; half _AlphaScale;
+			sampler2D _OcclusionMap; half _OcclusionStrength;
 			sampler2D _HeightMap; half _HeightScale;
 			sampler2D _EmissionMap; half4 _EmissionColor; half _EmissionIntensity; 
-			sampler2D _MixMap; half _Smoothness;
+			sampler2D _RoughnessMap; half _Roughness;
+			sampler2D _MetallicMap; half _Metallic;
 			sampler2D _BumpMap; half _BumpScale;
-			sampler2D _SkinMaskMap,_SkinProfileMap;
-			sampler2D _OcclusionMap;
-			half _Glossiness;
 
 			#ifdef USE_UNITY_CUBE
 				// samplerCUBE unity_SpecCube0; // 在HLSLSupport.cginc中已经声明
@@ -144,9 +127,10 @@
 			#endif
 			half4 _EnvColor; half _EnvScale;
 		
+
 			half _Cutoff;
 
-			half _TSThickness;			
+
 
 			v2f_forwardbase vert (appdata v)
 			{
@@ -154,8 +138,9 @@
 				
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.tex = TRANSFORM_TEX(v.uv0, _MainTex);
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				o.eyeVec = normalize( o.worldPos.xyz - _WorldSpaceCameraPos);
+				float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
+				o.worldPos = posWorld;
+				o.eyeVec = posWorld.xyz - _WorldSpaceCameraPos;
 				
 
 				half3 normalWorld = UnityObjectToWorldNormal(v.normal);
@@ -200,11 +185,9 @@
 				 half3 diffColor,specColor;
 				 half oneMinusReflectivity,roughness;
 				 float3 normalWorld,eyeVec,posWorld;
-				 half3 emissionColor;
 				 half alpha;
-
-				 half thickness;
 			}; 
+
 
 			Move_FragmentData Move_FragmentSetup(inout float2 i_tex,float3 i_eyeVec,half3 i_viewDirForParallax ,float4 tangentToWorld[3],float3 i_posWorld)
 			{
@@ -224,19 +207,16 @@
 				s.diffColor = _Color.rgb * mainTex.rgb;
 				s.alpha = mainTex.a;
 
-				fixed4 specTex = tex2D(_MixMap,i_tex.xy);
-				
-				half roughness = 1-(specTex.a * _Glossiness);
+				half metallic = tex2D(_MetallicMap,i_tex.xy).r * _Metallic;
+				half roughness = tex2D(_RoughnessMap,i_tex.xy).r * _Roughness;
 
-				s.specColor = specTex.rgb;
-				s.oneMinusReflectivity = (1-s.specColor.r);//(1-max (max (s.specColor.r, s.specColor.g), s.specColor.b));
+				s.specColor = lerp(unity_ColorSpaceDielectricSpec.rgb ,s.diffColor,metallic);
+				s.oneMinusReflectivity = (1-metallic) * unity_ColorSpaceDielectricSpec.a;
 
-				s.diffColor *= 1.0f.xxx - s.specColor;
+				s.diffColor *= s.oneMinusReflectivity;
 				s.roughness = roughness;
 				s.eyeVec = normalize(i_eyeVec);
 				s.posWorld = i_posWorld;
-
-				s.thickness = _TSThickness;
 				return s;
 
 			}
@@ -250,7 +230,12 @@
 				half3 indirectSpecular;
 			}; 
 
-			
+			float PerceptualRoughnessToMip(float perceptualRoughness,half mipCount)
+			{
+				half level = 3 - 1.15 * log2(perceptualRoughness);
+				return mipCount - 1- level;
+			}
+
 			Move_GI Move_FragmentGI(Move_FragmentData s,half occlusion,half4 i_ambient,half atten,half3 lightColor,half3 worldSpaceLightDir)
 			{
 				Move_GI gi = (Move_GI)0;
@@ -268,7 +253,9 @@
 				
 
 				/// EnvCol
-				float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
+				half3 reflUVW = reflect(s.eyeVec,s.normalWorld);
+				//reflUVW = BoxProjectedCubemapDirection (reflUVW, s.posWorld, unity_SpecCube0_ProbePosition, unity_SpecCube0_BoxMin, unity_SpecCube0_BoxMax);
+
 				half perceptualRoughness = s.roughness;
 
 				perceptualRoughness = perceptualRoughness*(1.7 - 0.7*perceptualRoughness);
@@ -285,7 +272,57 @@
     			half3 envCol = DecodeHDR(rgbm,unity_SpecCube0_HDR);
 
 				gi.indirectSpecular = envCol * occlusion;
+
+			
+				// float3 reflUVW = reflect(s.eyeVec,s.normalWorld);
+				// gi.indirectSpecular = UnityGI_IndirectSpecular(UnityGIInput data, occlusion, reflUVW,s.roughness)
 				return gi;
+			}
+		
+
+			inline half Pow5 (half x)
+			{
+			    return x*x * x*x * x;
+			}
+
+			// Note: Disney diffuse must be multiply by diffuseAlbedo / PI. This is done outside of this function.
+			half DisneyDiffuse(half NdotV, half NdotL, half LdotH, half perceptualRoughness)
+			{
+			    half fd90 = 0.5 + 2 * LdotH * LdotH * perceptualRoughness;
+			    // Two schlick fresnel term
+			    half lightScatter   = (1 + (fd90 - 1) * Pow5(1 - NdotL));
+			    half viewScatter    = (1 + (fd90 - 1) * Pow5(1 - NdotV));
+
+			    return lightScatter * viewScatter;
+			}
+
+			inline float GGXTerm (float NdotH, float roughness)
+			{
+			    float a2 = roughness * roughness;
+			    float d = (NdotH * a2 - NdotH) * NdotH + 1.0f; // 2 mad
+			    return UNITY_INV_PI * a2 / (d * d + 1e-7f); // This function is not intended to be running on Mobile,
+			                                            // therefore epsilon is smaller than what can be represented by half
+			}
+			
+			inline half SmithJointGGXVisibilityTerm (half NdotL, half NdotV, half roughness)
+			{
+				half a = roughness;
+			    half lambdaV = NdotL * (NdotV * (1 - a) + a);
+			    half lambdaL = NdotV * (NdotL * (1 - a) + a);
+
+			    return 0.5f / (lambdaV + lambdaL + 1e-5f);
+			}
+
+			inline half3 FresnelTerm (half3 F0, half cosA)
+			{
+			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
+			    return F0 + (1-F0) * t;
+			}
+
+			inline half3 FresnelLerp (half3 F0, half3 F90, half cosA)
+			{
+			    half t = Pow5 (1 - cosA);   // ala Schlick interpoliation
+			    return lerp (F0, F90, t);
 			}
 			
 			// Diffuse:Disney
@@ -297,11 +334,11 @@
 			// 原因是：防止在引擎中的结果和传统的相比太暗；SH和非重要的灯光也得除pi;
 			half4 Move_BRDF_PBS(Move_FragmentData s,Move_GI gi)
 			{
-				float perceptualRoughness = s.roughness;
-				float roughness = perceptualRoughness * perceptualRoughness;
+				float perceptualRoughness = sqrt(s.roughness);
+				float roughness = s.roughness;//perceptualRoughness * perceptualRoughness;
 
 				float3 lightDir = gi.dir;
-				float3 viewDir = -s.eyeVec; 
+				float3 viewDir = -normalize(s.eyeVec); 
 				float3 normal = s.normalWorld;
 				float3 halfDir = normalize (lightDir + viewDir);
 
@@ -351,17 +388,16 @@
 				UNITY_LIGHT_ATTENUATION(atten, i, s.posWorld); 
 
 				half occlusion = lerp(1,tex2D(_OcclusionMap,i.tex.xy).g,_OcclusionStrength);
-				// return occlusion.xxxx;
 				Move_GI gi = Move_FragmentGI(s,occlusion,i.ambient,atten,_LightColor0.rgb,_WorldSpaceLightPos0.xyz);
-			
 				half4 col = Move_BRDF_PBS(s,gi);
 
 				#ifdef ENABLE_EMISSION
-					col.rgb += s.emissionColor;//tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;
+					col.rgb += tex2D(_EmissionMap,i.tex.xy).rgb * _EmissionColor.rgb * _EmissionIntensity;
 				#endif
 
 				col.a = s.alpha;
 				
+				// return gi.indirectSpecular.rgbr;
 				return col;
 			}
 			ENDCG

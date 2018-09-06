@@ -90,7 +90,6 @@
     <None Include="Assets\Alloy\Shaders\Definition\SpeedTreeBillboard.cginc" />
     <None Include="Assets\Alloy\Shaders\4.6\Human\Tessellation Hair LowQuality OneSided.shader" />
     <None Include="Assets\Alloy\Shaders\3.0\Core\Core.shader" />
-    <None Include="Assets\G67\Includes\MessPBRCore.cginc" />
     <None Include="Assets\Alloy\Shaders\Type\SpeedTree.cginc" />
     <None Include="Assets\Alloy\Shaders\Feature\SpeedTree.cginc" />
     <None Include="Assets\Alloy\Shaders\3.0\Specialist\Weighted Blend.shader" />
@@ -103,6 +102,7 @@
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\07_PBR_Tex.shader" />
     <None Include="Assets\Alloy\Shaders\Framework\Forward.cginc" />
     <None Include="Assets\MSF\ReferenceShaders\MoveShaders\05_CookTorrence_Tex.shader" />
+    <None Include="Assets\MSF\Shaders\PBR_Base_Core_2.shader" />
     <None Include="Assets\Alloy\Shaders\3.0\Nature\Details2.shader" />
     <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Directional Blend.shader" />
     <None Include="Assets\Alloy\Shaders\Framework\Tessellation.cginc" />
@@ -207,7 +207,9 @@
     <None Include="Assets\Alloy\Shaders\Framework\TypeImpl.cginc" />
     <None Include="Assets\Alloy\Shaders\Type\Standard.cginc" />
     <None Include="Assets\Alloy\Shaders\Framework\FeatureImpl.cginc" />
+    <None Include="Assets\MSF\Shaders\PBR_Base_Core1.shader" />
     <None Include="Assets\Alloy\Shaders\Feature\SecondaryTextures.cginc" />
+    <None Include="Assets\MSF\Shaders\PBR_Base_Core_Specular.shader" />
     <None Include="Assets\Alloy\Shaders\3.0\Decal\Cutout.shader" />
     <None Include="Assets\Alloy\Shaders\Feature\TeamColor.cginc" />
     <None Include="Assets\Alloy\Scripts\MaterialMapChannelPacker\Shaders\AlloyPassthroughBlit.shader" />
@@ -251,6 +253,7 @@
     <None Include="Assets\Alloy\Shaders\4.6\VisualEffects\Tessellation Transition.shader" />
     <None Include="Assets\Alloy\Shaders\Framework\Particle.cginc" />
     <None Include="Assets\Alloy\Shaders\Feature\TriPlanar.cginc" />
+    <None Include="Assets\G67\G67_PBR_CGINC.cginc" />
     <None Include="Assets\Alloy Mods\Shaders\3.0\Transition Lite.shader" />
     <None Include="Assets\Alloy\Shaders\Definition\Transition.cginc" />
     <None Include="Assets\Alloy\Shaders\3.0\VisualEffects\Transition.shader" />
@@ -290,7 +293,7 @@
     <None Include="Assets\Alloy Mods\Shaders\3.0\Curvature Test.shader" />
     <None Include="Assets\MSF\ReferenceShaders\ManewPBR\Disney_Cook-Torrance.shader" />
     <None Include="Assets\Alloy\Shaders\4.6\Specialist\Tessellation Vertex Blend.shader" />
-    <None Include="Assets\G67\PBR.shader" />
+    <None Include="Assets\G67\G67_PBR.shader" />
     <None Include="Assets\Alloy\Shaders\Type\Details1.cginc" />
     <None Include="Assets\Alloy\Shaders\Type\DecalAlpha.cginc" />
     <None Include="Assets\Alloy\Shaders\Definition\Details0.cginc" />
@@ -309,16 +312,16 @@
     <None Include="Assets\Alloy\Shaders\Definition\OrientedBlend.cginc" />
     <None Include="Assets\Alloy\Shaders\3.0\Human\Skin.shader" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>E:/02_GitHubProjects/ShaderFramework/Client/ShaderFrameWork/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>E:/02_GitHubProjects/ShaderFramework/ShaderFrameWork/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/02_GitHubProjects/ShaderFramework/Client/ShaderFrameWork/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>E:/02_GitHubProjects/ShaderFramework/ShaderFrameWork/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/02_GitHubProjects/ShaderFramework/Client/ShaderFrameWork/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>E:/02_GitHubProjects/ShaderFramework/ShaderFrameWork/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/02_GitHubProjects/ShaderFramework/Client/ShaderFrameWork/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>E:/02_GitHubProjects/ShaderFramework/ShaderFrameWork/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity2018.2.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
