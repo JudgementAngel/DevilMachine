@@ -334,7 +334,7 @@ Shader "Move/PBR_Base_Core_RoughnessNotPerceptualRoughness"
 			// 原因是：防止在引擎中的结果和传统的相比太暗；SH和非重要的灯光也得除pi;
 			half4 Move_BRDF_PBS(Move_FragmentData s,Move_GI gi)
 			{
-				float perceptualRoughness = sqrt(s.roughness);
+				float perceptualRoughness = sqrt(s.roughness);// s.roughness;
 				float roughness = s.roughness;//perceptualRoughness * perceptualRoughness;
 
 				float3 lightDir = gi.dir;
