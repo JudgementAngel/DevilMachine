@@ -1,21 +1,13 @@
+/*
 #include <windows.h>
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 #include <iostream>
+#include "TempVectorHead.h"
 
 using namespace std;
 using namespace DirectX;
 using namespace DirectX::PackedVector;
-
-// ÷ÿ‘ÿ "<<" ‘ÀÀ„∑˚
-ostream& XM_CALLCONV operator<< (ostream& os,FXMVECTOR v)
-{
-	XMFLOAT3 dest;
-	XMStoreFloat3(&dest, v);
-
-	os << "(" << dest.x << "," << dest.y << "," << dest.z << ")";
-	return os;
-}
 
 int main()
 {
@@ -42,3 +34,4 @@ int main()
 
 	return 0;
 }
+*/

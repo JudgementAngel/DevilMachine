@@ -18,5 +18,19 @@
     <ClCompile Include="1.6.7_InitFunction.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="1.6.8_xmvec3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="1.6.9_tol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="1.8.19_VectorOps.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TempVectorHead.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

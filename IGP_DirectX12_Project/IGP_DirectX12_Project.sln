@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_Demo", "Test_Demo\Test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter1_XMVECTOR", "Chapter1_XMVECTOR\Chapter1_XMVECTOR.vcxproj", "{585E5CAB-3689-4BB3-9F12-F1D28D85A337}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter2_XMMATRIX", "Chapter2_XMMATRIX\Chapter2_XMMATRIX.vcxproj", "{4AC4833E-32C5-4CE7-858F-A37110E82701}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,8 +33,19 @@ Global
 		{585E5CAB-3689-4BB3-9F12-F1D28D85A337}.Release|x64.Build.0 = Release|x64
 		{585E5CAB-3689-4BB3-9F12-F1D28D85A337}.Release|x86.ActiveCfg = Release|Win32
 		{585E5CAB-3689-4BB3-9F12-F1D28D85A337}.Release|x86.Build.0 = Release|Win32
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Debug|x64.ActiveCfg = Debug|x64
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Debug|x64.Build.0 = Debug|x64
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Debug|x86.ActiveCfg = Debug|Win32
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Debug|x86.Build.0 = Debug|Win32
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x64.ActiveCfg = Release|x64
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x64.Build.0 = Release|x64
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x86.ActiveCfg = Release|Win32
+		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B0D2310-E51E-491A-9D70-740CA6F34E83}
 	EndGlobalSection
 EndGlobal
