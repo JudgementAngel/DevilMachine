@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter1_XMVECTOR", "Chapte
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter2_XMMATRIX", "Chapter2_XMMATRIX\Chapter2_XMMATRIX.vcxproj", "{4AC4833E-32C5-4CE7-858F-A37110E82701}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter4_Direct3DInitialization", "Chapter4_Direct3DInitialization\Chapter4_Direct3DInitialization.vcxproj", "{774E0D1C-31B1-4C20-929D-AC1963365D65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x64.Build.0 = Release|x64
 		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x86.ActiveCfg = Release|Win32
 		{4AC4833E-32C5-4CE7-858F-A37110E82701}.Release|x86.Build.0 = Release|Win32
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Debug|x64.ActiveCfg = Debug|x64
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Debug|x64.Build.0 = Debug|x64
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Debug|x86.ActiveCfg = Debug|Win32
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Debug|x86.Build.0 = Debug|Win32
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x64.ActiveCfg = Release|x64
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x64.Build.0 = Release|x64
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x86.ActiveCfg = Release|Win32
+		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

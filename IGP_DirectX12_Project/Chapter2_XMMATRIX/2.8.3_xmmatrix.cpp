@@ -1,3 +1,4 @@
+/*
 #include <windows.h>
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
@@ -66,3 +67,4 @@ int main()
 	
 	return 0;
 }
+*/
