@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter2_XMMATRIX", "Chapte
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter4_Direct3DInitialization", "Chapter4_Direct3DInitialization\Chapter4_Direct3DInitialization.vcxproj", "{774E0D1C-31B1-4C20-929D-AC1963365D65}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter6_DrawingInD3D12_I", "Chapter6_DrawingInD3D12_I\Chapter6_DrawingInD3D12_I.vcxproj", "{A49D115A-5807-4866-9042-4FA049DE545D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x64.Build.0 = Release|x64
 		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x86.ActiveCfg = Release|Win32
 		{774E0D1C-31B1-4C20-929D-AC1963365D65}.Release|x86.Build.0 = Release|Win32
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Debug|x64.ActiveCfg = Debug|x64
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Debug|x64.Build.0 = Debug|x64
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Debug|x86.ActiveCfg = Debug|Win32
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Debug|x86.Build.0 = Debug|Win32
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Release|x64.ActiveCfg = Release|x64
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Release|x64.Build.0 = Release|x64
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Release|x86.ActiveCfg = Release|Win32
+		{A49D115A-5807-4866-9042-4FA049DE545D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
